@@ -25,9 +25,10 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_package amsmath 1
 \use_package amssymb 1
 \use_package cancel 1
@@ -51,6 +52,13 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\headheight 2cm
+\headsep 2cm
+\footskip 1cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -89,7 +97,7 @@ Quantum States
 \begin_inset Formula $\frac{1+i}{\sqrt{2}}\lvert0\rangle$
 \end_inset
 
- are in the same quantum state as the direction, 
+ are in the same quantum state, as the direction, 
 \begin_inset Formula $\lvert0\rangle$
 \end_inset
 
@@ -113,22 +121,110 @@ Quantum States
 \begin_inset Formula $\lvert1\rangle$
 \end_inset
 
-, which is not in the same state as 
+, as shown below, which is not in the same state as 
 \begin_inset Formula $\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)$
 \end_inset
 
 .
+\begin_inset Formula 
+\[
+\lvert+\rangle=\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert-\rangle=\frac{1}{\sqrt{2}}(\lvert0\rangle-\lvert1\rangle)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{2}}(\lvert+\rangle-\lvert-\rangle)=\frac{1}{\sqrt{2}}(\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)-\frac{1}{\sqrt{2}}(\lvert0\rangle-\lvert1\rangle))
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{2}}(\lvert+\rangle-\lvert-\rangle)=\frac{1}{2}(\lvert0\rangle+\lvert1\rangle)-\frac{1}{2}(\lvert0\rangle-\lvert1\rangle)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{2}}(\lvert+\rangle-\lvert-\rangle)=\frac{1}{2}\lvert0\rangle+\frac{1}{2}\lvert1\rangle-\frac{1}{2}\lvert0\rangle+\frac{1}{2}\lvert1\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{2}}(\lvert+\rangle-\lvert-\rangle)=\lvert1\rangle
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $(\frac{3}{\sqrt{2}}(\lvert0\rangle-\frac{1}{2}\lvert1\rangle)$
+\begin_inset Formula $(\frac{\sqrt{3}}{2}\lvert0\rangle+\frac{1}{2}\lvert1\rangle)$
 \end_inset
 
  and 
-\begin_inset Formula $(\frac{\sqrt{6}+\sqrt{2}}{4}\lvert+\rangle-\frac{\sqrt{6}-\sqrt{2}}{4}\lvert-\rangle)$
+\begin_inset Formula $(\frac{\sqrt{6}+\sqrt{2}}{4}\lvert+\rangle+\frac{\sqrt{6}-\sqrt{2}}{4}\lvert-\rangle)$
 \end_inset
 
- 
+ are in the same quantum state as converting 
+\begin_inset Formula $(\frac{\sqrt{6}+\sqrt{2}}{4}\lvert+\rangle+\frac{\sqrt{6}-\sqrt{2}}{4}\lvert-\rangle)$
+\end_inset
+
+ to the standard basis gives 
+\begin_inset Formula $(\frac{\sqrt{3}}{2}\lvert0\rangle+\frac{1}{2}\lvert1\rangle)$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+(\frac{\sqrt{6}+\sqrt{2}}{4}\lvert+\rangle+\frac{\sqrt{6}-\sqrt{2}}{4}\lvert-\rangle)=(\frac{\sqrt{6}+\sqrt{2}}{4\sqrt{2}}(\lvert0\rangle+\lvert1\rangle))+\frac{\sqrt{6}-\sqrt{2}}{4\sqrt{2}}(\lvert0\rangle-\lvert1\rangle))
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+(\frac{\sqrt{6}+\sqrt{2}}{4}\lvert+\rangle+\frac{\sqrt{6}-\sqrt{2}}{4}\lvert-\rangle)=(\frac{2\sqrt{6}}{4\sqrt{2}}\lvert0\rangle+\frac{2\sqrt{2}}{4\sqrt{2}}\lvert1\rangle)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+(\frac{\sqrt{6}+\sqrt{2}}{4}\lvert+\rangle+\frac{\sqrt{6}-\sqrt{2}}{4}\lvert-\rangle)=(\frac{\sqrt{6}}{2\sqrt{2}}\lvert0\rangle+\frac{1}{2}\lvert1\rangle)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+(\frac{\sqrt{6}+\sqrt{2}}{4}\lvert+\rangle+\frac{\sqrt{6}-\sqrt{2}}{4}\lvert-\rangle)=(\frac{\sqrt{3}}{2}\lvert0\rangle+\frac{1}{2}\lvert1\rangle)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_deeper
@@ -136,5 +232,39 @@ Quantum States
 State Measurements
 \end_layout
 
+\begin_deeper
+\begin_layout Enumerate
+Given
+\begin_inset Formula $\frac{1}{2}\lvert0\rangle-\frac{\sqrt{3}}{2}\lvert1\rangle$
+\end_inset
+
+, the probability of measuring a 
+\begin_inset Formula $\lvert0\rangle$
+\end_inset
+
+ is 
+\begin_inset Formula $\frac{1}{2}^{2}=\frac{1}{4}$
+\end_inset
+
+, while the probability of measuring a 
+\begin_inset Formula $\lvert1\rangle$
+\end_inset
+
+ is 
+\begin_inset Formula $\frac{\sqrt{3}}{2}^{2}=\frac{3}{4}$
+\end_inset
+
+.
+ These are the only two possible measured states as measurement is being
+ done relative to the standard basis, and their probability is given by
+ the square of the magnitude of the direction of each possible state.
+ 
+\end_layout
+
+\begin_layout Enumerate
+k
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
