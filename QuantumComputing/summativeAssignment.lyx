@@ -234,11 +234,12 @@ State Measurements
 
 \begin_deeper
 \begin_layout Enumerate
-Given
+Given that
 \begin_inset Formula $\frac{1}{2}\lvert0\rangle-\frac{\sqrt{3}}{2}\lvert1\rangle$
 \end_inset
 
-, the probability of measuring a 
+ is being measured in the standard basis, the probability of measuring a
+ 
 \begin_inset Formula $\lvert0\rangle$
 \end_inset
 
@@ -262,9 +263,160 @@ Given
 \end_layout
 
 \begin_layout Enumerate
-k
+Given that
+\begin_inset Formula $\frac{3i}{4}\lvert+\rangle-\frac{\sqrt{7}}{4}\lvert-\rangle$
+\end_inset
+
+ is being measured in the standard basis, the probability of measuring a
+ 
+\begin_inset Formula $\lvert0\rangle$
+\end_inset
+
+ is 
+\begin_inset Formula $(\frac{3i-\sqrt{7}}{4\sqrt{2}})^{2}=\frac{-2-6\sqrt{7}i}{32}$
+\end_inset
+
+, while the probability of measuring a 
+\begin_inset Formula $\lvert1\rangle$
+\end_inset
+
+ is 
+\begin_inset Formula $(\frac{3i+\sqrt{7}}{4\sqrt{2}})^{2}=\frac{-2+6\sqrt{7}i}{32}$
+\end_inset
+
+.
+ THIS DOES NOT ADD UP TO 100%, CHECK AGAIN!!!
+\begin_inset Formula 
+\[
+\frac{3i}{4}\lvert+\rangle-\frac{\sqrt{7}}{4}\lvert-\rangle=\frac{3i}{4\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)-\frac{\sqrt{7}}{4\sqrt{2}}(\lvert0\rangle-\lvert1\rangle)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{3i}{4}\lvert+\rangle-\frac{\sqrt{7}}{4}\lvert-\rangle=\frac{3i}{4\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)-\frac{\sqrt{7}}{4\sqrt{2}}(\lvert0\rangle-\lvert1\rangle)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{3i}{4}\lvert+\rangle-\frac{\sqrt{7}}{4}\lvert-\rangle=\frac{3i-\sqrt{7}}{4\sqrt{2}}\lvert0\rangle+\frac{3i+\sqrt{7}}{4\sqrt{2}}\lvert1\rangle
+\]
+
+\end_inset
+
+
 \end_layout
 
+\begin_layout Enumerate
+Given that
+\begin_inset Formula $\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)$
+\end_inset
+
+ is being measured in the Hadamard basis, the probability of a 
+\begin_inset Formula $\lvert+\rangle$
+\end_inset
+
+ is 
+\begin_inset Formula $0$
+\end_inset
+
+, and the probability of a 
+\begin_inset Formula $\lvert-\rangle$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ 
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)=\frac{1}{2}(\lvert+\rangle+\lvert-\rangle-\lvert+\rangle+\lvert-\rangle)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)=\frac{1}{2}(2\lvert-\rangle)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)=\lvert-\rangle
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Key Exchange
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Alice's string 
+\begin_inset Formula $0101$
+\end_inset
+
+
+\begin_inset Formula $1101$
+\end_inset
+
+
+\begin_inset Formula $0100$
+\end_inset
+
+
+\begin_inset Formula $1110$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Alice's message 
+\begin_inset Formula $\lvert0-+-\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert1-01\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert+1+0\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert--1+\rangle$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Bob's message
+\end_layout
+
+\begin_layout Enumerate
+Agreed string
+\end_layout
+
+\end_deeper
 \end_deeper
 \end_body
 \end_document
