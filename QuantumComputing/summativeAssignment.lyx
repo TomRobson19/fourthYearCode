@@ -76,5 +76,65 @@ Quantum Computing Summative Assignment
 hzwr87
 \end_layout
 
+\begin_layout Enumerate
+Quantum States
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $i\lvert0\rangle$
+\end_inset
+
+ and 
+\begin_inset Formula $\frac{1+i}{\sqrt{2}}\lvert0\rangle$
+\end_inset
+
+ are in the same quantum state as the direction, 
+\begin_inset Formula $\lvert0\rangle$
+\end_inset
+
+, is common to both.
+ 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)$
+\end_inset
+
+ and 
+\begin_inset Formula $\frac{1}{\sqrt{2}}(\lvert+\rangle-\lvert-\rangle)$
+\end_inset
+
+ are not in the same quantum state, as converting 
+\begin_inset Formula $\frac{1}{\sqrt{2}}(\lvert+\rangle-\lvert-\rangle)$
+\end_inset
+
+ into the standard basis gives 
+\begin_inset Formula $\lvert1\rangle$
+\end_inset
+
+, which is not in the same state as 
+\begin_inset Formula $\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $(\frac{3}{\sqrt{2}}(\lvert0\rangle-\frac{1}{2}\lvert1\rangle)$
+\end_inset
+
+ and 
+\begin_inset Formula $(\frac{\sqrt{6}+\sqrt{2}}{4}\lvert+\rangle-\frac{\sqrt{6}-\sqrt{2}}{4}\lvert-\rangle)$
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+State Measurements
+\end_layout
+
 \end_body
 \end_document
