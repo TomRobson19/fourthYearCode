@@ -363,7 +363,21 @@ Given that
 
 \end_deeper
 \begin_layout Enumerate
-Key Exchange
+Key Exchange - in this question qubits presented in the form 
+\begin_inset Formula $\tbinom{+}{-}$
+\end_inset
+
+ have a probability of 50% of being a 
+\begin_inset Formula $\lvert+\rangle$
+\end_inset
+
+ and a probability of 50% of being a 
+\begin_inset Formula $\lvert-\rangle$
+\end_inset
+
+.
+ The same applies for the standard basis.
+ DO FULL ORDER OF MESSAGES SENT
 \end_layout
 
 \begin_deeper
@@ -372,15 +386,15 @@ Alice's string
 \begin_inset Formula $0101$
 \end_inset
 
-
+ 
 \begin_inset Formula $1101$
 \end_inset
 
-
+ 
 \begin_inset Formula $0100$
 \end_inset
 
-
+ 
 \begin_inset Formula $1110$
 \end_inset
 
@@ -409,11 +423,117 @@ Alice's message
 \end_layout
 
 \begin_layout Enumerate
+Bob's message 
+\begin_inset Formula $\lvert\tbinom{+}{-}-\tbinom{0}{1}-\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert\tbinom{+}{-}\tbinom{0}{1}01\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert+1+0\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert\tbinom{0}{1}\tbinom{0}{1}1+\rangle$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Both announce which bases they used.
+\end_layout
+
+\begin_layout Enumerate
+Agreed string 
+\begin_inset Formula $\lvert--01+1+01+\rangle$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Check bits 
+\begin_inset Formula $\lvert+01+\rangle$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Alice's string 
+\begin_inset Formula $0101$
+\end_inset
+
+ 
+\begin_inset Formula $1101$
+\end_inset
+
+ 
+\begin_inset Formula $0100$
+\end_inset
+
+ 
+\begin_inset Formula $1110$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Alice's message 
+\begin_inset Formula $\lvert0-+-\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert1-01\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert+1+0\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert--1+\rangle$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Eve's message 
+\begin_inset Formula $\lvert0-\tbinom{0}{1}\tbinom{0}{1}\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert\tbinom{+}{-}-0\tbinom{+}{-}\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert+\tbinom{+}{-}+\tbinom{+}{-}\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert\tbinom{0}{1}-1\tbinom{0}{1}\rangle$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
 Bob's message
 \end_layout
 
 \begin_layout Enumerate
 Agreed string
+\end_layout
+
+\begin_layout Enumerate
+Probability of detection
 \end_layout
 
 \end_deeper
