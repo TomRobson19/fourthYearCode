@@ -478,7 +478,9 @@ Alice sends the bases she used to encode.
 \end_layout
 
 \begin_layout Enumerate
-They agree on the string 
+Alice and Bob agree on the string for which they have used the same bases
+ - in this case this is xHxH xxSS HSHS xxSH, (where x means that the bit
+ has been discarded, which gives the qubits
 \begin_inset Formula $\lvert--01+1+01+\rangle$
 \end_inset
 
@@ -564,22 +566,108 @@ Eve measures the message as
 \begin_inset Formula $\lvert\tbinom{0}{1}-1\tbinom{0}{1}\rangle$
 \end_inset
 
+ and sends on to Bob
+\end_layout
+
+\begin_layout Enumerate
+Bob chooses bases HHSH HSSS HSHS SSSH
+\end_layout
+
+\begin_layout Enumerate
+Bob decodes the message as 
+\begin_inset Formula $\lvert\tbinom{+}{-}-\tbinom{0}{1}\tbinom{+}{-}\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert\tbinom{+}{-}\tbinom{0}{1}0\tbinom{0}{1}\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert+\tbinom{0}{1}+\tbinom{0}{1}\rangle$
+\end_inset
+
+
+\begin_inset Formula $\lvert\tbinom{0}{1}\tbinom{0}{1}1\tbinom{+}{-}\rangle$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+Alice and Bob agree on the string for which they have used the same bases
+ - in this case this is xHxH xxSS HSHS xxSH, (where x means that the bit
+ has been discarded, which gives the qubits 
+\begin_inset Formula $\lvert-\tbinom{+}{-}0\tbinom{0}{1}+\tbinom{0}{1}+\tbinom{0}{1}1\tbinom{0}{1}\rangle$
+\end_inset
+
 
 \end_layout
 
 \begin_layout Enumerate
-Bob's message
-\end_layout
+Alice and Bob compare the last 4 bits as check bits 
+\begin_inset Formula $\lvert+\tbinom{0}{1}1\tbinom{0}{1}\rangle$
+\end_inset
 
-\begin_layout Enumerate
-Agreed string
-\end_layout
+ to check for tampering.
+ In this case 2 of the qubits are different, and we know which bases Eve
+ has used and what the check bits were, so the probability she is not detected
+ in this particular case is 
+\begin_inset Formula $\frac{1}{2}\times\frac{1}{2}=\frac{1}{4}$
+\end_inset
 
-\begin_layout Enumerate
-Probability of detection
+, so the probability she is detected is 
+\begin_inset Formula $\frac{3}{4}$
+\end_inset
+
+.
+ In a more general case , if we did not know what the check bits would be,
+ then the probability of Eve getting away with it is 
+\begin_inset Formula $\frac{3}{4}^{4}=\frac{81}{256}$
+\end_inset
+
+, meaning that the probability of her being detected would be 
+\begin_inset Formula $\frac{175}{256}$
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
 \end_deeper
+\begin_layout Enumerate
+Polaroid Filters on Single Photon
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Probability it passes through (P) is 
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+, whereas the probability it is absorbed (A) is 
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+.
+ EXPLAIN THIS
+\end_layout
+
+\begin_layout Enumerate
+Probability P 
+\begin_inset Formula $=sin^{2}15=\frac{2+\sqrt{3}}{4}$
+\end_inset
+
+, Probability A 
+\begin_inset Formula $=sin^{2}75=\frac{2-\sqrt{3}}{4}$
+\end_inset
+
+EXPLAIN THIS
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+EPR
+\end_layout
+
 \end_body
 \end_document
