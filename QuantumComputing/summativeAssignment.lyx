@@ -654,11 +654,23 @@ Probability it passes through (P) is
 
 \begin_layout Enumerate
 Probability P 
-\begin_inset Formula $=sin^{2}15=\frac{2+\sqrt{3}}{4}$
+\begin_inset Formula $=cos^{2}(15)=\frac{2+\sqrt{3}}{4}=0.93$
 \end_inset
 
 , Probability A 
-\begin_inset Formula $=sin^{2}75=\frac{2-\sqrt{3}}{4}$
+\begin_inset Formula $=sin^{2}(15)=\frac{2-\sqrt{3}}{4}=0.07$
+\end_inset
+
+EXPLAIN THIS
+\end_layout
+
+\begin_layout Enumerate
+Probability P 
+\begin_inset Formula $=cos^{2}(75)=\frac{2+\sqrt{3}}{4}=0.07$
+\end_inset
+
+, Probability A 
+\begin_inset Formula $=sin^{2}(75)=\frac{2-\sqrt{3}}{4}=0.93$
 \end_inset
 
 EXPLAIN THIS
