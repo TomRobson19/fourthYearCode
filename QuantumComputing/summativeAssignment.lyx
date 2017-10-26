@@ -678,8 +678,64 @@ EXPLAIN THIS
 
 \end_deeper
 \begin_layout Enumerate
-EPR
+EPR pairs
 \end_layout
 
+\begin_deeper
+\begin_layout Enumerate
+Probability it passes through (P) is 
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+, whereas the probability it is absorbed (A) is 
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+.
+ EXPLAIN THIS
+\end_layout
+
+\begin_layout Enumerate
+Probability P 
+\begin_inset Formula $=cos^{2}(15)=\frac{2+\sqrt{3}}{4}=0.93$
+\end_inset
+
+, Probability A 
+\begin_inset Formula $=sin^{2}(15)=\frac{2-\sqrt{3}}{4}=0.07$
+\end_inset
+
+EXPLAIN THIS
+\end_layout
+
+\begin_layout Enumerate
+Probability P 
+\begin_inset Formula $=cos^{2}(75)=\frac{2+\sqrt{3}}{4}=0.07$
+\end_inset
+
+, Probability A 
+\begin_inset Formula $=sin^{2}(75)=\frac{2-\sqrt{3}}{4}=0.93$
+\end_inset
+
+EXPLAIN THIS
+\end_layout
+
+\begin_layout Enumerate
+Probability PP 
+\begin_inset Formula $=cos^{2}(15)=\frac{2+\sqrt{3}}{4}=0.93$
+\end_inset
+
+, Probability AA 
+\begin_inset Formula $=sin^{2}(15)=\frac{2-\sqrt{3}}{4}=0.07$
+\end_inset
+
+, Probability PA and AP are 0 as filters are in the same direction EXPLAIN
+ THIS MORE
+\end_layout
+
+\begin_layout Enumerate
+I dunno
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
