@@ -273,7 +273,7 @@ Given that
 \end_inset
 
  is 
-\begin_inset Formula $(\frac{3i-\sqrt{7}}{4\sqrt{2}})^{2}=\frac{-2-6\sqrt{7}i}{32}$
+\begin_inset Formula $\lvert\frac{3i-7}{4\sqrt{2}}\rvert=\frac{1}{2}$
 \end_inset
 
 , while the probability of measuring a 
@@ -281,11 +281,10 @@ Given that
 \end_inset
 
  is 
-\begin_inset Formula $(\frac{3i+\sqrt{7}}{4\sqrt{2}})^{2}=\frac{-2+6\sqrt{7}i}{32}$
+\begin_inset Formula $\lvert\frac{3i+7}{4\sqrt{2}}\rvert=\frac{1}{2}$
 \end_inset
 
 .
- THIS DOES NOT ADD UP TO 100%, CHECK AGAIN!!!
 \begin_inset Formula 
 \[
 \frac{3i}{4}\lvert+\rangle-\frac{\sqrt{7}}{4}\lvert-\rangle=\frac{3i}{4\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)-\frac{\sqrt{7}}{4\sqrt{2}}(\lvert0\rangle-\lvert1\rangle)
@@ -305,6 +304,22 @@ Given that
 \begin_inset Formula 
 \[
 \frac{3i}{4}\lvert+\rangle-\frac{\sqrt{7}}{4}\lvert-\rangle=\frac{3i-\sqrt{7}}{4\sqrt{2}}\lvert0\rangle+\frac{3i+\sqrt{7}}{4\sqrt{2}}\lvert1\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert\frac{3i-\sqrt{7}}{4\sqrt{2}}\rvert^{2}=(\frac{-\sqrt{7}}{4\sqrt{2}})^{2}+(\frac{3}{4\sqrt{2}})^{2}=\frac{7}{32}+\frac{9}{32}=\frac{1}{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert\frac{3i+\sqrt{7}}{4\sqrt{2}}\rvert^{2}=(\frac{\sqrt{7}}{4\sqrt{2}})^{2}+(\frac{3}{4\sqrt{2}})^{2}=\frac{7}{32}+\frac{9}{32}=\frac{1}{2}
 \]
 
 \end_inset
@@ -377,12 +392,16 @@ Key Exchange - in this question qubits presented in the form
 
 .
  The same applies for the standard basis.
- DO FULL ORDER OF MESSAGES SENT
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
-Alice's string 
+Steps:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Alice generates random string 
 \begin_inset Formula $0101$
 \end_inset
 
@@ -401,9 +420,12 @@ Alice's string
 
 \end_layout
 
-\begin_deeper
 \begin_layout Enumerate
-Alice's message 
+Alice chooses bases SHHH SHSS HSHS HHSH
+\end_layout
+
+\begin_layout Enumerate
+Alice encodes and sends message 
 \begin_inset Formula $\lvert0-+-\rangle$
 \end_inset
 
@@ -423,7 +445,11 @@ Alice's message
 \end_layout
 
 \begin_layout Enumerate
-Bob's message 
+Bob chooses bases HHSH HSSS HSHS SSSH
+\end_layout
+
+\begin_layout Enumerate
+Bob receives message and decodes it
 \begin_inset Formula $\lvert\tbinom{+}{-}-\tbinom{0}{1}-\rangle$
 \end_inset
 
@@ -443,11 +469,16 @@ Bob's message
 \end_layout
 
 \begin_layout Enumerate
-Both announce which bases they used.
+Bob announces that he has received and decoded the message, and announces
+ what bases he used to decode.
 \end_layout
 
 \begin_layout Enumerate
-Agreed string 
+Alice sends the bases she used to encode.
+\end_layout
+
+\begin_layout Enumerate
+They agree on the string 
 \begin_inset Formula $\lvert--01+1+01+\rangle$
 \end_inset
 
@@ -455,16 +486,21 @@ Agreed string
 \end_layout
 
 \begin_layout Enumerate
-Check bits 
+They compare the last 4 bits as check bits 
 \begin_inset Formula $\lvert+01+\rangle$
 \end_inset
 
-
+ to check for tampering, and will find none in this case.
 \end_layout
 
 \end_deeper
 \begin_layout Enumerate
-Alice's string 
+Steps:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Alice generates random string 
 \begin_inset Formula $0101$
 \end_inset
 
@@ -483,9 +519,12 @@ Alice's string
 
 \end_layout
 
-\begin_deeper
 \begin_layout Enumerate
-Alice's message 
+Alice chooses bases SHHH SHSS HSHS HHSH
+\end_layout
+
+\begin_layout Enumerate
+Alice encodes and sends message 
 \begin_inset Formula $\lvert0-+-\rangle$
 \end_inset
 
@@ -505,7 +544,11 @@ Alice's message
 \end_layout
 
 \begin_layout Enumerate
-Eve's message 
+Eve chooses bases SHSS HHSH HHHH SHSS
+\end_layout
+
+\begin_layout Enumerate
+Eve measures the message as
 \begin_inset Formula $\lvert0-\tbinom{0}{1}\tbinom{0}{1}\rangle$
 \end_inset
 
