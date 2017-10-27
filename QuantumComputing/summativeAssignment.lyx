@@ -349,10 +349,25 @@ Given that
 \end_inset
 
 .
+\begin_inset Formula 
+\[
+\lvert0\rangle=\frac{1}{\sqrt{2}}(\lvert+\rangle+\lvert-\rangle)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert1\rangle=\frac{1}{\sqrt{2}}(\lvert+\rangle-\lvert-\rangle)
+\]
+
+\end_inset
+
  
 \begin_inset Formula 
 \[
-\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)=\frac{1}{2}(\lvert+\rangle+\lvert-\rangle-\lvert+\rangle+\lvert-\rangle)
+\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)=\frac{1}{2}(\lvert+\rangle-\lvert-\rangle-\lvert+\rangle-\lvert-\rangle)
 \]
 
 \end_inset
@@ -360,7 +375,7 @@ Given that
 
 \begin_inset Formula 
 \[
-\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)=\frac{1}{2}(2\lvert-\rangle)
+\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)=\frac{1}{2}(-2\lvert-\rangle)
 \]
 
 \end_inset
@@ -368,7 +383,7 @@ Given that
 
 \begin_inset Formula 
 \[
-\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)=\lvert-\rangle
+\frac{1}{\sqrt{2}}(\lvert1\rangle-\lvert0\rangle)=-\lvert-\rangle
 \]
 
 \end_inset
