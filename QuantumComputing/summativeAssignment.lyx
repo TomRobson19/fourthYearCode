@@ -508,6 +508,19 @@ They compare the last 4 bits as check bits
 \end_inset
 
  to check for tampering, and will find none in this case.
+ This string will be 
+\begin_inset Formula $0010$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Their shared secret key with then be 
+\begin_inset Formula $110101$
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
@@ -615,6 +628,10 @@ Alice and Bob agree on the string for which they have used the same bases
 \begin_inset Formula $\lvert-\tbinom{+}{-}0\tbinom{0}{1}+\tbinom{0}{1}+\tbinom{0}{1}1\tbinom{0}{1}\rangle$
 \end_inset
 
+, and the string 
+\begin_inset Formula $1\tbinom{0}{1}0\tbinom{0}{1}0\tbinom{0}{1}0\tbinom{0}{1}1\tbinom{0}{1}$
+\end_inset
+
 
 \end_layout
 
@@ -623,10 +640,14 @@ Alice and Bob compare the last 4 bits as check bits
 \begin_inset Formula $\lvert+\tbinom{0}{1}1\tbinom{0}{1}\rangle$
 \end_inset
 
- to check for tampering.
- In this case 2 of the qubits are different, and we know which bases Eve
- has used and what the check bits were, so the probability she is not detected
- in this particular case is 
+, or string 
+\begin_inset Formula $0\tbinom{0}{1}1\tbinom{0}{1}$
+\end_inset
+
+, to check for tampering.
+ In this case 2 of the qubits could be different, and we know which bases
+ Eve has used and what the check bits were, so the probability she is not
+ detected in this particular case is 
 \begin_inset Formula $\frac{1}{2}\times\frac{1}{2}=\frac{1}{4}$
 \end_inset
 
@@ -645,6 +666,16 @@ Alice and Bob compare the last 4 bits as check bits
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Enumerate
+If she was detected then they start again, if she was not then the shared
+ secret key will also be diiferent with probability 
+\begin_inset Formula $\frac{7}{8}$
+\end_inset
+
+, so communication is unlikely to be successful.
+ 
 \end_layout
 
 \end_deeper
@@ -754,5 +785,9 @@ I dunno
 \end_layout
 
 \end_deeper
+\begin_layout Enumerate
+Quantum Supremacy
+\end_layout
+
 \end_body
 \end_document
