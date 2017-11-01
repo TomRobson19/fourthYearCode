@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:cd="https://www.amazon.co.uk">
+
+<rdf:Description
+rdf:about="https://www.amazon.co.uk/Low-High-School-Morrissey">
+  <cd:artist>Morrissey</cd:artist>
+  <cd:title>Low in High School</cd:title>
+  <cd:price>9.99</cd:price>
+  <cd:year>2017</cd:year>
+</rdf:Description>
+
+<rdf:Description
+rdf:about="https://www.amazon.co.uk/Thrill-All-Special-Tbc">
+  <cd:artist>Sam Smith</cd:artist>
+  <cd:title>The Thrill Of It All [Special Edition]</cd:title>
+  <cd:price>12.99</cd:price>
+  <cd:year>2017</cd:year>
+</rdf:Description>
+
+<rdf:Description
+rdf:about="https://www.amazon.co.uk/Now-Thats-What-Call-Music">
+  <cd:artist>Various</cd:artist>
+  <cd:title>Now That's What I Call Music! 98</cd:title>
+  <cd:price>12.99</cd:price>
+  <cd:year>2017</cd:year>
+</rdf:Description>
+
+<rdf:Description
+rdf:about="https://www.amazon.co.uk/Love-So-Beautiful-Philharmonic-Orchestra">
+  <cd:artist>Roy Orbison</cd:artist>
+  <cd:title>A Love So Beautiful: Roy Orbison and The Royal Philharmonic Orchestra</cd:title>
+  <cd:price>9.99</cd:price>
+  <cd:year>2017</cd:year>
+</rdf:Description>
+
+<rdf:Description
+rdf:about="https://www.amazon.co.uk/Reputation-Taylor-Swift">
+  <cd:artist>Taylor Swift</cd:artist>
+  <cd:title>reputation</cd:title>
+  <cd:price>10.99</cd:price>
+  <cd:year>2017</cd:year>
+</rdf:Description>
+
+<rdf:Description
+rdf:about="https://www.amazon.co.uk/Thrill-All-Sam-Smith">
+  <cd:artist>Sam Smith</cd:artist>
+  <cd:title>The Thrill Of It All</cd:title>
+  <cd:price>10.99</cd:price>
+  <cd:year>2017</cd:year>
+</rdf:Description>
+
+</rdf:RDF>
+
