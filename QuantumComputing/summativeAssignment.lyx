@@ -670,7 +670,7 @@ Alice and Bob compare the last 4 bits as check bits
 
 \begin_layout Enumerate
 If she was detected then they start again, if she was not then the shared
- secret key will also be diiferent with probability 
+ secret key will also be different with probability 
 \begin_inset Formula $\frac{7}{8}$
 \end_inset
 
