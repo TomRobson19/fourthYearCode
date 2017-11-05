@@ -686,16 +686,17 @@ Polaroid Filters on Single Photon
 
 \begin_deeper
 \begin_layout Enumerate
-Probability it passes through (P) is 
-\begin_inset Formula $\frac{1}{2}$
+As this does not require a change in basis, the probabilities of P and A
+ are simply the squares of the magnitudes of the amplitudes in each direction,
+ the Probability it passes through (P) is 
+\begin_inset Formula $\frac{1}{\sqrt{2}}^{2}=\frac{1}{2}$
 \end_inset
 
 , whereas the probability it is absorbed (A) is 
-\begin_inset Formula $\frac{1}{2}$
+\begin_inset Formula $\frac{1}{\sqrt{2}}^{2}=\frac{1}{2}$
 \end_inset
 
 .
- EXPLAIN THIS
 \end_layout
 
 \begin_layout Enumerate
