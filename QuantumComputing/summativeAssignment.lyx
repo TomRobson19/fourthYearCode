@@ -688,11 +688,11 @@ Polaroid Filters on Single Photon
 \begin_layout Enumerate
 As this does not require a change in basis, the probabilities of P and A
  are simply the squares of the magnitudes of the amplitudes in each direction,
- the Probability it passes through (P) is 
+ so Probability P is 
 \begin_inset Formula $\frac{1}{\sqrt{2}}^{2}=\frac{1}{2}$
 \end_inset
 
-, whereas the probability it is absorbed (A) is 
+, whereas the Probability A is 
 \begin_inset Formula $\frac{1}{\sqrt{2}}^{2}=\frac{1}{2}$
 \end_inset
 
@@ -700,29 +700,114 @@ As this does not require a change in basis, the probabilities of P and A
 \end_layout
 
 \begin_layout Enumerate
-Probability P 
-\begin_inset Formula $=cos^{2}(15)=\frac{2+\sqrt{3}}{4}=0.93$
+We must first determine what 
+\begin_inset Formula $\lvert0\rangle$
+\end_inset
+
+ and 
+\begin_inset Formula $\lvert1\rangle$
+\end_inset
+
+ in terms of the basis 
+\begin_inset Formula $\{\lvert u\rangle,\lvert u\rangle^{\perp}\}$
+\end_inset
+
+, and then apply this conversion to the original vector 
+\begin_inset Formula $\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)$
+\end_inset
+
+ to get the probabilities of pass through and absorbed.
+ Probability P 
+\begin_inset Formula $(\frac{1+\sqrt{3}}{2\sqrt{2}})^{2}=0.93$
 \end_inset
 
 , Probability A 
-\begin_inset Formula $=sin^{2}(15)=\frac{2-\sqrt{3}}{4}=0.07$
+\begin_inset Formula $(\frac{1-\sqrt{3}}{2\sqrt{2}})^{2}=0.07$
 \end_inset
 
 .
- EXPLAIN THIS
+ 
+\begin_inset Formula 
+\[
+\lvert0\rangle=\frac{1}{2}\lvert u\rangle-\frac{\sqrt{3}}{2}\lvert u\rangle^{\perp}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert1\rangle=\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\perp}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1}{\sqrt{2}}(\frac{1}{2}\lvert u\rangle-\frac{\sqrt{3}}{2}\lvert u\rangle^{\perp}+\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\perp})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle+\frac{1-\sqrt{3}}{2\sqrt{2}}\lvert u\rangle^{\perp}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
-Probability P 
-\begin_inset Formula $=cos^{2}(75)=\frac{2+\sqrt{3}}{4}=0.07$
-\end_inset
-
-, Probability A 
-\begin_inset Formula $=sin^{2}(75)=\frac{2-\sqrt{3}}{4}=0.93$
+Here, we apply the same method as (b), but to the basis
+\begin_inset Formula $\{\lvert w\rangle,\lvert w\rangle^{\perp}\}$
 \end_inset
 
 .
- EXPLAIN THIS
+ Probability P 
+\begin_inset Formula $(\frac{-1+\sqrt{3}}{2\sqrt{2}})^{2}=0.07$
+\end_inset
+
+, Probability A 
+\begin_inset Formula $(\frac{1+\sqrt{3}}{2\sqrt{2}})^{2}=0.93$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+\lvert0\rangle=-\frac{1}{2}\lvert u\rangle+\frac{\sqrt{3}}{2}\lvert u\rangle^{\perp}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert1\rangle=\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\perp}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1}{\sqrt{2}}(-\frac{1}{2}\lvert u\rangle+\frac{\sqrt{3}}{2}\lvert u\rangle^{\perp}+\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\perp})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{-1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle+\frac{1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle^{\perp}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_deeper
