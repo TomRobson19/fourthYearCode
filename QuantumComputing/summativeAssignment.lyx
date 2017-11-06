@@ -709,7 +709,7 @@ We must first determine what
 \end_inset
 
  in terms of the basis 
-\begin_inset Formula $\{\lvert u\rangle,\lvert u\rangle^{\perp}\}$
+\begin_inset Formula $\{\lvert u\rangle,\lvert u\rangle^{\bot}\}$
 \end_inset
 
 , and then apply this conversion to the original vector 
@@ -729,7 +729,7 @@ We must first determine what
  
 \begin_inset Formula 
 \[
-\lvert0\rangle=\frac{1}{2}\lvert u\rangle-\frac{\sqrt{3}}{2}\lvert u\rangle^{\perp}
+\lvert0\rangle=\frac{1}{2}\lvert u\rangle-\frac{\sqrt{3}}{2}\lvert u\rangle^{\bot}
 \]
 
 \end_inset
@@ -737,7 +737,7 @@ We must first determine what
 
 \begin_inset Formula 
 \[
-\lvert1\rangle=\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\perp}
+\lvert1\rangle=\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\bot}
 \]
 
 \end_inset
@@ -745,7 +745,7 @@ We must first determine what
 
 \begin_inset Formula 
 \[
-\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1}{\sqrt{2}}(\frac{1}{2}\lvert u\rangle-\frac{\sqrt{3}}{2}\lvert u\rangle^{\perp}+\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\perp})
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1}{\sqrt{2}}(\frac{1}{2}\lvert u\rangle-\frac{\sqrt{3}}{2}\lvert u\rangle^{\bot}+\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\bot})
 \]
 
 \end_inset
@@ -753,7 +753,7 @@ We must first determine what
 
 \begin_inset Formula 
 \[
-\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle+\frac{1-\sqrt{3}}{2\sqrt{2}}\lvert u\rangle^{\perp}
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle+\frac{1-\sqrt{3}}{2\sqrt{2}}\lvert u\rangle^{\bot}
 \]
 
 \end_inset
@@ -763,7 +763,7 @@ We must first determine what
 
 \begin_layout Enumerate
 Here, we apply the same method as (b), but to the basis
-\begin_inset Formula $\{\lvert w\rangle,\lvert w\rangle^{\perp}\}$
+\begin_inset Formula $\{\lvert w\rangle,\lvert w\rangle^{\bot}\}$
 \end_inset
 
 .
@@ -778,7 +778,7 @@ Here, we apply the same method as (b), but to the basis
 .
 \begin_inset Formula 
 \[
-\lvert0\rangle=-\frac{1}{2}\lvert u\rangle+\frac{\sqrt{3}}{2}\lvert u\rangle^{\perp}
+\lvert0\rangle=-\frac{1}{2}\lvert u\rangle+\frac{\sqrt{3}}{2}\lvert u\rangle^{\bot}
 \]
 
 \end_inset
@@ -786,7 +786,7 @@ Here, we apply the same method as (b), but to the basis
 
 \begin_inset Formula 
 \[
-\lvert1\rangle=\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\perp}
+\lvert1\rangle=\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\bot}
 \]
 
 \end_inset
@@ -794,7 +794,7 @@ Here, we apply the same method as (b), but to the basis
 
 \begin_inset Formula 
 \[
-\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1}{\sqrt{2}}(-\frac{1}{2}\lvert u\rangle+\frac{\sqrt{3}}{2}\lvert u\rangle^{\perp}+\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\perp})
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1}{\sqrt{2}}(-\frac{1}{2}\lvert u\rangle+\frac{\sqrt{3}}{2}\lvert u\rangle^{\bot}+\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\bot})
 \]
 
 \end_inset
@@ -802,7 +802,7 @@ Here, we apply the same method as (b), but to the basis
 
 \begin_inset Formula 
 \[
-\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{-1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle+\frac{1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle^{\perp}
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{-1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle+\frac{1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle^{\bot}
 \]
 
 \end_inset
