@@ -495,7 +495,7 @@ Alice sends the bases she used to encode.
 \begin_layout Enumerate
 Alice and Bob agree on the string for which they have used the same bases
  - in this case this is xHxH xxSS HSHS xxSH, (where x means that the bit
- has been discarded, which gives the qubits
+ has been discarded), which gives the qubits
 \begin_inset Formula $\lvert--01+1+01+\rangle$
 \end_inset
 
@@ -624,7 +624,7 @@ Bob decodes the message as
 \begin_layout Enumerate
 Alice and Bob agree on the string for which they have used the same bases
  - in this case this is xHxH xxSS HSHS xxSH, (where x means that the bit
- has been discarded, which gives the qubits 
+ has been discarded), which gives the qubits 
 \begin_inset Formula $\lvert-\tbinom{+}{-}0\tbinom{0}{1}+\tbinom{0}{1}+\tbinom{0}{1}1\tbinom{0}{1}\rangle$
 \end_inset
 
@@ -726,6 +726,8 @@ We must first determine what
 \end_inset
 
 .
+ The calculations for this have been done using the numerical values of
+ sin and cos, as shown below.
  
 \begin_inset Formula 
 \[
@@ -812,16 +814,21 @@ Here, we apply the same method as (b), but to the basis
 
 \end_deeper
 \begin_layout Enumerate
-EPR pairs
+Polaroid filters on EPR pairs.
+ In this question 
+\begin_inset Formula $\lvert v\rangle=\frac{1}{2}(\lvert00\rangle+\lvert11\rangle)$
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
-Probability it passes through (P) is 
+Probability P is 
 \begin_inset Formula $\frac{1}{2}$
 \end_inset
 
-, whereas the probability it is absorbed (A) is 
+, whereas Probability A is 
 \begin_inset Formula $\frac{1}{2}$
 \end_inset
 
@@ -854,9 +861,205 @@ EXPLAIN THIS
 \end_layout
 
 \begin_layout Enumerate
-I dunno
+When we are measuring both photons, we must consider the outcomes PP, PA,
+ AP and AA.
+ The respective probabilities of these outcomes are 
+\begin_inset Formula $\frac{1}{2},0,0,\frac{1}{2}.$
+\end_inset
+
+ 
 \end_layout
 
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $PP=S1=\lvert u\rangle\otimes\lvert u\rangle$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert PP\rangle=cos60\lvert0\rangle+sin60\lvert1\rangle\otimes cos60\lvert0\rangle+sin60\lvert1\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert PP\rangle=cos^{2}60\lvert00\rangle+cos60sin60\lvert01\rangle+cos60sin60\lvert10\rangle+sin^{2}60\lvert11\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S1)=\lvert v\rangle.\lvert PP\rangle\lvert PP\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(PP)=\lvert\lvert v\rangle.\lvert PP\rangle\rvert^{2}=\lvert\frac{cos^{2}60\lvert00\rangle+sin^{2}60\lvert11\rangle}{\sqrt{2}}\rvert^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(PP)=\frac{1}{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $PA=S2=\lvert u\rangle\otimes\lvert u\rangle^{\bot}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert PA\rangle=cos60\lvert0\rangle+sin60\lvert1\rangle\otimes-cos30\lvert0\rangle+sin30\lvert1\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert PA\rangle=-cos60cos30\lvert00\rangle+cos60sin30\lvert01\rangle-cos30sin60\lvert10\rangle+sin60sin30\lvert11\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S2)=\lvert v\rangle.\lvert PA\rangle\lvert PA\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(PA)=\lvert\lvert v\rangle.\lvert PA\rangle\rvert^{2}=\lvert\frac{-cos60cos30\lvert00\rangle+sin60sin30\lvert11\rangle}{\sqrt{2}}\rvert^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(PA)=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $AP=S3=\lvert u\rangle^{\bot}\otimes\lvert u\rangle$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert AP\rangle=-cos30\lvert0\rangle+sin30\lvert1\rangle\otimes cos60\lvert0\rangle+sin60\lvert1\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert AP\rangle=-cos30cos60\lvert00\rangle-cos30sin60\lvert01\rangle+cos60sin30\lvert10\rangle+sin30sin60\lvert11\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S3)=\lvert v\rangle.\lvert AP\rangle\lvert AP\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(AP)=\lvert\lvert v\rangle.\lvert AP\rangle\rvert^{2}=\lvert\frac{-cos30cos60\lvert00\rangle+sin30sin60\lvert11\rangle}{\sqrt{2}}\rvert^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(PA)=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $AA=S4=\lvert u\rangle^{\bot}\otimes\lvert u\rangle^{\bot}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert AA\rangle=-cos30\lvert0\rangle+sin30\lvert1\rangle\otimes-cos30\lvert0\rangle+sin30\lvert1\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert AA\rangle=cos^{2}30\lvert00\rangle-cos30sin30\lvert01\rangle-cos30sin30\lvert10\rangle+sin^{2}30\lvert11\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S4)=\lvert v\rangle.\lvert AA\rangle\lvert AA\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(AA)=\lvert\lvert v\rangle.\lvert AA\rangle\rvert^{2}=\lvert\frac{cos^{2}30\lvert00\rangle+sin^{2}30\lvert11\rangle}{\sqrt{2}}\rvert^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(PP)=\frac{1}{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Enumerate
 I dunno
 \end_layout
