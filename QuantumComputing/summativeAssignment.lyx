@@ -61,8 +61,8 @@
 \footskip 1cm
 \secnumdepth 3
 \tocdepth 3
-\paragraph_separation indent
-\paragraph_indentation default
+\paragraph_separation skip
+\defskip bigskip
 \quotes_language english
 \papercolumns 1
 \papersides 1
@@ -1080,7 +1080,11 @@ Quantum supremacy refers to the ability of quantum computers to outperform
  their associated quantum processing machinery from the outside world.
  This has not yet been properly solved, so it would seem that an effective
  demonstration of quantum supremacy is still some distance in the future.
- 
+ However, recent publications and announcements have begun to shift focus
+ away from a general purpose quantum computer, and towards one the is built
+ to solve one very specific problem.
+ If it can provably solve this better than a classical computer can, then
+ they will be able to achieve the first demonstration of quantum supremacy.
 \end_layout
 
 \end_body
