@@ -1069,5 +1069,19 @@ I dunno
 Quantum Supremacy
 \end_layout
 
+\begin_layout Standard
+Quantum supremacy refers to the ability of quantum computers to outperform
+ classical computers and perform incredibly complex calculations.
+ Physicists have predicted that a quantum computer with 50 qubits would
+ be able to outperform the world's most powerful supercomputers.
+ However, this is a very difficult thing to achieve, as quantum states are
+ incredible delicate objects, and one of the key challenges associated with
+ quantum computer development is the isolation of quantum computers and
+ their associated quantum processing machinery from the outside world.
+ This has not yet been properly solved, so it would seem that an effective
+ demonstration of quantum supremacy is still some distance in the future.
+ 
+\end_layout
+
 \end_body
 \end_document
