@@ -731,7 +731,7 @@ We must first determine what
  
 \begin_inset Formula 
 \[
-\lvert0\rangle=\frac{1}{2}\lvert u\rangle-\frac{\sqrt{3}}{2}\lvert u\rangle^{\bot}
+\lvert0\rangle=\frac{1}{2}\lvert u\rangle-\frac{\sqrt{3}}{2}\lvert u^{\bot}\rangle
 \]
 
 \end_inset
@@ -739,7 +739,7 @@ We must first determine what
 
 \begin_inset Formula 
 \[
-\lvert1\rangle=\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\bot}
+\lvert1\rangle=\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u^{\bot}\rangle
 \]
 
 \end_inset
@@ -747,7 +747,7 @@ We must first determine what
 
 \begin_inset Formula 
 \[
-\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1}{\sqrt{2}}(\frac{1}{2}\lvert u\rangle-\frac{\sqrt{3}}{2}\lvert u\rangle^{\bot}+\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\bot})
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1}{\sqrt{2}}(\frac{1}{2}\lvert u\rangle-\frac{\sqrt{3}}{2}\lvert u^{\bot}\rangle+\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u^{\bot}\rangle)
 \]
 
 \end_inset
@@ -755,7 +755,7 @@ We must first determine what
 
 \begin_inset Formula 
 \[
-\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle+\frac{1-\sqrt{3}}{2\sqrt{2}}\lvert u\rangle^{\bot}
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle+\frac{1-\sqrt{3}}{2\sqrt{2}}\lvert u^{\bot}\rangle
 \]
 
 \end_inset
@@ -780,7 +780,7 @@ Here, we apply the same method as (b), but to the basis
 .
 \begin_inset Formula 
 \[
-\lvert0\rangle=-\frac{1}{2}\lvert u\rangle+\frac{\sqrt{3}}{2}\lvert u\rangle^{\bot}
+\lvert0\rangle=-\frac{1}{2}\lvert u\rangle+\frac{\sqrt{3}}{2}\lvert u^{\bot}\rangle
 \]
 
 \end_inset
@@ -788,7 +788,7 @@ Here, we apply the same method as (b), but to the basis
 
 \begin_inset Formula 
 \[
-\lvert1\rangle=\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\bot}
+\lvert1\rangle=\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u^{\bot}\rangle
 \]
 
 \end_inset
@@ -796,7 +796,7 @@ Here, we apply the same method as (b), but to the basis
 
 \begin_inset Formula 
 \[
-\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1}{\sqrt{2}}(-\frac{1}{2}\lvert u\rangle+\frac{\sqrt{3}}{2}\lvert u\rangle^{\bot}+\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u\rangle^{\bot})
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{1}{\sqrt{2}}(-\frac{1}{2}\lvert u\rangle+\frac{\sqrt{3}}{2}\lvert u^{\bot}\rangle+\frac{\sqrt{3}}{2}\lvert u\rangle+\frac{1}{2}\lvert u^{\bot}\rangle)
 \]
 
 \end_inset
@@ -804,7 +804,7 @@ Here, we apply the same method as (b), but to the basis
 
 \begin_inset Formula 
 \[
-\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{-1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle+\frac{1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle^{\bot}
+\frac{1}{\sqrt{2}}(\lvert0\rangle+\lvert1\rangle)=\frac{-1+\sqrt{3}}{2\sqrt{2}}\lvert u\rangle+\frac{1+\sqrt{3}}{2\sqrt{2}}\lvert u^{\bot}\rangle
 \]
 
 \end_inset
@@ -832,8 +832,7 @@ Probability P is
 \begin_inset Formula $\frac{1}{2}$
 \end_inset
 
-.
- EXPLAIN THIS
+
 \end_layout
 
 \begin_layout Enumerate
@@ -919,7 +918,7 @@ Prob(PP)=\frac{1}{2}
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $PA=S2=\lvert u\rangle\otimes\lvert u\rangle^{\bot}$
+\begin_inset Formula $PA=S2=\lvert u\rangle\otimes\lvert u^{\bot}\rangle$
 \end_inset
 
 
@@ -966,7 +965,7 @@ Prob(PA)=0
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $AP=S3=\lvert u\rangle^{\bot}\otimes\lvert u\rangle$
+\begin_inset Formula $AP=S3=\lvert u^{\bot}\rangle\otimes\lvert u\rangle$
 \end_inset
 
 
@@ -1013,7 +1012,7 @@ Prob(PA)=0
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $AA=S4=\lvert u\rangle^{\bot}\otimes\lvert u\rangle^{\bot}$
+\begin_inset Formula $AA=S4=\lvert u^{\bot}\rangle\otimes\lvert u^{\bot}\rangle$
 \end_inset
 
 
