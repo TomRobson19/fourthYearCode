@@ -1099,7 +1099,7 @@ Prob(AP)=\lvert\lvert v\rangle.\lvert AP\rangle\rvert^{2}=\lvert\frac{-cos30cos6
 
 \begin_inset Formula 
 \[
-Prob(PA)=0
+Prob(AP)=0
 \]
 
 \end_inset
@@ -1146,7 +1146,7 @@ Prob(AA)=\lvert\lvert v\rangle.\lvert AA\rangle\rvert^{2}=\lvert\frac{cos^{2}30\
 
 \begin_inset Formula 
 \[
-Prob(PP)=\frac{1}{2}
+Prob(AA)=\frac{1}{2}
 \]
 
 \end_inset
@@ -1156,9 +1156,173 @@ Prob(PP)=\frac{1}{2}
 
 \end_deeper
 \begin_layout Enumerate
-I dunno
+When we are measuring both photons, we must consider the outcomes PP, PA,
+ AP and AA.
+ The respective probabilities of these outcomes are 
+\begin_inset Formula $\frac{1}{8},\frac{3}{8},\frac{3}{8},\frac{1}{8}.$
+\end_inset
+
+ 
 \end_layout
 
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $PP=S1=\lvert u\rangle\otimes\lvert0\rangle$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert PP\rangle=cos60\lvert00\rangle+sin60\lvert10\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S1)=\lvert v\rangle.\lvert PP\rangle\lvert PP\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(PP)=\lvert\lvert v\rangle.\lvert PP\rangle\rvert^{2}=\lvert\frac{cos60\lvert00\rangle}{\sqrt{2}}\rvert^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(PP)=\frac{1}{8}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $PA=S2=\lvert u\rangle\otimes\lvert1\rangle$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert PA\rangle=cos60\lvert01\rangle+sin60\lvert11\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S2)=\lvert v\rangle.\lvert PA\rangle\lvert PA\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(PA)=\lvert\lvert v\rangle.\lvert PA\rangle\rvert^{2}=\lvert\frac{sin60\lvert00\rangle}{\sqrt{2}}\rvert^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(PA)=\frac{3}{8}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $AP=S3=\lvert u^{\bot}\rangle\otimes\lvert0\rangle$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert AP\rangle=-cos30\lvert00\rangle+sin30\lvert10\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S3)=\lvert v\rangle.\lvert AP\rangle\lvert AP\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(AP)=\lvert\lvert v\rangle.\lvert AP\rangle\rvert^{2}=\lvert\frac{-cos30\lvert00\rangle}{\sqrt{2}}\rvert^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(AP)=\frac{3}{8}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $AA=S4=\lvert u^{\bot}\rangle\otimes\lvert1\rangle$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lvert AA\rangle=-cos30\lvert01\rangle+sin30\lvert11\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S4)=\lvert v\rangle.\lvert AA\rangle\lvert AA\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(AA)=\lvert\lvert v\rangle.\lvert AA\rangle\rvert^{2}=\lvert\frac{sin30\lvert11\rangle}{\sqrt{2}}\rvert^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(AA)=\frac{1}{8}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Enumerate
 Quantum Supremacy
