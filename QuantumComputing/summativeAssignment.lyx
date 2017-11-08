@@ -828,35 +828,131 @@ Probability P is
 \begin_inset Formula $\frac{1}{2}$
 \end_inset
 
-, whereas Probability A is 
+, Probability A is 
 \begin_inset Formula $\frac{1}{2}$
 \end_inset
 
 
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S1)=\frac{1}{\sqrt{2}}\lvert00\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(P)=\frac{1}{\sqrt{2}}^{2}=\frac{1}{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S2)=\frac{1}{\sqrt{2}}\lvert11\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(A)=\frac{1}{\sqrt{2}}^{2}=\frac{1}{2}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
-Probability P 
-\begin_inset Formula $=cos^{2}(15)=\frac{2+\sqrt{3}}{4}=0.933$
+Probability P is 
+\begin_inset Formula $\frac{1}{2}$
 \end_inset
 
-, Probability A 
-\begin_inset Formula $=sin^{2}(15)=\frac{2-\sqrt{3}}{4}=0.067$
+, Probability A is 
+\begin_inset Formula $\frac{1}{2}$
 \end_inset
 
-EXPLAIN THIS
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S1)=\frac{cos60}{\sqrt{2}}\lvert u0\rangle+\frac{sin60}{\sqrt{2}}\lvert u1\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(P)=\lvert\sqrt{\frac{cos60}{\sqrt{2}}^{2}+\frac{sin60}{\sqrt{2}}^{2}}\rvert^{2}=\frac{1}{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S2)=\frac{-cos30}{\sqrt{2}}\lvert u^{\bot}0\rangle+\frac{sin30}{\sqrt{2}}\lvert u^{\bot}1\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(A)=\lvert\sqrt{\frac{-cos30}{\sqrt{2}}^{2}+\frac{sin30}{\sqrt{2}}^{2}}\rvert^{2}=\frac{1}{2}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
-Probability P 
-\begin_inset Formula $=cos^{2}(75)=\frac{2+\sqrt{3}}{4}=0.067$
+Probability P is 
+\begin_inset Formula $\frac{1}{2}$
 \end_inset
 
-, Probability A 
-\begin_inset Formula $=sin^{2}(75)=\frac{2-\sqrt{3}}{4}=0.933$
+, Probability A is 
+\begin_inset Formula $\frac{1}{2}$
 \end_inset
 
-EXPLAIN THIS
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S1)=\frac{-cos60}{\sqrt{2}}\lvert w0\rangle+\frac{sin60}{\sqrt{2}}\lvert w1\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(P)=\lvert\sqrt{\frac{-cos60}{\sqrt{2}}^{2}+\frac{sin60}{\sqrt{2}}^{2}}\rvert^{2}=\frac{1}{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Proj(\lvert v\rangle\rightarrow S2)=\frac{cos30}{\sqrt{2}}\lvert w^{\bot}0\rangle+\frac{sin30}{\sqrt{2}}\lvert w^{\bot}1\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Prob(A)=\lvert\sqrt{\frac{cos30}{\sqrt{2}}^{2}+\frac{sin30}{\sqrt{2}}^{2}}\rvert^{2}=\frac{1}{2}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
