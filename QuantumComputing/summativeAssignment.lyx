@@ -1403,5 +1403,16 @@ ucting chips, which was the fear among theoretical physicists.
  
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "quantum"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
