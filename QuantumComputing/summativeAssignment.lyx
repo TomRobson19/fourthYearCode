@@ -1363,5 +1363,13 @@ Before moving on to examine the suggested machine for demonstrating quantum
  store in a classical computer.
 \end_layout
 
+\begin_layout Standard
+This is how scientists plan to demonstrate quantum supremacy, by creating
+ a system that can support 49 qubits in superposition.
+ The ability to perform calculations is not necessary, it simply needs to
+ be able to reliably explore the space of the 49 qubit superposition.
+ 
+\end_layout
+
 \end_body
 \end_document
