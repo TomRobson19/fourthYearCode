@@ -1368,6 +1368,38 @@ This is how scientists plan to demonstrate quantum supremacy, by creating
  a system that can support 49 qubits in superposition.
  The ability to perform calculations is not necessary, it simply needs to
  be able to reliably explore the space of the 49 qubit superposition.
+ The quantum system being proposed for use here is based on a super-conducting
+ qubit.
+ This is a loop of metal that has been cooled to a low temperature, and
+ if a current is made to flow through this loop it will then flow forever.
+ This is the quantum phenomenon of superconductivity, and it allows the
+ current to flow in one direction and the other at the same time, which
+ is what enables this superconducting loop to act as a qubit and simultaneously
+ represent 0 and 1.
+ 
+\end_layout
+
+\begin_layout Standard
+There are other ways of creating qubits that are currently being experimented
+ with, such as polarising photons vertically and horizontally, spinning
+ atomic nuclei up and down at the same time or sending electrons along the
+ two paths at the same time.
+ The advantage of using the superconductivity method is that they are comparativ
+ely easy to control and measure, and can also be linked to their neighbours
+ if they are put into a sufficiently high energy state.
+ This interaction enables the creation of much larger superpositions.
+ A proof of concept chip has been constructed with nine neighbouring superconduc
+ting loops, and it has been proven that this can represent 512 numbers simultane
+ously.
+ This is not anywhere close to enough to be a proof of quantum supremacy,
+ but it does give promising indications of things to come, as the team performin
+g the experiments showed that the errors do not scale rapidly in these supercond
+ucting chips, which was the fear among theoretical physicists.
+ They claim that this design will enable meaningful superposition of up
+ to 60 qubits.
+ If this claim holds, we can expect a demonstration of quantum supremacy
+ in the near future, but if it does not, then it may be the case that a
+ proof of effective quantum supremacy is still a very long way off.
  
 \end_layout
 
