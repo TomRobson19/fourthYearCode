@@ -1342,9 +1342,17 @@ Quantum supremacy refers to the ability of quantum computers to outperform
  their associated quantum processing machinery from the outside world.
  This has not yet been properly solved, so it would seem that an effective
  demonstration of quantum supremacy is still some distance in the future.
- However, recent publications and announcements have begun to shift focus
- away from a general purpose quantum computer, and towards one the is built
- to solve one very specific problem.
+ However, Charles Neill at the University of California Santa Barbara and
+ Pedram Roushan at Google claim to know how a demonstration of quantum supremacy
+ can be achieved
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Neill2017,EmergingTechnologyfromthearXiv2017"
+
+\end_inset
+
+, by shifting focus away from a general purpose quantum computer, and towards
+ one the is built to solve one very specific problem.
  If it can provably solve this better than a classical computer can, then
  they will be able to achieve the first demonstration of quantum supremacy.
 \end_layout
@@ -1361,11 +1369,25 @@ Before moving on to examine the suggested machine for demonstrating quantum
  predict will outperform classical computers can represent 10,000,000,000,000,00
 0 numbers at the same time, which would require petabyte scale memory to
  store in a classical computer.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "EmergingTechnologyfromthearXiv2017"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-This is how scientists plan to demonstrate quantum supremacy, by creating
- a system that can support 49 qubits in superposition.
+This is how Neill and Roushan 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Neill2017,EmergingTechnologyfromthearXiv2017"
+
+\end_inset
+
+ plan to demonstrate quantum supremacy, by creating a system that can support
+ 49 qubits in superposition.
  The ability to perform calculations is not necessary, it simply needs to
  be able to reliably explore the space of the 49 qubit superposition.
  The quantum system being proposed for use here is based on a super-conducting
@@ -1381,31 +1403,61 @@ This is how scientists plan to demonstrate quantum supremacy, by creating
 
 \begin_layout Standard
 There are other ways of creating qubits that are currently being experimented
- with, such as polarising photons vertically and horizontally, spinning
- atomic nuclei up and down at the same time or sending electrons along the
- two paths at the same time.
+ with by physicists, such as the polarisation of photons vertically and
+ horizontally, spinning atomic nuclei up and down at the same time or sending
+ electrons along two separate paths at the same time.
  The advantage of using the superconductivity method is that they are comparativ
 ely easy to control and measure, and can also be linked to their neighbours
  if they are put into a sufficiently high energy state.
  This interaction enables the creation of much larger superpositions.
  A proof of concept chip has been constructed with nine neighbouring superconduc
 ting loops, and it has been proven that this can represent 512 numbers simultane
-ously.
- This is not anywhere close to enough to be a proof of quantum supremacy,
+ously
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Neill2017"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+This is not anywhere close to enough to be a proof of quantum supremacy,
  but it does give promising indications of things to come, as the team performin
-g the experiments showed that the errors do not scale rapidly in these supercond
-ucting chips, which was the fear among theoretical physicists.
- They claim that this design will enable meaningful superposition of up
- to 60 qubits.
- If this claim holds, we can expect a demonstration of quantum supremacy
- in the near future, but if it does not, then it may be the case that a
- proof of effective quantum supremacy is still a very long way off.
+g the experiments in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Neill2017"
+
+\end_inset
+
+ showed that the errors do not scale rapidly in these superconducting chips,
+ which was the fear among theoretical physicists, who predicted that the
+ errors would increase exponentially in quantum systems as well as the quantity
+ of numbers that they will be able to simultaneously represent.
+ The authors of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Neill2017"
+
+\end_inset
+
+ claim that this design will enable meaningful superposition of up to 60
+ qubits.
+ This work seems to be our best hope for a demonstration of quantum supremacy
+ in the near future, as if this claim holds, we can expect a demonstration
+ of quantum supremacy in the near future, but if it does not, then it may
+ be the case that a proof of effective quantum supremacy is still a very
+ long way off.
  
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
+btprint "btPrintAll"
 bibfiles "quantum"
 options "plain"
 
