@@ -27,6 +27,7 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
+\float_placement H
 \paperfontsize default
 \spacing single
 \use_hyperref false
@@ -1388,9 +1389,10 @@ key "Neill2017,EmergingTechnologyfromthearXiv2017"
 
  plan to demonstrate quantum supremacy, by creating a system that can support
  49 qubits in superposition.
- The ability to perform calculations is not necessary, it simply needs to
- be able to reliably explore the space of the 49 qubit superposition.
- The quantum system being proposed for use here is based on a super-conducting
+ For this proposed system, the ability to perform calculations is not necessary,
+ it simply needs to be able to reliably explore the space of the 49 qubit
+ superposition.
+ The quantum system being proposed for use here is based on a superconducting
  qubit.
  This is a loop of metal that has been cooled to a low temperature, and
  if a current is made to flow through this loop it will then flow forever.
@@ -1420,13 +1422,71 @@ key "Neill2017"
 \end_inset
 
 .
+ This chip is shown in the figure below.
  
 \end_layout
 
 \begin_layout Standard
-This is not anywhere close to enough to be a proof of quantum supremacy,
- but it does give promising indications of things to come, as the team performin
-g the experiments in 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/tom/Pictures/Quantum.png
+	scale 40
+	rotateOrigin center
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Quotes eld
+\end_inset
+
+Device: nine-qubit array.
+ Optical micrograph of the device.
+ Gray regions are aluminum, dark regions are where the aluminum has been
+ etched away to define features.
+ Colours have been added to distinguish readout circuitry, qubits, couplers
+ and control wiring.
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Neill2017"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is far from sufficient levels of complexity to be a proof of quantum
+ supremacy, but it does give promising indications of things to come, as
+ the team performing the experiments in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Neill2017"
