@@ -4,3 +4,7 @@
 *.lyx#
 
 Vision/TTBB-durham-02-10-17-sub5/
+
+Vision/__pycache__/
+
+Vision/mosaic-lab
