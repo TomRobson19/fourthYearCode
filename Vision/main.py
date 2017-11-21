@@ -49,9 +49,10 @@ first_image = True
 
 for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 
+    full_path_filename = os.path.join(full_path_directory, filename);
     # skip forward to start a file we specify by timestamp (if this is set)
     if(first_image):
-    	first_image = false
+        first_image = False
         previous_image = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
     else:
 
@@ -61,9 +62,6 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
             skip_forward_file_pattern = "";
 
         # from image filename get the correspondoning full path
-
-        full_path_filename = os.path.join(full_path_directory, filename);
-
 
         img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
 
@@ -85,27 +83,25 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 
         for i,(m,n) in enumerate(matches):
             if m.distance < 0.7*n.distance:   #filter out 'bad' matches
-                good_matches1.append(kp1[m.trainIdx].pt)
-                good_matches2.append(kp2[m.queryidx].pt)
+                good_matches1.append(kp1[m.queryIdx].pt)
+                good_matches2.append(kp2[m.trainIdx].pt)
 
         good_matches1 = np.array(good_matches1)
         good_matches2 = np.array(good_matches2)
 
-        essential_matrix = cv2.findEssentialMat(good_matches1,good_matches2)[0]
+        essential_matrix,mask = cv2.findEssentialMat(good_matches1,good_matches2)
         
+        print(essential_matrix)
 
-        #img2 = cv2.drawKeypoints(img,good_matches,None,(255,0,0),4)
+        _,R,t,mask = cv2.recoverPose(essential_matrix,good_matches1,good_matches2)
+
+        print(R)
+        print(t)
+
 
         previous_image = img
 
-        #####################################################################
-
-        # *** do any processing here ***
-
-        #####################################################################
-
         cv2.imshow('input image',img)
-        cv2.imshow('features',img2)
 
         key = cv2.waitKey(40 * (not(pause_playback))) & 0xFF; # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
@@ -114,9 +110,6 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         elif (key == ord(' ')):     # pause (on next frame)
             pause_playback = not(pause_playback)
             print("pause")
-    else:
-            print("-- files skipped (perhaps one is missing or not PNG)")
-            print("\n")
 
 # close all windows
 
