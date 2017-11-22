@@ -66,6 +66,8 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
 
         #USE ORB NOT SURF
+        #USE FEATURE BINNING
+        #GET MAT PLOT LIB PLOTTING CODE FROM ONLINE EXAMPLE
         surf = cv2.xfeatures2d.SURF_create(thres)
         kp1, des1 = surf.detectAndCompute(img,None)
         kp2, des2 = surf.detectAndCompute(previous_image,None)
