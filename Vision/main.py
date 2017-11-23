@@ -11,6 +11,8 @@ master_path_to_dataset = "TTBB-durham-02-10-17-sub5"; # ** need to edit this **
 directory_to_cycle = "left-images";     # edit this for left or right image set
 
 
+
+# unsure whether this is the correct way to get scale from gps, might be Breckon's answer in the FAQ
 def getScaleFromGPS(index):
     gpsFile = open(master_path_to_dataset+"/GPS.csv") 
     previousImage = []
@@ -119,8 +121,9 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
                 currentT = t*scale
                 currentR = R
             elif isForwardDominant:
+                currentR = R.dot(currentR)          #THIS IS THE OTHER WAY ROUND FROM THE GITHUB EXAMPLE BUT SEEMS TO MAKE MORE SENSE, CHECK IT
                 currentT += scale*currentR.dot(t)
-                currentR = R.dot(currentR)
+                
             else:
                 print("Dominant motion not forward, ignored")
         else:
