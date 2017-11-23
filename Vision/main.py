@@ -10,6 +10,21 @@ import csv
 master_path_to_dataset = "TTBB-durham-02-10-17-sub5"; # ** need to edit this **
 directory_to_cycle = "left-images";     # edit this for left or right image set
 
+
+def getScaleFromGPS(index):
+    gpsFile = open(master_path_to_dataset+"/GPS.csv") 
+    previousImage = []
+    currentImage = []
+    for i, line in enumerate(gpsFile):
+        if i == index:
+            previousImage = line.split(",")
+        elif i == index+1:
+            currentImage = line.split(",")
+            break
+    gpsFile.close()
+    return np.sqrt(((float(currentImage[1])-float(previousImage[1]))**2) + ((float(currentImage[2])-float(previousImage[2]))**2) + ((float(currentImage[3])-float(previousImage[3]))**2))
+  
+
 #####################################################################
 
 # full camera parameters - from camera calibration
@@ -41,14 +56,15 @@ pause_playback = False; # pause until key press after each image
 
 full_path_directory =  os.path.join(master_path_to_dataset, directory_to_cycle);
 
-thres = 100
-
 previous_image = None
 
 first_image = True
 
-for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
+currentR = []
 
+currentT = []
+
+for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
     full_path_filename = os.path.join(full_path_directory, filename);
     # skip forward to start a file we specify by timestamp (if this is set)
     if(first_image):
@@ -68,6 +84,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         #USE ORB NOT SURF
         #USE FEATURE BINNING
         #GET MAT PLOT LIB PLOTTING CODE FROM ONLINE EXAMPLE
+        thres = 100
         surf = cv2.xfeatures2d.SURF_create(thres)
         kp1, des1 = surf.detectAndCompute(img,None)
         kp2, des2 = surf.detectAndCompute(previous_image,None)
@@ -89,18 +106,19 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
                 good_matches1.append(kp1[m.queryIdx].pt)
                 good_matches2.append(kp2[m.trainIdx].pt)
 
-        good_matches1 = np.array(good_matches1)
+        good_matches1 = np.array(good_matches1)        
         good_matches2 = np.array(good_matches2)
 
         essential_matrix,mask = cv2.findEssentialMat(good_matches1,good_matches2)
         
         print(essential_matrix)
 
-        _,R,t,mask = cv2.recoverPose(essential_matrix,good_matches1,good_matches2)
-
+        _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2)
         print(R)
         print(t)
 
+        scale = getScaleFromGPS(index)
+        print(scale)
 
         previous_image = img
 
@@ -119,3 +137,4 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 cv2.destroyAllWindows()
 
 #####################################################################
+
