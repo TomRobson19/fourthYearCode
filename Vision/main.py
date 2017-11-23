@@ -81,25 +81,20 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 
         img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
 
-        #USE ORB NOT SURF
-        #USE FEATURE BINNING
-        #GET MAT PLOT LIB PLOTTING CODE FROM ONLINE EXAMPLE
-        thres = 100
+        thres = 1000
         surf = cv2.xfeatures2d.SURF_create(thres)
         kp1, des1 = surf.detectAndCompute(img,None)
         kp2, des2 = surf.detectAndCompute(previous_image,None)
 
-        #img2 = cv2.drawKeypoints(img,kp,None,(255,0,0),4)
+        #img2 = cv2.drawKeypoints(img,kp1,None,(255,0,0),4)
 
-        index_params = dict(algorithm = 1, trees = 1)
+        index_params = dict(algorithm = 0, trees = 5)
         search_params = dict(checks = 50)
         flann = cv2.FlannBasedMatcher(index_params, search_params)
         matches = flann.knnMatch(des1, des2, k=2)
-        
 
         good_matches1 = []
         good_matches2 = []
-
 
         for i,(m,n) in enumerate(matches):
             if m.distance < 0.7*n.distance:   #filter out 'bad' matches
@@ -109,16 +104,28 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         good_matches1 = np.array(good_matches1)        
         good_matches2 = np.array(good_matches2)
 
-        essential_matrix,mask = cv2.findEssentialMat(good_matches1,good_matches2)
+        essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC, prob=0.999, threshold=1.0)
         
-        print(essential_matrix)
-
-        _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2)
+        _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h))
         print(R)
         print(t)
 
         scale = getScaleFromGPS(index)
         print(scale)
+
+        if scale > 0.00001 or currentT == []:
+            isForwardDominant = t[2] > t[0] and t[2] > t[1]
+            if currentT == [] and currentR == []:
+                currentT = t*scale
+                currentR = R
+            elif isForwardDominant:
+                currentT += scale*currentR.dot(t)
+                currentR = R.dot(currentR)
+            else:
+                print("Dominant motion not forward, ignored")
+        else:
+            print("Insufficient movement - assumed stationary")
+
 
         previous_image = img
 
@@ -137,4 +144,3 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 cv2.destroyAllWindows()
 
 #####################################################################
-
