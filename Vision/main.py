@@ -58,20 +58,28 @@ pause_playback = False; # pause until key press after each image
 
 full_path_directory =  os.path.join(master_path_to_dataset, directory_to_cycle);
 
-previous_image = None
+previous_kp = None
+previous_des = None
 
 first_image = True
 
 currentR = []
-
 currentT = []
+
+thres = 1000
+surf = cv2.xfeatures2d.SURF_create(thres)
+index_params = dict(algorithm = 0, trees = 5)
+search_params = dict(checks = 50)
+flann = cv2.FlannBasedMatcher(index_params, search_params)
+
 
 for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
     full_path_filename = os.path.join(full_path_directory, filename);
     # skip forward to start a file we specify by timestamp (if this is set)
     if(first_image):
         first_image = False
-        previous_image = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
+        img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
+        previous_kp, previous_des = surf.detectAndCompute(img,None)
     else:
 
         if ((len(skip_forward_file_pattern) > 0) and not(skip_forward_file_pattern in filename)):
@@ -83,25 +91,19 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 
         img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
 
-        thres = 1000
-        surf = cv2.xfeatures2d.SURF_create(thres)
-        kp1, des1 = surf.detectAndCompute(img,None)
-        kp2, des2 = surf.detectAndCompute(previous_image,None)
+        kp, des = surf.detectAndCompute(img,None)
 
-        #img2 = cv2.drawKeypoints(img,kp1,None,(255,0,0),4)
+        img2 = cv2.drawKeypoints(img,kp,img)
 
-        index_params = dict(algorithm = 0, trees = 5)
-        search_params = dict(checks = 50)
-        flann = cv2.FlannBasedMatcher(index_params, search_params)
-        matches = flann.knnMatch(des1, des2, k=2)
+        matches = flann.knnMatch(des, previous_des, k=2)
 
         good_matches1 = []
         good_matches2 = []
 
         for i,(m,n) in enumerate(matches):
             if m.distance < 0.7*n.distance:   #filter out 'bad' matches
-                good_matches1.append(kp1[m.queryIdx].pt)
-                good_matches2.append(kp2[m.trainIdx].pt)
+                good_matches1.append(kp[m.queryIdx].pt)
+                good_matches2.append(previous_kp[m.trainIdx].pt)
 
         good_matches1 = np.array(good_matches1)        
         good_matches2 = np.array(good_matches2)
@@ -130,9 +132,10 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
             print("Insufficient movement - assumed stationary")
 
 
-        previous_image = img
+        previous_kp = kp
+        previous_des = des
 
-        cv2.imshow('input image',img)
+        cv2.imshow('input image',img2)
 
         key = cv2.waitKey(40 * (not(pause_playback))) & 0xFF; # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
