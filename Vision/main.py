@@ -150,3 +150,10 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 cv2.destroyAllWindows()
 
 #####################################################################
+
+"""
+TO DO:
+Feature Binning
+Start with initial GPS points and then plot them
+Hope it works
+"""
