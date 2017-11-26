@@ -80,6 +80,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         first_image = False
         img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
         previous_kp, previous_des = surf.detectAndCompute(img,None)
+        previous_kp.sort(key=lambda x: x.response)
     else:
 
         if ((len(skip_forward_file_pattern) > 0) and not(skip_forward_file_pattern in filename)):
@@ -93,9 +94,18 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 
         kp, des = surf.detectAndCompute(img,None)
 
+        print(des)
+
         img2 = cv2.drawKeypoints(img,kp,img)
 
         matches = flann.knnMatch(des, previous_des, k=2)
+
+        temp = (sorted(zip(kp, des), key=lambda pair: pair[0].response))
+
+        kp,tempDes = [list(t) for t in zip(*temp)]
+
+        for i in tempDes:
+            des = tempDes[0]
 
         good_matches1 = []
         good_matches2 = []
@@ -105,7 +115,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
                 good_matches1.append(kp[m.queryIdx].pt)
                 good_matches2.append(previous_kp[m.trainIdx].pt)
 
-        good_matches1 = np.array(good_matches1)        
+        good_matches1 = np.array(good_matches1)
         good_matches2 = np.array(good_matches2)
 
         essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC, prob=0.999, threshold=1.0)
@@ -123,7 +133,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
                 currentT = t*scale
                 currentR = R
             elif isForwardDominant:
-                currentR = R.dot(currentR)          #THIS IS THE OTHER WAY ROUND FROM THE GITHUB EXAMPLE BUT SEEMS TO MAKE MORE SENSE, CHECK IT
+                currentR = R.dot(currentR)
                 currentT += scale*currentR.dot(t)
                 
             else:
