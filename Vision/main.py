@@ -66,7 +66,7 @@ first_image = True
 currentR = []
 currentT = []
 
-thres = 1000
+thres = 5000
 surf = cv2.xfeatures2d.SURF_create(thres)
 index_params = dict(algorithm = 0, trees = 5)
 search_params = dict(checks = 50)
@@ -95,13 +95,13 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 
         img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
 
-        kp, des = surf.detectAndCompute(img,None)
-
-        matches = flann.knnMatch(np.asarray(des), np.asarray(previous_des), k=2)
+        kp, des = surf.detectAndCompute(img,None)        
 
         temp = (sorted(zip(kp, des), key=lambda pair: pair[0].response))
 
         kp,des = [list(t) for t in zip(*temp)]
+
+        matches = flann.knnMatch(np.asarray(des), np.asarray(previous_des), k=2)
 
         good_matches1 = []
         good_matches2 = []
@@ -111,22 +111,43 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
                 good_matches1.append(kp[m.queryIdx].pt)
                 good_matches2.append(previous_kp[m.trainIdx].pt)
 
+        old_good_matches1 = good_matches1
+        old_good_matches2 = good_matches2
+        
+        #binning - bins are 68x128
+        #size is 544 x 1024
+        bin_size = 100
+
+        no_bins = 64
+
+        good_matches1 = [[] for _ in range(no_bins)]
+        good_matches2 = [[] for _ in range(no_bins)]
+
+
+        for i in old_good_matches1:
+            bin_to_place = int(i[0]//128 + 8*(i[1]//68))
+            if len(good_matches1[bin_to_place]) < bin_size:
+                if len(good_matches1[bin_to_place]) != 0:
+                    good_matches1[bin_to_place].append(i)
+                else:
+                    good_matches1[bin_to_place] = [i]
+
+        for i in old_good_matches2:
+            bin_to_place = int(i[0]//128 + 8*(i[1]//68))
+            if len(good_matches2[bin_to_place]) < bin_size:
+                if len(good_matches2[bin_to_place]) != 0:
+                    good_matches2[bin_to_place].append(i)
+                else:
+                    good_matches2[bin_to_place] = [i]
+
+        good_matches1 = [item for sublist in good_matches1 for item in sublist]
+        good_matches2 = [item for sublist in good_matches2 for item in sublist]
+
         good_matches1 = np.array(good_matches1)
         good_matches2 = np.array(good_matches2)
 
-        #binning - bins are 100x100
-        #size is 544 x 1024
-        # good_matches1 = [[]] * 66
-        # good_matches2 = [[]] * 66
-
-        bin_size = 100
-
-        # for x,y in old_good_matches1:
-        #     bin_to_place = old_good_matches1[0] % 100 + 11*old_good_matches1[1] % 100
-        #     if len(good_matches1[bin_to_place]) < bin_size:
-        #         good_matches1[bin_to_place].append(x,y)
-
-        #print(good_matches1)
+        print(len(old_good_matches1),len(old_good_matches2))
+        print(len(good_matches1),len(good_matches2))
 
         img2 = cv2.drawKeypoints(img,kp,img)
 
