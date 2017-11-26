@@ -80,7 +80,10 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         first_image = False
         img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
         previous_kp, previous_des = surf.detectAndCompute(img,None)
-        previous_kp.sort(key=lambda x: x.response)
+        temp = (sorted(zip(previous_kp, previous_des), key=lambda pair: pair[0].response))
+
+        previous_kp,previous_des = [list(t) for t in zip(*temp)]
+        
     else:
 
         if ((len(skip_forward_file_pattern) > 0) and not(skip_forward_file_pattern in filename)):
@@ -94,18 +97,11 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 
         kp, des = surf.detectAndCompute(img,None)
 
-        print(des)
-
-        img2 = cv2.drawKeypoints(img,kp,img)
-
-        matches = flann.knnMatch(des, previous_des, k=2)
+        matches = flann.knnMatch(np.asarray(des), np.asarray(previous_des), k=2)
 
         temp = (sorted(zip(kp, des), key=lambda pair: pair[0].response))
 
-        kp,tempDes = [list(t) for t in zip(*temp)]
-
-        for i in tempDes:
-            des = tempDes[0]
+        kp,des = [list(t) for t in zip(*temp)]
 
         good_matches1 = []
         good_matches2 = []
@@ -118,14 +114,30 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         good_matches1 = np.array(good_matches1)
         good_matches2 = np.array(good_matches2)
 
+        #binning - bins are 100x100
+        #size is 544 x 1024
+        # good_matches1 = [[]] * 66
+        # good_matches2 = [[]] * 66
+
+        bin_size = 100
+
+        # for x,y in old_good_matches1:
+        #     bin_to_place = old_good_matches1[0] % 100 + 11*old_good_matches1[1] % 100
+        #     if len(good_matches1[bin_to_place]) < bin_size:
+        #         good_matches1[bin_to_place].append(x,y)
+
+        #print(good_matches1)
+
+        img2 = cv2.drawKeypoints(img,kp,img)
+
         essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC, prob=0.999, threshold=1.0)
         
         _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h))
-        print(R)
-        print(t)
+        # print(R)
+        # print(t)
 
         scale = getScaleFromGPS(index)
-        print(scale)
+        # print(scale)
 
         if scale > 0.00001 or currentT == []:
             isForwardDominant = t[2] > t[0] and t[2] > t[1]
@@ -140,6 +152,10 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
                 print("Dominant motion not forward, ignored")
         else:
             print("Insufficient movement - assumed stationary")
+
+        # print(currentR)
+        # print(currentT)
+        # print(scale)
 
 
         previous_kp = kp
