@@ -67,7 +67,7 @@ first_image = True
 currentR = []
 currentT = []
 
-thres = 1000
+thres = 5000
 surf = cv2.xfeatures2d.SURF_create(thres)
 index_params = dict(algorithm = 0, trees = 5)
 search_params = dict(checks = 50)
@@ -78,10 +78,9 @@ features_per_bin = 50
 
 for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
     full_path_filename = os.path.join(full_path_directory, filename);
-    # skip forward to start a file we specify by timestamp (if this is set)
 
     img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
-    img = img[0:340, 0:1024]
+    img = img[0:340, 0:image_width]
 
     bins_y = math.ceil(img.shape[0]/100)
     bins_x = math.ceil(img.shape[1]/100)
@@ -89,6 +88,22 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
     number_of_bins = bins_x * bins_y
 
     kp, des = surf.detectAndCompute(img,None)
+
+    temp_kp = [[] for _ in range(number_of_bins)]
+    temp_des = [[] for _ in range(number_of_bins)]
+
+    for i,p in enumerate(kp):
+        bin_to_place = int(p.pt[0]//bin_size + bins_x*(p.pt[1]//bin_size))
+        if len(temp_kp[bin_to_place]) < bin_size:
+            if len(temp_kp[bin_to_place]) != 0:
+                temp_kp[bin_to_place].append(kp[i])
+                temp_des[bin_to_place].append(des[i])
+            else:
+                temp_kp[bin_to_place] = [kp[i]]
+                temp_des[bin_to_place] = [des[i]]
+
+    kp = [item for sublist in temp_kp for item in sublist]
+    des = [item for sublist in temp_des for item in sublist]
 
     if(first_image):
         first_image = False        
@@ -102,44 +117,17 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
             if m.distance < 0.7*n.distance:   #filter out 'bad' matches
                 threshold_matches1.append(kp[m.queryIdx].pt)
                 threshold_matches2.append(previous_kp[m.trainIdx].pt)
-        
-        good_matches1 = [[] for _ in range(number_of_bins)]
-        good_matches2 = [[] for _ in range(number_of_bins)]
 
+        good_matches1 = np.array(threshold_matches1)
+        good_matches2 = np.array(threshold_matches2)
 
-        for i in threshold_matches1:
-            bin_to_place = int(i[0]//bin_size + 8*(i[1]//bin_size))
-            if len(good_matches1[bin_to_place]) < bin_size:
-                if len(good_matches1[bin_to_place]) != 0:
-                    good_matches1[bin_to_place].append(i)
-                else:
-                    good_matches1[bin_to_place] = [i]
-
-        for i in threshold_matches2:
-            bin_to_place = int(i[0]//bin_size + 8*(i[1]//bin_size))
-            if len(good_matches2[bin_to_place]) < bin_size:
-                if len(good_matches2[bin_to_place]) != 0:
-                    good_matches2[bin_to_place].append(i)
-                else:
-                    good_matches2[bin_to_place] = [i]
-
-        #flatten bins
-        good_matches1 = [item for sublist in good_matches1 for item in sublist]
-        good_matches2 = [item for sublist in good_matches2 for item in sublist]
-
-        good_matches1 = np.array(good_matches1)
-        good_matches2 = np.array(good_matches2)
-
-        img2 = cv2.drawKeypoints(img,kp[:len(good_matches1)],img)
+        img2 = cv2.drawKeypoints(img,kp,img)
 
         essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC, prob=0.999, threshold=1.0)
         
         _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h))
-        # print(R)
-        # print(t)
 
         scale = getScaleFromGPS(index)
-        # print(scale)
 
         if scale > 0.00001 or currentT == []:
             isForwardDominant = t[2] > t[0] and t[2] > t[1]
@@ -159,9 +147,6 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         # print(currentT)
         # print(scale)
 
-
-        
-
         cv2.imshow('input image',img2)
 
         key = cv2.waitKey(40 * (not(pause_playback))) & 0xFF; # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
@@ -171,6 +156,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         elif (key == ord(' ')):     # pause (on next frame)
             pause_playback = not(pause_playback)
             print("pause")
+
     previous_kp = kp
     previous_des = des
 
@@ -182,7 +168,7 @@ cv2.destroyAllWindows()
 
 """
 TO DO:
-Feature Binning
-Start with initial GPS points and then plot them
-Hope it works
+CHANGE SCALE FUNCTION
+
+WILL NEED TO CORRECT TO GROUND TRUTH, QUESTION IS HOW OFTEN?
 """
