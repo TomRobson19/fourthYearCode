@@ -2,6 +2,7 @@ import cv2
 import os
 import numpy as np
 import csv
+import math
 
 #####################################################################
 
@@ -66,7 +67,7 @@ first_image = True
 currentR = []
 currentT = []
 
-thres = 5000
+thres = 1000
 surf = cv2.xfeatures2d.SURF_create(thres)
 index_params = dict(algorithm = 0, trees = 5)
 search_params = dict(checks = 50)
@@ -75,15 +76,17 @@ flann = cv2.FlannBasedMatcher(index_params, search_params)
 bin_size = 100
 features_per_bin = 50
 
-number_of_bins = img.shape[0]/100 * img.shape[1]/100
-
-
 for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
     full_path_filename = os.path.join(full_path_directory, filename);
     # skip forward to start a file we specify by timestamp (if this is set)
 
     img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
     img = img[0:340, 0:1024]
+
+    bins_y = math.ceil(img.shape[0]/100)
+    bins_x = math.ceil(img.shape[1]/100)
+
+    number_of_bins = bins_x * bins_y
 
     kp, des = surf.detectAndCompute(img,None)
 
@@ -100,22 +103,12 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
                 threshold_matches1.append(kp[m.queryIdx].pt)
                 threshold_matches2.append(previous_kp[m.trainIdx].pt)
         
-        #binning - bins are 68x128
-        #size is 544 x 1024
-        bin_size = 100
-
-        # no_bins_x = 8
-
-        # no_bins_y = 2
-
-        no_bins = 64
-
-        good_matches1 = [[] for _ in range(no_bins)]
-        good_matches2 = [[] for _ in range(no_bins)]
+        good_matches1 = [[] for _ in range(number_of_bins)]
+        good_matches2 = [[] for _ in range(number_of_bins)]
 
 
         for i in threshold_matches1:
-            bin_to_place = int(i[0]//128 + 8*(i[1]//68))
+            bin_to_place = int(i[0]//bin_size + 8*(i[1]//bin_size))
             if len(good_matches1[bin_to_place]) < bin_size:
                 if len(good_matches1[bin_to_place]) != 0:
                     good_matches1[bin_to_place].append(i)
@@ -123,7 +116,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
                     good_matches1[bin_to_place] = [i]
 
         for i in threshold_matches2:
-            bin_to_place = int(i[0]//128 + 8*(i[1]//68))
+            bin_to_place = int(i[0]//bin_size + 8*(i[1]//bin_size))
             if len(good_matches2[bin_to_place]) < bin_size:
                 if len(good_matches2[bin_to_place]) != 0:
                     good_matches2[bin_to_place].append(i)
@@ -158,7 +151,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
                 currentT += scale*currentR.dot(t)
                 
             else:
-                print("Dominant motion not forward, ignored")
+                print("Dominant motion not forward - ignored")
         else:
             print("Insufficient movement - assumed stationary")
 
