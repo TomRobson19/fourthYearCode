@@ -12,8 +12,7 @@ master_path_to_dataset = "TTBB-durham-02-10-17-sub5"; # ** need to edit this **
 directory_to_cycle = "left-images";     # edit this for left or right image set
 
 
-
-# unsure whether this is the correct way to get scale from gps, might be Breckon's answer in the FAQ
+#Is OK just to use this, don't need to mess with stereo
 def getScaleFromGPS(index):
     gpsFile = open(master_path_to_dataset+"/GPS.csv") 
     previousImage = []
@@ -25,7 +24,23 @@ def getScaleFromGPS(index):
             currentImage = line.split(",")
             break
     gpsFile.close()
-    return np.sqrt(((float(currentImage[1])-float(previousImage[1]))**2) + ((float(currentImage[2])-float(previousImage[2]))**2) + ((float(currentImage[3])-float(previousImage[3]))**2))
+
+    previousLat = radians(previousImage[1])
+    previousLon = radians(previousImage[2])
+    currentLat = radians(currentImage[1])
+    currentLon = radians(currentImage[2])
+
+    dlon = currentLon - previousLon
+    dlat = currentLat - previousLat
+
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    distance = R * c
+
+    return distance
+
+    #return np.sqrt(((float(currentImage[1])-float(previousImage[1]))**2) + ((float(currentImage[2])-float(previousImage[2]))**2) + ((float(currentImage[3])-float(previousImage[3]))**2))
   
 
 #####################################################################
