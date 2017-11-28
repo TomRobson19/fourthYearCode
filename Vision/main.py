@@ -140,29 +140,30 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 
         img2 = cv2.drawKeypoints(img,kp,img)
 
-        essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC, prob=0.999, threshold=1.0)
-        
-        _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h))
+        if len(good_matches1) > 5:
 
-        scale = getScaleFromGPS(index)
+            essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC, prob=0.999, threshold=1.0)
+            _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h))
 
-        if scale > 0.00001 or currentT == []:
-            isForwardDominant = t[2] > t[0] and t[2] > t[1]
-            if currentT == [] and currentR == []:
-                currentT = t*scale
-                currentR = R
-            elif isForwardDominant:
-                currentR = R.dot(currentR)
-                currentT += scale*currentR.dot(t)
-                
+            scale = getScaleFromGPS(index)
+
+            if scale > 0.00001 or currentT == []:
+                isForwardDominant = t[2] > t[0] and t[2] > t[1]
+                if currentT == [] and currentR == []:
+                    currentT = t*scale
+                    currentR = R
+                elif isForwardDominant:
+                    currentR = R.dot(currentR)
+                    currentT += scale*currentR.dot(t)
+                    
+                else:
+                    print("Dominant motion not forward - ignored")
             else:
-                print("Dominant motion not forward - ignored")
-        else:
-            print("Insufficient movement - assumed stationary")
+                print("Insufficient movement - assumed stationary")
 
-        print(currentR)
-        print(currentT)
-        print(scale)
+            print(currentR)
+            print(currentT)
+            print(scale)
 
         cv2.imshow('input image',img2)
 
@@ -185,7 +186,7 @@ cv2.destroyAllWindows()
 
 """
 TO DO:
-CHANGE SCALE FUNCTION
+PLOT THE FUCKER
 
 WILL NEED TO CORRECT TO GROUND TRUTH, QUESTION IS HOW OFTEN?
 """
