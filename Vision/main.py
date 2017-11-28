@@ -25,18 +25,20 @@ def getScaleFromGPS(index):
             break
     gpsFile.close()
 
-    previousLat = radians(previousImage[1])
-    previousLon = radians(previousImage[2])
-    currentLat = radians(currentImage[1])
-    currentLon = radians(currentImage[2])
+    radius = 6373.0
+
+    previousLat = math.radians(float(previousImage[1]))
+    previousLon = math.radians(float(previousImage[2]))
+    currentLat = math.radians(float(currentImage[1]))
+    currentLon = math.radians(float(currentImage[2]))
 
     dlon = currentLon - previousLon
     dlat = currentLat - previousLat
 
-    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    a = math.sin(dlat / 2)**2 + math.cos(previousLat) * math.cos(currentLat) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
-    distance = R * c
+    distance = (radius * c)*1000.0
 
     return distance
 
@@ -158,9 +160,9 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         else:
             print("Insufficient movement - assumed stationary")
 
-        # print(currentR)
-        # print(currentT)
-        # print(scale)
+        print(currentR)
+        print(currentT)
+        print(scale)
 
         cv2.imshow('input image',img2)
 
