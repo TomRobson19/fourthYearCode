@@ -100,3 +100,14 @@ def gyro_to_angles(orientation_x, orientation_y, orientation_z, orientation_w):
     return roll, pitch, heading;
 
 #####################################################################
+
+imu = open("TTBB-durham-02-10-17-sub5/IMU.csv")
+
+_ = imu.readline()
+imuPoints = imu.readline()
+
+imuPoints = imuPoints.split(",")
+
+print(gyro_to_angles(float(imuPoints[1]), float(imuPoints[2]), float(imuPoints[3]), float(imuPoints[4])))
+
+#-13.9, -11.1, 121.8
