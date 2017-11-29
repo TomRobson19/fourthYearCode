@@ -43,6 +43,24 @@ def getScaleFromGPS(index):
 
     return distance
 
+def GPSToXYZ():
+    GPSXYZ = []
+    gpsFile = open(master_path_to_dataset+"/GPS.csv") 
+    for i, line in enumerate(gpsFile):
+        if i != 0:
+            temp = line.split(",")
+            GPSXYZ.append([float(temp[1]), 0.0, float(temp[2])])
+        if i == 1:
+            temp = line.split(",")
+            originLat = float(temp[1])
+            originLon = float(temp[2])
+    gpsFile.close()
+
+    for i in GPSXYZ:
+        i[0] = (i[0]-originLat) / 0.00001 * 0.12179047095976932582726898256213
+        i[2] = (i[2]-originLat) / 0.000001 * 0.00728553580298947812081345114627
+    return GPSXYZ
+
 def featureBinning(kp):
     bin_size = 100
     features_per_bin = 50
@@ -64,6 +82,29 @@ def featureBinning(kp):
 
     kp = [item for sublist in temp_kp for item in sublist]
     return kp
+
+def rotateFunct(pts_l, angle, degrees=False):
+    """ Returns a rotated list(function) by the provided angle."""
+    if degrees == True:
+        theta = math.radians(angle)
+    else:
+        theta = angle
+
+    R = np.array([ [math.cos(theta), -math.sin(theta)],
+                   [math.sin(theta), math.cos(theta)] ])
+    rot_pts = []
+    for v in pts_l:
+        v = np.array(v).transpose()
+        v = R.dot(v)
+        v = v.transpose()
+        rot_pts.append(v)
+
+    return rot_pts
+
+def plotResults(allT,allGPS):
+    angle = 121.8
+
+    rotatedVO = rotateFunct(allT,angle)
 
 
 #####################################################################
@@ -112,7 +153,13 @@ first_image = True
 currentR = []
 currentT = []
 
+allT = []
+
 detector = cv2.FastFeatureDetector_create(threshold=25, nonmaxSuppression=True)
+
+allGPS = GPSToXYZ()
+
+print(allGPS)
 
 for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
     full_path_filename = os.path.join(full_path_directory, filename);
@@ -164,9 +211,12 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
             else:
                 cv2.imshow('input image',img)
 
+            allT.append(currentT)
+
             print(currentR)
             print(currentT)
             print(scale)
+
 
 
 
