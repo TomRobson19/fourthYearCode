@@ -55,7 +55,7 @@ def featureBinning(kp):
     temp_kp = [[] for _ in range(number_of_bins)]
 
     for i,p in enumerate(kp):
-        bin_to_place = int(p[0]//bin_size + bins_x*(p[1]//bin_size))
+        bin_to_place = int(p.pt[0]//bin_size + bins_x*(p.pt[1]//bin_size))
         if len(temp_kp[bin_to_place]) < bin_size:
             if len(temp_kp[bin_to_place]) != 0:
                 temp_kp[bin_to_place].append(kp[i])
@@ -84,11 +84,6 @@ image_width = 1024;
 
 #####################################################################
 
-# params for ShiTomasi corner detection
-feature_params = dict( maxCorners = 100,
-                       qualityLevel = 0.3,
-                       minDistance = 7,
-                       blockSize = 7 )
 # Parameters for lucas kanade optical flow
 lk_params = dict( winSize  = (15,15),
                   maxLevel = 2,
@@ -128,7 +123,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
     if(first_image):
         first_image = False
         kp = detector.detect(img) 
-        #kp = featureBinning(kp)
+        kp = featureBinning(kp)
         kp = np.array([x.pt for x in kp], dtype=np.float32)
     else:
 
@@ -137,10 +132,6 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 
         good_matches1 = (kp[st==1])
         good_matches2 = (previous_kp[st==1])
-
-        drawOpticalFlowField(img,good_matches1,good_matches2)
-
-        #img2 = cv2.drawKeypoints(img,kp,img)
 
         if len(good_matches1) > 5:
 
@@ -163,11 +154,26 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
             else:
                 print("Insufficient movement - assumed stationary")
 
+            if len(good_matches2) < 1500:
+                kp = detector.detect(img) 
+                kp = featureBinning(kp)
+                
+                img2 = cv2.drawKeypoints(img,kp,img)
+                kp = np.array([x.pt for x in kp], dtype=np.float32)
+                cv2.imshow('input image',img2)
+            else:
+                cv2.imshow('input image',img)
+
             print(currentR)
             print(currentT)
             print(scale)
 
-        cv2.imshow('input image',img)
+
+
+
+
+
+
 
         key = cv2.waitKey(40 * (not(pause_playback))) & 0xFF; # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
