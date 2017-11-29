@@ -49,7 +49,7 @@ def GPSToXYZ():
     for i, line in enumerate(gpsFile):
         if i != 0:
             temp = line.split(",")
-            GPSXYZ.append([float(temp[1]), 0.0, float(temp[2])])
+            GPSXYZ.append([float(temp[1]), float(temp[2])])
         if i == 1:
             temp = line.split(",")
             originLat = float(temp[1])
@@ -58,7 +58,7 @@ def GPSToXYZ():
 
     for i in GPSXYZ:
         i[0] = (i[0]-originLat) / 0.00001 * 0.12179047095976932582726898256213
-        i[2] = (i[2]-originLat) / 0.000001 * 0.00728553580298947812081345114627
+        i[1] = (i[1]-originLon) / 0.000001 * 0.00728553580298947812081345114627
     return GPSXYZ
 
 def featureBinning(kp):
@@ -102,9 +102,28 @@ def rotateFunct(pts_l, angle, degrees=False):
     return rot_pts
 
 def plotResults(allT,allGPS):
-    angle = 121.8
+    angle = math.radians(-121.8)
 
-    rotatedVO = rotateFunct(allT,angle)
+    allGPS = allGPS[:len(allT)]
+
+    newT = []
+    for i,t in enumerate(allT):
+        if i!=0:
+            newT.append([t[0], t[2]])
+
+    newT = np.array(newT)
+    #newT = rotateFunct(newT,angle)
+
+    print(newT)
+
+    plt.figure(1)
+    GPS, = plt.plot(*zip(*allGPS), color='red', marker='o', label='GPS')
+    pyMVO, = plt.plot(*zip(*newT), color='blue', marker='o',  label='py-MVO')
+    plt.legend(handles=[pyMVO, GPS])
+    # Set plot parameters and show it
+    plt.axis('equal')
+    plt.grid()
+    plt.show()
 
 
 #####################################################################
@@ -151,15 +170,13 @@ previous_img = None
 first_image = True
 
 currentR = []
-currentT = []
+currentT = np.array([0,0,0])
 
 allT = []
 
 detector = cv2.FastFeatureDetector_create(threshold=25, nonmaxSuppression=True)
 
 allGPS = GPSToXYZ()
-
-print(allGPS)
 
 for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
     full_path_filename = os.path.join(full_path_directory, filename);
@@ -189,7 +206,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 
             if scale > 0.00001 or currentT == []:
                 isForwardDominant = t[2] > t[0] and t[2] > t[1]
-                if currentT == [] and currentR == []:
+                if currentR == []:
                     currentT = t*scale
                     currentR = R
                 elif isForwardDominant:
@@ -211,12 +228,11 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
             else:
                 cv2.imshow('input image',img)
 
-            allT.append(currentT)
-
             print(currentR)
             print(currentT)
             print(scale)
 
+            
 
 
 
@@ -228,11 +244,14 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         key = cv2.waitKey(40 * (not(pause_playback))) & 0xFF; # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
             print("Keyboard exit requested : exiting now - bye!")
-            break; # exit
+            plotResults(allT,allGPS)
+            break # exit
         elif (key == ord(' ')):     # pause (on next frame)
             pause_playback = not(pause_playback)
             print("pause")
 
+    allT.append([currentT.item(0), currentT.item(1), currentT.item(2)])
+    #allT.append(currentT)
     previous_kp = kp
     previous_img = img
 
