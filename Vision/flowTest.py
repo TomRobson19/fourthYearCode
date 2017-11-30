@@ -111,12 +111,10 @@ def plotResults(allT,allGPS):
     newT = []
     for i,t in enumerate(allT):
         if i!=0:
-            newT.append([t[0], t[2]])
+            newT.append([-t[0], t[2]])
 
     newT = np.array(newT)
     #newT = rotateFunct(newT,angle)
-
-    print(newT)
 
     plt.figure(1)
     GPS, = plt.plot(*zip(*allGPS), color='red', marker='o', label='GPS')
@@ -147,9 +145,9 @@ image_width = 1024;
 #####################################################################
 
 # Parameters for lucas kanade optical flow
-lk_params = dict( winSize  = (15,15),
-                  maxLevel = 2,
-                  criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
+lk_params = dict(winSize  = (21, 21), 
+                #maxLevel = 3,
+                criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 30, 0.01))
 
 #####################################################################
 
@@ -180,7 +178,7 @@ detector = cv2.FastFeatureDetector_create(threshold=25, nonmaxSuppression=True)
 
 allGPS = GPSToXYZ()
 
-for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
+for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:52]):
     full_path_filename = os.path.join(full_path_directory, filename);
 
     img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
@@ -205,7 +203,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
             scale = getScaleFromGPS(index)
 
             if scale > 0.00001:
-                isForwardDominant = t[2] > t[0] and t[2] > t[1]
+                isForwardDominant = 100*t[2] > t[0]
                 if currentR == []:
                     currentT = t*scale
                     currentR = R
@@ -218,7 +216,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
             else:
                 print("Insufficient movement - assumed stationary")
 
-            if len(good_matches2) < 1500:
+            if len(good_matches1) < 1500:
                 kp = detector.detect(img) 
                 kp = featureBinning(kp)
                 
@@ -235,7 +233,6 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         key = cv2.waitKey(40 * (not(pause_playback))) & 0xFF; # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
             print("Keyboard exit requested : exiting now - bye!")
-            plotResults(allT,allGPS)
             break # exit
         elif (key == ord(' ')):     # pause (on next frame)
             pause_playback = not(pause_playback)
@@ -248,6 +245,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
 
 # close all windows
 
+plotResults(allT,allGPS)
 cv2.destroyAllWindows()
 
 #####################################################################
