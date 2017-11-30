@@ -178,6 +178,8 @@ detector = cv2.FastFeatureDetector_create(threshold=25, nonmaxSuppression=True)
 
 allGPS = GPSToXYZ()
 
+minFlowFeatures = 1500
+
 for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:52]):
     full_path_filename = os.path.join(full_path_directory, filename);
 
@@ -216,7 +218,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:52]):
             else:
                 print("Insufficient movement - assumed stationary")
 
-            if len(good_matches1) < 1500:
+            if len(good_matches1) < minFlowFeatures:
                 kp = detector.detect(img) 
                 kp = featureBinning(kp)
                 
@@ -239,7 +241,6 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:52]):
             print("pause")
 
     allT.append([currentT.item(0), currentT.item(1), currentT.item(2)])
-    #allT.append(currentT)
     previous_kp = kp
     previous_img = img
 
