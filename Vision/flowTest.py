@@ -39,7 +39,7 @@ def getScaleFromGPS(index):
     a = math.sin(dlat / 2)**2 + math.cos(previousLat) * math.cos(currentLat) * math.sin(dlon / 2)**2
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
-    distance = (radius * c)*1000.0
+    distance = (radius * c)*100.0
 
     return distance
 
@@ -63,7 +63,9 @@ def GPSToXYZ():
 
 def featureBinning(kp):
     bin_size = 100
-    features_per_bin = 50
+    features_per_bin = 20
+
+    kp.sort(key=lambda x: x.response) 
 
     bins_y = math.ceil(img.shape[0]/bin_size)
     bins_x = math.ceil(img.shape[1]/bin_size)
@@ -190,7 +192,6 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         kp = featureBinning(kp)
         kp = np.array([x.pt for x in kp], dtype=np.float32)
     else:
-
         kp, st, err = cv2.calcOpticalFlowPyrLK(previous_img, img, previous_kp, None, **lk_params)
         st = st.reshape(st.shape[0])
 
@@ -198,13 +199,12 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
         good_matches2 = (previous_kp[st==1])
 
         if len(good_matches1) > 5:
-
             essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC, prob=0.999, threshold=1.0)
             _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h))
 
             scale = getScaleFromGPS(index)
 
-            if scale > 0.00001 or currentT == []:
+            if scale > 0.00001:
                 isForwardDominant = t[2] > t[0] and t[2] > t[1]
                 if currentR == []:
                     currentT = t*scale
@@ -232,15 +232,6 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):
             print(currentT)
             print(scale)
 
-            
-
-
-
-
-
-
-
-
         key = cv2.waitKey(40 * (not(pause_playback))) & 0xFF; # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
             print("Keyboard exit requested : exiting now - bye!")
@@ -263,7 +254,6 @@ cv2.destroyAllWindows()
 
 """
 TO DO:
-PLOT THE FUCKER
 
 WILL NEED TO CORRECT TO GROUND TRUTH, QUESTION IS HOW OFTEN?
 """
