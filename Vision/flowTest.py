@@ -9,39 +9,24 @@ import geopy.distance
 
 #####################################################################
 
-# where is the data ? - set this to where you have it
-
-master_path_to_dataset = "TTBB-durham-02-10-17-sub5"; # ** need to edit this **
-directory_to_cycle = "left-images";     # edit this for left or right image set
-
+master_path_to_dataset = "TTBB-durham-02-10-17-sub5"
+directory_to_cycle = "left-images"     # edit this for left or right image set
 
 #Is OK just to use this, don't need to mess with stereo
-def getScaleFromGPS(index):
-    gpsFile = open(master_path_to_dataset+"/GPS.csv") 
-    previousImage = []
-    currentImage = []
-    for i, line in enumerate(gpsFile):
-        if i == index:
-            previousImage = line.split(",")
-        elif i == index+1:
-            currentImage = line.split(",")
-            break
-    gpsFile.close()
+def getScale(allGPS,index):
 
-    radius = 6373.0
+    previousImage = allGPS[index-1]
+    currentImage = allGPS[index]
 
-    previousLat = math.radians(float(previousImage[1]))
-    previousLon = math.radians(float(previousImage[2]))
-    currentLat = math.radians(float(currentImage[1]))
-    currentLon = math.radians(float(currentImage[2]))
+    previousLat = previousImage[0]
+    previousLon = previousImage[1]
+    currentLat = currentImage[0]
+    currentLon = currentImage[1]
 
     dlon = currentLon - previousLon
     dlat = currentLat - previousLat
 
-    a = math.sin(dlat / 2)**2 + math.cos(previousLat) * math.cos(currentLat) * math.sin(dlon / 2)**2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-
-    distance = (radius * c)*1000.0
+    distance = math.sqrt(dlon**2 + dlat**2)
 
     return distance
 
@@ -57,11 +42,8 @@ def GPSToXYZ():
     start = geopy.Point(GPSXYZ[0][0],GPSXYZ[0][1])
 
     for p in GPSXYZ:
-
-        # p[0] = (p[0]-originLat) / 0.00001 * 0.12179047095976932582726898256213 * 9
-        # p[1] = (p[1]-originLon) / 0.000001 * 0.00728553580298947812081345114627 * 9
-        lat = geopy.Point(p[0],start.longitude) #original longitude
-        lon = geopy.Point(start.latitude,p[1]) #original latitude
+        lat = geopy.Point(p[0],start.longitude)
+        lon = geopy.Point(start.latitude,p[1])
 
         p[0] = geopy.distance.vincenty(start,lat).meters
 
@@ -70,7 +52,6 @@ def GPSToXYZ():
         p[1] = geopy.distance.vincenty(start,lon).meters
         if(p[1] < GPSXYZ[0][1]):
             p[1]*=-1
-        #print(p)
 
     return GPSXYZ
 
@@ -215,7 +196,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:152]):
             essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC, prob=0.999, threshold=1.0)
             _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h))
 
-            scale = getScaleFromGPS(index)
+            scale = getScale(allGPS,index)
 
             if scale > 0.00001:
                 isForwardDominant = 100*t[2] > t[0]
