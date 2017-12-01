@@ -47,6 +47,7 @@ def GPSToXYZ():
 
         p[0] = geopy.distance.vincenty(start,lat).meters
 
+        #change sign here to make go left
         if(p[0] < GPSXYZ[0][0]):
             p[0]*=-1
         p[1] = geopy.distance.vincenty(start,lon).meters
@@ -119,6 +120,7 @@ def plotResults(allT,allGPS):
     newT = []
     for i,t in enumerate(allT):
         if i!=0:
+            #remove minus to make go left
             newT.append([-t[0], t[2]])
 
     newT = np.array(newT)
@@ -192,7 +194,7 @@ allGPS = GPSToXYZ()
 
 minFlowFeatures = 1500
 
-for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:152]):
+for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:52]):
     full_path_filename = os.path.join(full_path_directory, filename);
 
     img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
@@ -240,9 +242,9 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:152]):
             else:
                 cv2.imshow('input image',img)
 
-            # print(currentR)
-            # print(currentT)
-            # print(scale)
+            print(currentR)
+            print(currentT)
+            print(scale)
 
         key = cv2.waitKey(40 * (not(pause_playback))) & 0xFF; # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
