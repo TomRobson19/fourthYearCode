@@ -55,6 +55,20 @@ def GPSToXYZ():
 
     return GPSXYZ
 
+def XYZtoGPS(allGPS):
+    start = geopy.point(allGPS[0][0],allGPS[0][1])
+    for p in allGPS:
+        d = geopy.distance.VincentyDistance(meters = p[0])
+        newP = d.destination(point=start, bearing = 0)
+
+        d = geopy.distance.VincentyDistance(meters = p[1])
+        newP = d.destination(point=newP, bearing = 90)
+
+        p[0] = newP.latitude
+        p[1] = newP.longitude
+
+    return allGPS
+
 def featureBinning(kp):
     bin_size = 100
     features_per_bin = 50
@@ -118,6 +132,10 @@ def plotResults(allT,allGPS):
     plt.axis('equal')
     plt.grid()
     plt.show()
+
+#TO DO
+def plotResultsOnMap():
+    return None
 
 
 #####################################################################
