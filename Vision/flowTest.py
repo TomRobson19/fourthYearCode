@@ -4,6 +4,8 @@ import numpy as np
 import csv
 import math
 from matplotlib import pyplot as plt
+import geopy
+import geopy.distance
 
 #####################################################################
 
@@ -39,7 +41,7 @@ def getScaleFromGPS(index):
     a = math.sin(dlat / 2)**2 + math.cos(previousLat) * math.cos(currentLat) * math.sin(dlon / 2)**2
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
-    distance = (radius * c)*100.0
+    distance = (radius * c)*1000.0
 
     return distance
 
@@ -50,20 +52,31 @@ def GPSToXYZ():
         if i != 0:
             temp = line.split(",")
             GPSXYZ.append([float(temp[1]), float(temp[2])])
-        if i == 1:
-            temp = line.split(",")
-            originLat = float(temp[1])
-            originLon = float(temp[2])
     gpsFile.close()
 
-    for i in GPSXYZ:
-        i[0] = (i[0]-originLat) / 0.00001 * 0.12179047095976932582726898256213
-        i[1] = (i[1]-originLon) / 0.000001 * 0.00728553580298947812081345114627
+    start = geopy.Point(GPSXYZ[0][0],GPSXYZ[0][1])
+
+    for p in GPSXYZ:
+
+        # p[0] = (p[0]-originLat) / 0.00001 * 0.12179047095976932582726898256213 * 9
+        # p[1] = (p[1]-originLon) / 0.000001 * 0.00728553580298947812081345114627 * 9
+        lat = geopy.Point(p[0],start.longitude) #original longitude
+        lon = geopy.Point(start.latitude,p[1]) #original latitude
+
+        p[0] = geopy.distance.vincenty(start,lat).meters
+
+        if(p[0] < GPSXYZ[0][0]):
+            p[0]*=-1
+        p[1] = geopy.distance.vincenty(start,lon).meters
+        if(p[1] < GPSXYZ[0][1]):
+            p[1]*=-1
+        #print(p)
+
     return GPSXYZ
 
 def featureBinning(kp):
     bin_size = 100
-    features_per_bin = 20
+    features_per_bin = 50
 
     kp.sort(key=lambda x: x.response) 
 
@@ -114,7 +127,7 @@ def plotResults(allT,allGPS):
             newT.append([-t[0], t[2]])
 
     newT = np.array(newT)
-    #newT = rotateFunct(newT,angle)
+    #allGPS = rotateFunct(allGPS,angle)
 
     plt.figure(1)
     GPS, = plt.plot(*zip(*allGPS), color='red', marker='o', label='GPS')
@@ -180,7 +193,7 @@ allGPS = GPSToXYZ()
 
 minFlowFeatures = 1500
 
-for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:52]):
+for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:152]):
     full_path_filename = os.path.join(full_path_directory, filename);
 
     img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
@@ -228,9 +241,9 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:52]):
             else:
                 cv2.imshow('input image',img)
 
-            print(currentR)
-            print(currentT)
-            print(scale)
+            # print(currentR)
+            # print(currentT)
+            # print(scale)
 
         key = cv2.waitKey(40 * (not(pause_playback))) & 0xFF; # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
