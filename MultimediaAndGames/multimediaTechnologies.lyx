@@ -88,5 +88,84 @@ Multimedia Technologies Summative Assignment
 hzwr87
 \end_layout
 
+\begin_layout Section
+Describe the main difference between the Human “Earscape” model (Ref: Lecture
+ note 2) and the Audio Noise Masking model (Ref: MP3).
+ Explain how these two models are applied to optimize signal quantization
+ in the audio digitalization process.
+ [20 Marks] 
+\end_layout
+
+\begin_layout Standard
+Earscape - low frequency have to be louder.
+ higher frequencies can be anything.
+ can use this as part of the encoding process to do some compression.
+ 
+\end_layout
+
+\begin_layout Standard
+Audio Noise Masking - playing one sound over another means you can't hear
+ the first sound as well.
+ Adding another sound in the same frequency band 
+\begin_inset Quotes eld
+\end_inset
+
+masks
+\begin_inset Quotes erd
+\end_inset
+
+ it.
+ Can use in the MP3 algorithm to work out when it can get away with doing
+ more quantisation by adding more noise as this is being masked by the original
+ signal.
+ 
+\end_layout
+
+\begin_layout Section
+MPEG/Audio Layer I encoding divides an input audio signal into 32 sub-bands
+ forming the inputs for audio digitalization.
+ Justify whether this procedure improves or degrades audio signal quantization.
+ (Ref: MP3) [20 Marks] 
+\end_layout
+
+\begin_layout Standard
+Don't compare to other numbers of bands
+\end_layout
+
+\begin_layout Section
+In your own words, explain the purpose of involving Discrete Cosine Transform
+ (DCT) in MPEG/Audio Layer 3.
+ Justify how this procedure improves the quality of audio digitalization
+ in terms of both the audio signal preserved and file size produced.
+ (Ref: MP3) [20 Marks] 
+\end_layout
+
+\begin_layout Section
+Justify the suitability of replacing the DCT function in MPEG/Audio Layer
+ 3 with Wavelet transform, explaining any requirement in choosing Wavelet
+ transform functions and what changes have to make in MPEG/Audio Layer 3
+ components to allow such a replacement.
+ (Ref: Lecture note and MP3) [20 Marks] 
+\end_layout
+
+\begin_layout Section
+In your own words, explain four differences between applying DCT and Wavelet
+ transform to compress an image, and justify their difference in supporting
+ image decompression and transmission.
+ (Ref: Lecture note) [20 Marks] 
+\end_layout
+
+\begin_layout Standard
+Wavelets are lecture 4
+\end_layout
+
+\begin_layout Section
+Level 4 students - Conducting a research in scalable video coding (SVC)
+ in the H.264/AVC standard, write up your finding about how SVC is technically
+ different from the original H.264/AVC standard, in terms of architecture,
+ coding mechanism, functionalities, video representation and transmission.
+ (Ref: Lecture note and SVC) [50 Marks] 
+\end_layout
+
 \end_body
 \end_document
