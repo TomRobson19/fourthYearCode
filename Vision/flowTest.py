@@ -159,7 +159,7 @@ image_width = 1024;
 #####################################################################
 
 # Parameters for lucas kanade optical flow
-lk_params = dict(winSize  = (21, 21), 
+lk_params = dict(winSize  = (3, 3), #default is 21
                 #maxLevel = 3,
                 criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 30, 0.01))
 
@@ -188,14 +188,14 @@ currentT = np.array([0,0,0])
 
 allT = []
 
-detector = cv2.FastFeatureDetector_create(threshold=25, nonmaxSuppression=True)
+detector = cv2.FastFeatureDetector_create(threshold=50, nonmaxSuppression=True) #50 is good
 
 allGPS = GPSToXYZ()
 
-minFlowFeatures = 1500
+minFlowFeatures = 500
 
-for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:52]):
-    full_path_filename = os.path.join(full_path_directory, filename);
+for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100]):
+    full_path_filename = os.path.join(full_path_directory, filename)
 
     img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
     img = img[0:340, 0:image_width]
@@ -223,9 +223,9 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))[:52]):
                 if currentR == []:
                     currentT = t*scale
                     currentR = R
-                elif isForwardDominant:
-                    currentR = R.dot(currentR)
+                elif isForwardDominant:  
                     currentT += scale*currentR.dot(t)
+                    currentR = R.dot(currentR)
                     
                 else:
                     print("Dominant motion not forward - ignored")
