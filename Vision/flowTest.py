@@ -232,7 +232,7 @@ def eulerAnglesToRotationMatrix(theta) :
                     ])
                     
                     
-    return (np.dot(R_x, np.dot( R_y, R_z )))
+    return (np.dot(R_z, np.dot( R_y, R_x )))
 #####################################################################
 
 # full camera parameters - from camera calibration
@@ -330,25 +330,11 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
                 currentT[2] = allGPS[index][1]
 
                 imu = originalIMU()
-                roll, pitch, yaw = gyro_to_angles(imu[index][0],imu[index][1],imu[index][2],imu[index][3])
+                roll, pitch, yaw = gyro_to_angles(-imu[index][0],-imu[index][1],imu[index][2],-imu[index][3])
 
-                theta = [yaw,pitch,roll]
-                print(theta)
-                print(currentR)
+                theta = [roll,pitch,yaw]
 
                 currentR = eulerAnglesToRotationMatrix(theta)
-
-                print(currentR)
-
-                # currentR[0][0] = math.cos(math.radians(yaw))*math.cos(math.radians(pitch))
-                # currentR[0][1] = (math.cos(math.radians(yaw))*math.sin(math.radians(pitch))*math.sin(math.radians(roll)))-math.sin(math.radians(yaw))*math.cos(math.radians(roll))
-                # currentR[0][2] = (math.cos(math.radians(yaw))*math.sin(math.radians(pitch))*math.cos(math.radians(roll)))+math.sin(math.radians(yaw))*math.sin(math.radians(roll))
-                # currentR[1][0] = math.sin(math.radians(yaw))*math.cos(math.radians(pitch))
-                # currentR[1][1] = (math.sin(math.radians(yaw))*math.sin(math.radians(pitch))*math.sin(math.radians(roll)))+math.cos(math.radians(yaw))*math.cos(math.radians(roll))
-                # currentR[1][2] = (math.sin(math.radians(yaw))*math.sin(math.radians(pitch))*math.cos(math.radians(roll)))-math.cos(math.radians(yaw))*math.sin(math.radians(roll))
-                # currentR[2][0] = -math.cos(math.radians(pitch))
-                # currentR[2][1] = math.cos(math.radians(pitch))*math.sin(math.radians(roll))
-                # currentR[2][2] = math.cos(math.radians(pitch))*math.cos(math.radians(roll))
 
         key = cv2.waitKey(1)  # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
