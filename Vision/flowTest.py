@@ -6,6 +6,7 @@ import math
 from matplotlib import pyplot as plt
 import geopy
 import geopy.distance
+import gmplot
 
 #####################################################################
 
@@ -30,14 +31,18 @@ def getScale(allGPS,index):
 
     return distance
 
-def GPSToXYZ():
-    GPSXYZ = []
+def originalGPS():
+    GPS = []
     gpsFile = open(master_path_to_dataset+"/GPS.csv") 
     for i, line in enumerate(gpsFile):
         if i != 0:
             temp = line.split(",")
-            GPSXYZ.append([float(temp[1]), float(temp[2])])
+            GPS.append([float(temp[1]), float(temp[2])])
     gpsFile.close()
+    return GPS
+
+def GPSToXYZ():
+    GPSXYZ = originalGPS()
 
     start = geopy.Point(GPSXYZ[0][0],GPSXYZ[0][1])
 
@@ -47,7 +52,7 @@ def GPSToXYZ():
 
         p[0] = geopy.distance.vincenty(start,lat).meters
 
-        #change sign here to make go left
+        #change < to > here to make go left
         if(p[0] < GPSXYZ[0][0]):
             p[0]*=-1
         p[1] = geopy.distance.vincenty(start,lon).meters
@@ -57,13 +62,15 @@ def GPSToXYZ():
     return GPSXYZ
 
 def XYZtoGPS(allGPS):
-    start = geopy.point(allGPS[0][0],allGPS[0][1])
+    temp = originalGPS()
+    start = geopy.Point(temp[0][0],temp[0][1])
+   
     for p in allGPS:
         d = geopy.distance.VincentyDistance(meters = p[0])
-        newP = d.destination(point=start, bearing = 0)
+        newP = d.destination(point=start, bearing = 180)
 
         d = geopy.distance.VincentyDistance(meters = p[1])
-        newP = d.destination(point=newP, bearing = 90)
+        newP = d.destination(point=newP, bearing = 270)
 
         p[0] = newP.latitude
         p[1] = newP.longitude
@@ -119,9 +126,8 @@ def plotResults(allT,allGPS):
 
     newT = []
     for i,t in enumerate(allT):
-        if i!=0:
-            #remove minus to make go left
-            newT.append([-t[0], t[2]])
+        #remove minus to make go left
+        newT.append([-t[0], t[2]])
 
     newT = np.array(newT)
     #allGPS = rotateFunct(allGPS,angle)
@@ -136,8 +142,29 @@ def plotResults(allT,allGPS):
     plt.show()
 
 #TO DO
-def plotResultsOnMap():
-    return None
+def plotResultsOnMap(allT):
+    GPS = originalGPS()
+    T = XYZtoGPS(allT)
+
+    originalLat = []
+    originalLon = []
+    myLat = []
+    myLon = []
+
+    GPS = GPS[:len(T)]
+    
+    for i in range(len(T)):
+        originalLat.append(GPS[i][0])
+        originalLon.append(GPS[i][1])
+        myLat.append(T[i][0])
+        myLon.append(T[i][1])
+
+    gmap = gmplot.GoogleMapPlotter(54.767093,-1.570038, 16)
+
+    gmap.plot(originalLat, originalLon, 'red', edge_width=10)
+    gmap.plot(myLat, myLon, 'cornflowerblue', edge_width=10)
+
+    gmap.draw("mymap.html")
 
 
 #####################################################################
@@ -163,19 +190,6 @@ lk_params = dict(winSize  = (3, 3), #default is 21
                 #maxLevel = 3,
                 criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 30, 0.01))
 
-#####################################################################
-
-# set this to a file timestamp to start from (empty is first example - outside lab)
-# e.g. set to 1506943191.487683 for the end of the Bailey, just as the vehicle turns
-
-skip_forward_file_pattern = ""; # set to timestamp to skip forward to
-
-pause_playback = False; # pause until key press after each image
-
-#####################################################################
-
-# resolve full directory location of data set for images
-
 full_path_directory =  os.path.join(master_path_to_dataset, directory_to_cycle);
 
 previous_kp = None
@@ -188,7 +202,7 @@ currentT = np.array([0,0,0])
 
 allT = []
 
-detector = cv2.FastFeatureDetector_create(threshold=50, nonmaxSuppression=True) #50 is good
+detector = cv2.FastFeatureDetector_create(threshold=50, nonmaxSuppression=True)
 
 allGPS = GPSToXYZ()
 
@@ -213,7 +227,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
         good_matches2 = (previous_kp[st==1])
 
         if len(good_matches1) > 5:
-            essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC, prob=0.999, threshold=1.0)
+            essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC,prob=0.999,threshold=1.0)
             _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h))
 
             scale = getScale(allGPS,index)
@@ -246,7 +260,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
             print(currentT)
             print(scale)
 
-        key = cv2.waitKey(40 * (not(pause_playback))) & 0xFF; # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
+        key = cv2.waitKey(40)  # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
             print("Keyboard exit requested : exiting now - bye!")
             break # exit
@@ -259,8 +273,8 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
     previous_img = img
 
 # close all windows
-
 plotResults(allT,allGPS)
+plotResultsOnMap(allT)
 cv2.destroyAllWindows()
 
 #####################################################################
