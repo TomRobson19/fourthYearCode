@@ -41,6 +41,17 @@ def originalGPS():
     gpsFile.close()
     return GPS
 
+def originalIMU():
+    IMU = []
+    imuFile = open(master_path_to_dataset+"/IMU.csv") 
+    for i, line in enumerate(imuFile):
+        if i != 0:
+            temp = line.split(",")
+            IMU.append([float(temp[1]), float(temp[2]), float(temp[3]), float(temp[4])])
+    imuFile.close()
+    return IMU
+
+
 def GPSToXYZ():
     GPSXYZ = originalGPS()
 
@@ -167,6 +178,61 @@ def plotResultsOnMap(allT):
     gmap.draw("mymap.html")
 
 
+def gyro_to_angles(orientation_x, orientation_y, orientation_z, orientation_w):
+
+    # code section lifted from lines 386 - 404 of yocto_gyro.py example
+    # provided with YoctoLib.python 28878 (November 2017)
+
+    sqw = orientation_w * orientation_w;
+    sqx = orientation_x * orientation_x;
+    sqy = orientation_y * orientation_y;
+    sqz = orientation_z * orientation_z;
+    norm = sqx + sqy + sqz + sqw;
+    delta = orientation_y * orientation_w - orientation_x * orientation_z;
+
+    if delta > 0.499 * norm:
+            # // singularity at north pole
+            roll = 0 # added - T. Breckon (this is a fudge, not correct) **
+            pitch = 90.0
+            yaw  = round(2.0 * 1800.0/math.pi * math.atan2(orientation_x,-orientation_w)) / 10.0
+    else:
+            if delta < -0.499 * norm:
+                # // singularity at south pole
+                roll = 0 # added - T. Breckon (this is a fudge, not correct) **
+                pitch = -90.0
+                yaw  = round(-2.0 * 1800.0/math.pi * math.atan2(orientation_x,-orientation_w)) / 10.0
+            else:
+                roll  = round(1800.0/math.pi * math.atan2(2.0 * (orientation_w * orientation_x +orientation_y * orientation_z),sqw - sqx - sqy + sqz)) / 10.0
+                pitch = round(1800.0/math.pi * math.asin(2.0 * delta / norm)) / 10.0
+                yaw  = round(1800.0/math.pi * math.atan2(2.0 * (orientation_x * orientation_y + orientation_z * orientation_w),sqw + sqx - sqy - sqz)) / 10.0
+
+    # ** - within the above code we will assume we are not operating at the North or South Pole
+    # and if we are then the roll angle value here will be wrong and we'll have to just cope
+
+    return roll, pitch, yaw
+
+# Calculates Rotation Matrix given euler angles.
+def eulerAnglesToRotationMatrix(theta) :
+    
+    R_x = np.array([[1,         0,                  0                   ],
+                    [0,         math.cos(math.radians(theta[0])), -math.sin(math.radians(theta[0])) ],
+                    [0,         math.sin(math.radians(theta[0])), math.cos(math.radians(theta[0]))  ]
+                    ])
+        
+        
+                    
+    R_y = np.array([[math.cos(math.radians(theta[1])),    0,      math.sin(math.radians(theta[1]))  ],
+                    [0,                     1,      0                   ],
+                    [-math.sin(math.radians(theta[1])),   0,      math.cos(math.radians(theta[1]))  ]
+                    ])
+                
+    R_z = np.array([[math.cos(math.radians(theta[2])),    -math.sin(math.radians(theta[2])),    0],
+                    [math.sin(math.radians(theta[2])),    math.cos(math.radians(theta[2])),     0],
+                    [0,                     0,                      1]
+                    ])
+                    
+                    
+    return (np.dot(R_x, np.dot( R_y, R_z )))
 #####################################################################
 
 # full camera parameters - from camera calibration
@@ -207,6 +273,8 @@ detector = cv2.FastFeatureDetector_create(threshold=50, nonmaxSuppression=True)
 allGPS = GPSToXYZ()
 
 minFlowFeatures = 500
+
+imu = originalIMU()
 
 for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100]):
     full_path_filename = os.path.join(full_path_directory, filename)
@@ -256,11 +324,33 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
             else:
                 cv2.imshow('input image',img)
 
-            print(currentR)
-            print(currentT)
-            print(scale)
+            if index%50 == 0:#abs(currentT[0] - allGPS[index][0]) > 5 and abs(currentT[2] - allGPS[index][1]) > 5:
+                print("here")
+                currentT[0] = -allGPS[index][0]
+                currentT[2] = allGPS[index][1]
 
-        key = cv2.waitKey(40)  # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
+                imu = originalIMU()
+                roll, pitch, yaw = gyro_to_angles(imu[index][0],imu[index][1],imu[index][2],imu[index][3])
+
+                theta = [yaw,pitch,roll]
+                print(theta)
+                print(currentR)
+
+                currentR = eulerAnglesToRotationMatrix(theta)
+
+                print(currentR)
+
+                # currentR[0][0] = math.cos(math.radians(yaw))*math.cos(math.radians(pitch))
+                # currentR[0][1] = (math.cos(math.radians(yaw))*math.sin(math.radians(pitch))*math.sin(math.radians(roll)))-math.sin(math.radians(yaw))*math.cos(math.radians(roll))
+                # currentR[0][2] = (math.cos(math.radians(yaw))*math.sin(math.radians(pitch))*math.cos(math.radians(roll)))+math.sin(math.radians(yaw))*math.sin(math.radians(roll))
+                # currentR[1][0] = math.sin(math.radians(yaw))*math.cos(math.radians(pitch))
+                # currentR[1][1] = (math.sin(math.radians(yaw))*math.sin(math.radians(pitch))*math.sin(math.radians(roll)))+math.cos(math.radians(yaw))*math.cos(math.radians(roll))
+                # currentR[1][2] = (math.sin(math.radians(yaw))*math.sin(math.radians(pitch))*math.cos(math.radians(roll)))-math.cos(math.radians(yaw))*math.sin(math.radians(roll))
+                # currentR[2][0] = -math.cos(math.radians(pitch))
+                # currentR[2][1] = math.cos(math.radians(pitch))*math.sin(math.radians(roll))
+                # currentR[2][2] = math.cos(math.radians(pitch))*math.cos(math.radians(roll))
+
+        key = cv2.waitKey(1)  # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
             print("Keyboard exit requested : exiting now - bye!")
             break # exit
