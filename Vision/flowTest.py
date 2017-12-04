@@ -324,17 +324,19 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
             else:
                 cv2.imshow('input image',img)
 
-            if index%50 == 0:#abs(currentT[0] - allGPS[index][0]) > 5 and abs(currentT[2] - allGPS[index][1]) > 5:
+            if index%10 == 0:#abs(currentT[0] - allGPS[index][0]) > 5 and abs(currentT[2] - allGPS[index][1]) > 5:
                 print("here")
                 currentT[0] = -allGPS[index][0]
                 currentT[2] = allGPS[index][1]
 
                 imu = originalIMU()
-                roll, pitch, yaw = gyro_to_angles(-imu[index][0],-imu[index][1],imu[index][2],-imu[index][3])
+                roll, pitch, yaw = gyro_to_angles(imu[index][0],imu[index][1],imu[index][2],imu[index][3])
 
-                theta = [roll,pitch,yaw]
+                theta = np.array([roll,pitch,yaw])
 
-                currentR = eulerAnglesToRotationMatrix(theta)
+                currentR = cv2.Rodrigues(theta)[0]
+
+                print(currentR)
 
         key = cv2.waitKey(1)  # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
