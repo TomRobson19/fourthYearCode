@@ -214,21 +214,21 @@ def gyro_to_angles(orientation_x, orientation_y, orientation_z, orientation_w):
 # Calculates Rotation Matrix given euler angles.
 def eulerAnglesToRotationMatrix(theta) :
     
-    R_x = np.array([[1,         0,                  0                   ],
-                    [0,         math.cos(math.radians(theta[0])), -math.sin(math.radians(theta[0])) ],
-                    [0,         math.sin(math.radians(theta[0])), math.cos(math.radians(theta[0]))  ]
+    R_x = np.array([[1,0,0],
+                    [0,math.cos(math.radians(theta[0])), -math.sin(math.radians(theta[0]))],
+                    [0,math.sin(math.radians(theta[0])), math.cos(math.radians(theta[0]))]
                     ])
         
         
                     
-    R_y = np.array([[math.cos(math.radians(theta[1])),    0,      math.sin(math.radians(theta[1]))  ],
-                    [0,                     1,      0                   ],
-                    [-math.sin(math.radians(theta[1])),   0,      math.cos(math.radians(theta[1]))  ]
+    R_y = np.array([[math.cos(math.radians(theta[1])),0,math.sin(math.radians(theta[1]))],
+                    [0,1,0],
+                    [-math.sin(math.radians(theta[1])),0,math.cos(math.radians(theta[1]))]
                     ])
                 
-    R_z = np.array([[math.cos(math.radians(theta[2])),    -math.sin(math.radians(theta[2])),    0],
-                    [math.sin(math.radians(theta[2])),    math.cos(math.radians(theta[2])),     0],
-                    [0,                     0,                      1]
+    R_z = np.array([[math.cos(math.radians(theta[2])),-math.sin(math.radians(theta[2])),0],
+                    [math.sin(math.radians(theta[2])),math.cos(math.radians(theta[2])),0],
+                    [0,0,1]
                     ])
                     
                     
@@ -264,7 +264,7 @@ previous_img = None
 first_image = True
 
 currentR = []
-currentT = np.array([0,0,0])
+currentT = np.array([0,0,0],dtype=np.float64)
 
 allT = []
 
@@ -294,7 +294,32 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
         good_matches1 = (kp[st==1])
         good_matches2 = (previous_kp[st==1])
 
-        if len(good_matches1) > 5:
+        #will eventually be based on when it goes wrong (when this works)
+        if index%10 == 120:#abs(currentT[0] - allGPS[index][0]) > 5 and abs(currentT[2] - allGPS[index][1]) > 5:
+            print("returning to ground truth here")
+            currentT[0] = -allGPS[index][0]
+            currentT[2] = allGPS[index][1]
+
+            #try and get angle from GPS rather than IMU, it seems to not be good - is currently the only reason I can think of for it not working
+
+            previousPoint = geopy.Point(-allGPS[index-1][0],allGPS[index-1][1])
+            currentPoint = geopy.Point(-allGPS[index][0],allGPS[index][1])
+            nextPoint = geopy.Point(-allGPS[index+1][0],allGPS[index+1][1])
+
+
+
+            imu = originalIMU()
+            roll, pitch, yaw = gyro_to_angles(imu[index][0],imu[index][1],imu[index][2],imu[index][3])
+
+            theta = np.array(np.radians([yaw,pitch,roll]))
+
+            currentR = cv2.Rodrigues(theta)[0]
+
+            #currentR = np.array([[1,0,0],[0,1,0],[0,0,1]])
+
+            cv2.imshow('input image',img)
+        
+        elif len(good_matches1) > 5:
             essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC,prob=0.999,threshold=1.0)
             _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h))
 
@@ -306,9 +331,8 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
                     currentT = t*scale
                     currentR = R
                 elif isForwardDominant:  
-                    currentT += scale*currentR.dot(t)
                     currentR = R.dot(currentR)
-                    
+                    currentT += scale*currentR.dot(t)                    
                 else:
                     print("Dominant motion not forward - ignored")
             else:
@@ -323,20 +347,6 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
                 cv2.imshow('input image',img2)
             else:
                 cv2.imshow('input image',img)
-
-            if index%10 == 0:#abs(currentT[0] - allGPS[index][0]) > 5 and abs(currentT[2] - allGPS[index][1]) > 5:
-                print("here")
-                currentT[0] = -allGPS[index][0]
-                currentT[2] = allGPS[index][1]
-
-                imu = originalIMU()
-                roll, pitch, yaw = gyro_to_angles(imu[index][0],imu[index][1],imu[index][2],imu[index][3])
-
-                theta = np.array([roll,pitch,yaw])
-
-                currentR = cv2.Rodrigues(theta)[0]
-
-                print(currentR)
 
         key = cv2.waitKey(1)  # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
         if (key == ord('x')):       # exit
