@@ -92,16 +92,85 @@ hzwr87
 Pre-processing
 \end_layout
 
+\begin_layout Standard
+Following an examination of the dataset, the first decision that was made
+ was to remove the lower part of the images, as this contained the bonnet
+ of the car and its shadow, which would have features that would either
+ not move or move differently to the rest of the features in the image,
+ leading to confusing results.
+\end_layout
+
 \begin_layout Section*
 Feature Extraction and Matching
 \end_layout
 
-\begin_layout Section*
-Optimisation Approach
+\begin_layout Standard
+The approach chosen for this implementation of visual odometry was monocular
+ odometry.
+ The features used come from sparse Optical Flow, using the Lucas-Kanade
+ algorithm.
+ This is backed up by the OpenCV implementation of the FAST feature detector,
+ which is used when the number of matching features that the optical flow
+ algorithm finds is insufficient.
+ When this number of features is deemed insufficient is one of the tunable
+ parameters assotiated with this implementation.
+ When the FAST feature detector is used, the features are placed into bins
+ in order to prevent features becoming too concentarted in a specific area.
+ 
+\end_layout
+
+\begin_layout Standard
+The scale, or approximate number of meters moved between images, is calculated
+ from the ground truth GPS data.
+ To try and cut down on the number of erroneous results and the number of
+ unnecessary computations, we ignore any images with a very small scale
+ value, as this indicates that the car has not moved very far, and is most
+ likely stationary in traffic, following examination of the dataset.
+ 
+\end_layout
+
+\begin_layout Standard
+Another important consideration is to only include results where there s
+ a significant forward component to the translation vector.
+ One of the reasons that this has been implemented is possible interpretations
+ of sideways motion caused by cars travelling in the other direction.
+ The reason that we do not require the forward motion to be dominant, just
+ significant, is due to the large number of tight corners present in this
+ dataset.
+ 
 \end_layout
 
 \begin_layout Section*
 Performance
+\end_layout
+
+\begin_layout Standard
+The performance of this system has been evaluated in several different ways.
+ The first of these was using a matplotlib graph to try and compare the
+ shape of this implementation to that of the ground truth GPS data.
+ The purpose of this was to assist early in development and determine if
+ the shape of the trajectory that the odometry was finding was sufficiently
+ close to the shape of the ground truth data, particularly for determining
+ how it handled difficult parts of the dataset.
+ 
+\end_layout
+
+\begin_layout Standard
+The second evaluation method was to convert all of the translations given
+ by this implementation back into GPS points and overlay them on a map of
+ Durham, along with the ground truth data, to determine whether the path
+ that the system had found was accurate.
+ 
+\end_layout
+
+\begin_layout Standard
+The final method of evaluation implemented here was to correct the results
+ of the odometry when it strayed too far from the corresponding ground truth
+ point.
+ The number of corrections necessary gives an indication of the quality
+ of the odometry implementation, as well as an indication of the relative
+ difficulty of the sections of the dataset.
+ 
 \end_layout
 
 \end_body
