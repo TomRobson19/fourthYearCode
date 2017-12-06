@@ -107,15 +107,19 @@ Feature Extraction and Matching
 \begin_layout Standard
 The approach chosen for this implementation of visual odometry was monocular
  odometry.
- The features used come from sparse Optical Flow, using the Lucas-Kanade
- algorithm.
+ The initial approach taken used a SURF feature detector, and the OpenCV
+ Flann based matcher to correlate features between the current and previous
+ images.
+ However, the results using this approach were quite poor and slow to run.
+ Therefore, taking inspiration from the example provided, the feature detector
+ was changed to use sparse Optical Flow, using the Lucas-Kanade algorithm.
  This is backed up by the OpenCV implementation of the FAST feature detector,
  which is used when the number of matching features that the optical flow
  algorithm finds is insufficient.
  When this number of features is deemed insufficient is one of the tunable
- parameters assotiated with this implementation.
+ parameters associated with this implementation.
  When the FAST feature detector is used, the features are placed into bins
- in order to prevent features becoming too concentarted in a specific area.
+ in order to prevent features becoming too concentrated in a specific area.
  
 \end_layout
 
