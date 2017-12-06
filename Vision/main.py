@@ -57,20 +57,25 @@ def GPSToXYZ():
 
     start = geopy.Point(GPSXYZ[0][0],GPSXYZ[0][1])
 
+    newGPSXYZ = []
+
     for p in GPSXYZ:
+        newP = [0,0]
         lat = geopy.Point(p[0],start.longitude)
         lon = geopy.Point(start.latitude,p[1])
 
-        p[0] = geopy.distance.vincenty(start,lat).meters
+        newP[0] = geopy.distance.vincenty(start,lat).meters
 
-        #change < to > here to make go left
-        if(p[0] < GPSXYZ[0][0]):
-            p[0]*=-1
-        p[1] = geopy.distance.vincenty(start,lon).meters
-        if(p[1] < GPSXYZ[0][1]):
-            p[1]*=-1
+        if(p[0] > start[0]):
+            newP[0]*=-1
 
-    return GPSXYZ
+        newP[1] = geopy.distance.vincenty(start,lon).meters
+        if (p[1] < start[1]):
+            newP[1]*=-1
+
+        newGPSXYZ.append(newP)
+
+    return newGPSXYZ
 
 def XYZtoGPS(allGPS):
     temp = originalGPS()
@@ -81,7 +86,7 @@ def XYZtoGPS(allGPS):
         newP = d.destination(point=start, bearing = 180)
 
         d = geopy.distance.VincentyDistance(meters = p[1])
-        newP = d.destination(point=newP, bearing = 270)
+        newP = d.destination(point=newP, bearing = 90)
 
         p[0] = newP.latitude
         p[1] = newP.longitude
@@ -112,47 +117,19 @@ def featureBinning(kp):
     kp = [item for sublist in temp_kp for item in sublist]
     return kp
 
-def rotateFunct(pts_l, angle, degrees=False):
-    """ Returns a rotated list(function) by the provided angle."""
-    if degrees == True:
-        theta = math.radians(angle)
-    else:
-        theta = angle
-
-    R = np.array([ [math.cos(theta), -math.sin(theta)],
-                   [math.sin(theta), math.cos(theta)] ])
-    rot_pts = []
-    for v in pts_l:
-        v = np.array(v).transpose()
-        v = R.dot(v)
-        v = v.transpose()
-        rot_pts.append(v)
-
-    return rot_pts
-
 def plotResults(allT,allGPS):
-    angle = math.radians(-121.8)
-
     allGPS = allGPS[:len(allT)]
-
-    newT = []
-    for i,t in enumerate(allT):
-        #remove minus to make go left
-        newT.append([-t[0], t[2]])
-
-    newT = np.array(newT)
-    #allGPS = rotateFunct(allGPS,angle)
 
     plt.figure(1)
     GPS, = plt.plot(*zip(*allGPS), color='red', marker='o', label='GPS')
-    pyMVO, = plt.plot(*zip(*newT), color='blue', marker='o',  label='py-MVO')
+    pyMVO, = plt.plot(*zip(*allT), color='blue', marker='o',  label='py-MVO')
     plt.legend(handles=[pyMVO, GPS])
     # Set plot parameters and show it
     plt.axis('equal')
     plt.grid()
     plt.show()
 
-#TO DO
+
 def plotResultsOnMap(allT):
     GPS = originalGPS()
     T = XYZtoGPS(allT)
@@ -177,62 +154,53 @@ def plotResultsOnMap(allT):
 
     gmap.draw("mymap.html")
 
-
-def gyro_to_angles(orientation_x, orientation_y, orientation_z, orientation_w):
-
-    # code section lifted from lines 386 - 404 of yocto_gyro.py example
-    # provided with YoctoLib.python 28878 (November 2017)
-
-    sqw = orientation_w * orientation_w;
-    sqx = orientation_x * orientation_x;
-    sqy = orientation_y * orientation_y;
-    sqz = orientation_z * orientation_z;
-    norm = sqx + sqy + sqz + sqw;
-    delta = orientation_y * orientation_w - orientation_x * orientation_z;
-
-    if delta > 0.499 * norm:
-            # // singularity at north pole
-            roll = 0 # added - T. Breckon (this is a fudge, not correct) **
-            pitch = 90.0
-            yaw  = round(2.0 * 1800.0/math.pi * math.atan2(orientation_x,-orientation_w)) / 10.0
+def rotateFunct(pts_l, angle, degrees=False):
+    """ Returns a rotated list(function) by the provided angle."""
+    if degrees == True:
+        theta = math.radians(angle)
     else:
-            if delta < -0.499 * norm:
-                # // singularity at south pole
-                roll = 0 # added - T. Breckon (this is a fudge, not correct) **
-                pitch = -90.0
-                yaw  = round(-2.0 * 1800.0/math.pi * math.atan2(orientation_x,-orientation_w)) / 10.0
-            else:
-                roll  = round(1800.0/math.pi * math.atan2(2.0 * (orientation_w * orientation_x +orientation_y * orientation_z),sqw - sqx - sqy + sqz)) / 10.0
-                pitch = round(1800.0/math.pi * math.asin(2.0 * delta / norm)) / 10.0
-                yaw  = round(1800.0/math.pi * math.atan2(2.0 * (orientation_x * orientation_y + orientation_z * orientation_w),sqw + sqx - sqy - sqz)) / 10.0
+        theta = angle
 
-    # ** - within the above code we will assume we are not operating at the North or South Pole
-    # and if we are then the roll angle value here will be wrong and we'll have to just cope
+    R = np.array([ [math.cos(theta), -math.sin(theta)],
+                   [math.sin(theta), math.cos(theta)] ])
+    rot_pts = []
+    for v in pts_l:
+        v = np.array(v).transpose()
+        v = R.dot(v)
+        v = v.transpose()
+        rot_pts.append(v)
 
-    return roll, pitch, yaw
+    return rot_pts
 
-# Calculates Rotation Matrix given euler angles.
-def eulerAnglesToRotationMatrix(theta) :
-    
-    R_x = np.array([[1,0,0],
-                    [0,math.cos(math.radians(theta[0])), -math.sin(math.radians(theta[0]))],
-                    [0,math.sin(math.radians(theta[0])), math.cos(math.radians(theta[0]))]
-                    ])
-        
-        
-                    
-    R_y = np.array([[math.cos(math.radians(theta[1])),0,math.sin(math.radians(theta[1]))],
-                    [0,1,0],
-                    [-math.sin(math.radians(theta[1])),0,math.cos(math.radians(theta[1]))]
-                    ])
-                
-    R_z = np.array([[math.cos(math.radians(theta[2])),-math.sin(math.radians(theta[2])),0],
-                    [math.sin(math.radians(theta[2])),math.cos(math.radians(theta[2])),0],
-                    [0,0,1]
-                    ])
-                    
-                    
-    return (np.dot(R_z, np.dot( R_y, R_x )))
+def correctToGroundTruth(allT, allGPS):
+    correctionFrequency = 100
+
+    allT = np.array(allT)
+    allGPS = np.array(allGPS)
+
+    startIndex = 0
+    newAllT = []
+    angle = 0
+    correction = 0
+
+    for i,p in enumerate(allT):
+        if i%correctionFrequency == 0 and i != 0:
+            #find correct position 
+            startIndex = i
+            initialPoint = allT[i+5]-allT[i]
+            angle = np.degrees(np.arctan2(initialPoint[0],initialPoint[1]))
+            gpsInitialPoint = allGPS[i+5]-allGPS[i]
+            gpsAngle = np.degrees(np.arctan2(gpsInitialPoint[0],gpsInitialPoint[1]))
+            angle -= gpsAngle
+            correction = allGPS[i] - p
+        newT = p+correction
+        initialPoint = allGPS[startIndex]
+        newT = rotateFunct([newT-initialPoint], np.radians(angle))[0]+initialPoint
+        newAllT.append(newT)
+
+    return newAllT
+
+
 #####################################################################
 
 # full camera parameters - from camera calibration
@@ -293,33 +261,8 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
 
         good_matches1 = (kp[st==1])
         good_matches2 = (previous_kp[st==1])
-
-        #will eventually be based on when it goes wrong (when this works)
-        if index%10 == 120:#abs(currentT[0] - allGPS[index][0]) > 5 and abs(currentT[2] - allGPS[index][1]) > 5:
-            print("returning to ground truth here")
-            currentT[0] = -allGPS[index][0]
-            currentT[2] = allGPS[index][1]
-
-            #try and get angle from GPS rather than IMU, it seems to not be good - is currently the only reason I can think of for it not working
-
-            previousPoint = geopy.Point(-allGPS[index-1][0],allGPS[index-1][1])
-            currentPoint = geopy.Point(-allGPS[index][0],allGPS[index][1])
-            nextPoint = geopy.Point(-allGPS[index+1][0],allGPS[index+1][1])
-
-
-
-            imu = originalIMU()
-            roll, pitch, yaw = gyro_to_angles(imu[index][0],imu[index][1],imu[index][2],imu[index][3])
-
-            theta = np.array(np.radians([yaw,pitch,roll]))
-
-            currentR = cv2.Rodrigues(theta)[0]
-
-            #currentR = np.array([[1,0,0],[0,1,0],[0,0,1]])
-
-            cv2.imshow('input image',img)
         
-        elif len(good_matches1) > 5:
+        if len(good_matches1) > 5:
             essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC,prob=0.999,threshold=1.0)
             _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h))
 
@@ -334,6 +277,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
                     currentR = R.dot(currentR)
                     currentT += scale*currentR.dot(t)                    
                 else:
+                    print(t)
                     print("Dominant motion not forward - ignored")
             else:
                 print("Insufficient movement - assumed stationary")
@@ -348,27 +292,26 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
             else:
                 cv2.imshow('input image',img)
 
-        key = cv2.waitKey(1)  # wait 40ms (i.e. 1000ms / 25 fps = 40 ms)
-        if (key == ord('x')):       # exit
+        key = cv2.waitKey(1)  
+        if (key == ord('x')):       
             print("Keyboard exit requested : exiting now - bye!")
             break # exit
-        elif (key == ord(' ')):     # pause (on next frame)
-            pause_playback = not(pause_playback)
-            print("pause")
 
     allT.append([currentT.item(0), currentT.item(1), currentT.item(2)])
     previous_kp = kp
     previous_img = img
 
+
+newT = []
+for i,t in enumerate(allT):
+    newT.append([t[0], t[2]])
+
+correctedT = newT
+#correctedT = correctToGroundTruth(newT,allGPS)
+
 # close all windows
-plotResults(allT,allGPS)
-plotResultsOnMap(allT)
+plotResults(correctedT,allGPS)
+plotResultsOnMap(correctedT)
 cv2.destroyAllWindows()
 
 #####################################################################
-
-"""
-TO DO:
-
-WILL NEED TO CORRECT TO GROUND TRUTH, QUESTION IS HOW OFTEN?
-"""
