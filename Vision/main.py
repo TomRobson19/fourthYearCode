@@ -172,8 +172,8 @@ def rotateFunct(pts_l, angle, degrees=False):
 
     return rot_pts
 
-def correctToGroundTruth(allT, allGPS):
-    correctionFrequency = 100
+def correctToGroundTruth(allT, allGPS,frequency):
+    correctionFrequency = frequency
 
     allT = np.array(allT)
     allGPS = np.array(allGPS)
@@ -277,7 +277,6 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
                     currentR = R.dot(currentR)
                     currentT += scale*currentR.dot(t)                    
                 else:
-                    print(t)
                     print("Dominant motion not forward - ignored")
             else:
                 print("Insufficient movement - assumed stationary")
@@ -306,8 +305,8 @@ newT = []
 for i,t in enumerate(allT):
     newT.append([t[0], t[2]])
 
-correctedT = newT
-#correctedT = correctToGroundTruth(newT,allGPS)
+#correctedT = newT
+correctedT = correctToGroundTruth(newT,allGPS,50)
 
 # close all windows
 plotResults(correctedT,allGPS)
