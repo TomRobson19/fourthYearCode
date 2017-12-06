@@ -137,11 +137,13 @@ The scale, or approximate number of meters moved between images, is calculated
 Another important consideration is to only include results where there s
  a significant forward component to the translation vector.
  One of the reasons that this has been implemented is possible interpretations
- of sideways motion caused by cars travelling in the other direction.
+ of sideways or backwards motion caused by cars travelling in the other
+ direction.
  The reason that we do not require the forward motion to be dominant, just
- significant, is due to the large number of tight corners present in this
- dataset.
- 
+ significant, is that we still want to be able to recognise when the car
+ is going round a corner, but ignore erroneous readings, many of which have
+ negative forward components.
+ The interpretation of significant was determined by experimentation.
 \end_layout
 
 \begin_layout Section*
