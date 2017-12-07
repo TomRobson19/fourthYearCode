@@ -176,7 +176,7 @@ The final method of evaluation implemented here was to correct the results
  The number of corrections necessary gives an indication of the quality
  of the odometry implementation, as well as an indication of the relative
  difficulty of the sections of the dataset.
- 
+ This was implemented as a post-processing step.
 \end_layout
 
 \end_body

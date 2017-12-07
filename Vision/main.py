@@ -172,8 +172,8 @@ def rotateFunct(pts_l, angle, degrees=False):
 
     return rot_pts
 
-def correctToGroundTruth(allT, allGPS,frequency):
-    correctionFrequency = frequency
+def correctToGroundTruth(allT, allGPS,threshold):
+    correctionThreshold = threshold
 
     allT = np.array(allT)
     allGPS = np.array(allGPS)
@@ -183,22 +183,33 @@ def correctToGroundTruth(allT, allGPS,frequency):
     angle = 0
     correction = 0
 
+    counter = 0
+    corrections = []
+
     for i,p in enumerate(allT):
-        if i%correctionFrequency == 0 and i != 0:
-            #find correct position 
-            startIndex = i
-            initialPoint = allT[i+5]-allT[i]
-            angle = np.degrees(np.arctan2(initialPoint[0],initialPoint[1]))
-            gpsInitialPoint = allGPS[i+5]-allGPS[i]
-            gpsAngle = np.degrees(np.arctan2(gpsInitialPoint[0],gpsInitialPoint[1]))
-            angle -= gpsAngle
-            correction = allGPS[i] - p
+        #is the previous frame too far away?
+        if i > 0:
+            distance = math.hypot(allGPS[i-1][0]-newAllT[i-1][0],allGPS[i-1][1]-newAllT[i-1][1])
+            if distance > correctionThreshold:
+                counter += 1
+                corrections.append(i)
+                #find correct position 
+                startIndex = i
+                if(len(allT) > i+5):
+                    initialPoint = allT[i+5]-allT[i]
+                else:
+                    initialPoint = allT[-1]-allT[i]
+                angle = np.degrees(np.arctan2(initialPoint[0],initialPoint[1]))
+                gpsInitialPoint = allGPS[i+5]-allGPS[i]
+                gpsAngle = np.degrees(np.arctan2(gpsInitialPoint[0],gpsInitialPoint[1]))
+                angle -= gpsAngle
+                correction = allGPS[i] - p
         newT = p+correction
         initialPoint = allGPS[startIndex]
         newT = rotateFunct([newT-initialPoint], np.radians(angle))[0]+initialPoint
         newAllT.append(newT)
 
-    return newAllT
+    return newAllT, counter, len(allT), corrections
 
 
 #####################################################################
@@ -306,7 +317,9 @@ for i,t in enumerate(allT):
     newT.append([t[0], t[2]])
 
 #correctedT = newT
-correctedT = correctToGroundTruth(newT,allGPS,50)
+correctedT, counter, numberOfFrames, corrections = correctToGroundTruth(newT,allGPS,5)
+
+print("Number of Corrections required was "+ str(counter) + " over the course of " + str(numberOfFrames) + " frames")
 
 # close all windows
 plotResults(correctedT,allGPS)
