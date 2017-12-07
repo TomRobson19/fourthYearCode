@@ -188,7 +188,7 @@ def correctToGroundTruth(allT, allGPS,threshold):
 
     for i,p in enumerate(allT):
         #is the previous frame too far away?
-        if i > 0:
+        if i > 0 and i < 2890:
             distance = math.hypot(allGPS[i-1][0]-newAllT[i-1][0],allGPS[i-1][1]-newAllT[i-1][1])
             if distance > correctionThreshold:
                 counter += 1
@@ -265,7 +265,9 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
         first_image = False
         kp = detector.detect(img) 
         kp = featureBinning(kp)
+        img2 = cv2.drawKeypoints(img,kp,img)
         kp = np.array([x.pt for x in kp], dtype=np.float32)
+        cv2.imshow("input image", img2)
     else:
         kp, st, err = cv2.calcOpticalFlowPyrLK(previous_img, img, previous_kp, None, **lk_params)
         st = st.reshape(st.shape[0])
