@@ -13,7 +13,7 @@ import gmplot
 master_path_to_dataset = "TTBB-durham-02-10-17-sub5"
 directory_to_cycle = "left-images"     # edit this for left or right image set
 
-#Is OK just to use this, don't need to mess with stereo
+# get scale from ground truth GPS
 def getScale(allGPS,index):
 
     previousImage = allGPS[index-1]
@@ -31,6 +31,7 @@ def getScale(allGPS,index):
 
     return distance
 
+#read in ground truth GPS
 def originalGPS():
     GPS = []
     gpsFile = open(master_path_to_dataset+"/GPS.csv") 
@@ -41,17 +42,7 @@ def originalGPS():
     gpsFile.close()
     return GPS
 
-def originalIMU():
-    IMU = []
-    imuFile = open(master_path_to_dataset+"/IMU.csv") 
-    for i, line in enumerate(imuFile):
-        if i != 0:
-            temp = line.split(",")
-            IMU.append([float(temp[1]), float(temp[2]), float(temp[3]), float(temp[4])])
-    imuFile.close()
-    return IMU
-
-
+#convert GPS coordinates to XYZ translations
 def GPSToXYZ():
     GPSXYZ = originalGPS()
 
@@ -77,6 +68,7 @@ def GPSToXYZ():
 
     return newGPSXYZ
 
+#convert XYZ translations to GPS to be plotted on a map
 def XYZtoGPS(allGPS):
     temp = originalGPS()
     start = geopy.Point(temp[0][0],temp[0][1])
@@ -93,6 +85,7 @@ def XYZtoGPS(allGPS):
 
     return allGPS
 
+#place features in bins when FAST features is used
 def featureBinning(kp):
     bin_size = 100
     features_per_bin = 50
@@ -117,6 +110,7 @@ def featureBinning(kp):
     kp = [item for sublist in temp_kp for item in sublist]
     return kp
 
+#plot results on MatPlotLib
 def plotResults(allT,allGPS):
     allGPS = allGPS[:len(allT)]
 
@@ -130,6 +124,7 @@ def plotResults(allT,allGPS):
     plt.show()
 
 
+#plot results on google maps
 def plotResultsOnMap(allT):
     GPS = originalGPS()
     T = XYZtoGPS(allT)
@@ -154,8 +149,8 @@ def plotResultsOnMap(allT):
 
     gmap.draw("mymap.html")
 
+#Returns a rotated list(function) by the provided angle - taken from https://github.com/Transportation-Inspection/visual_odometry/blob/master/src/Trajectory_Tools.py
 def rotateFunct(pts_l, angle, degrees=False):
-    """ Returns a rotated list(function) by the provided angle."""
     if degrees == True:
         theta = math.radians(angle)
     else:
@@ -172,6 +167,7 @@ def rotateFunct(pts_l, angle, degrees=False):
 
     return rot_pts
 
+#correct odometry results to ground truth when it goes wrong by a specific distance threshold
 def correctToGroundTruth(allT, allGPS,threshold):
     correctionThreshold = threshold
 
@@ -184,15 +180,12 @@ def correctToGroundTruth(allT, allGPS,threshold):
     correction = 0
 
     counter = 0
-    corrections = []
 
     for i,p in enumerate(allT):
-        #is the previous frame too far away?
-        if i > 0 and i < 2890:
+        if i > 0 and i < 2893:
             distance = math.hypot(allGPS[i-1][0]-newAllT[i-1][0],allGPS[i-1][1]-newAllT[i-1][1])
             if distance > correctionThreshold:
                 counter += 1
-                corrections.append(i)
                 #find correct position 
                 startIndex = i
                 if(len(allT) > i+5):
@@ -209,7 +202,7 @@ def correctToGroundTruth(allT, allGPS,threshold):
         newT = rotateFunct([newT-initialPoint], np.radians(angle))[0]+initialPoint
         newAllT.append(newT)
 
-    return newAllT, counter, len(allT), corrections
+    return newAllT, counter, len(allT)
 
 
 #####################################################################
@@ -261,28 +254,28 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
     img = cv2.imread(full_path_filename, cv2.IMREAD_COLOR)
     img = img[0:340, 0:image_width]
 
-    if(first_image):
+    if(first_image): #special case for first image using FAST
         first_image = False
         kp = detector.detect(img) 
         kp = featureBinning(kp)
         img2 = cv2.drawKeypoints(img,kp,img)
         kp = np.array([x.pt for x in kp], dtype=np.float32)
         cv2.imshow("input image", img2)
-    else:
+    else: #use Optical flow
         kp, st, err = cv2.calcOpticalFlowPyrLK(previous_img, img, previous_kp, None, **lk_params)
         st = st.reshape(st.shape[0])
 
         good_matches1 = (kp[st==1])
         good_matches2 = (previous_kp[st==1])
         
-        if len(good_matches1) > 5:
+        if len(good_matches1) > 5: #ensure there are sufficent matches to compute the essential matrix
             essential_matrix,_ = cv2.findEssentialMat(good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h),method=cv2.RANSAC,prob=0.999,threshold=1.0)
             _,R,t,_ = cv2.recoverPose(essential_matrix,good_matches1,good_matches2,focal=camera_focal_length_px,pp=(optical_image_centre_w,optical_image_centre_h))
 
             scale = getScale(allGPS,index)
 
-            if scale > 0.00001:
-                isForwardDominant = 100*t[2] > t[0]
+            if scale > 0.00001: #ensure there is movement present
+                isForwardDominant = 100*t[2] > t[0] #ensure the forward component is significant, then update currentR and currentT
                 if currentR == []:
                     currentT = t*scale
                     currentR = R
@@ -294,7 +287,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
             else:
                 print("Insufficient movement - assumed stationary")
 
-            if len(good_matches1) < minFlowFeatures:
+            if len(good_matches1) < minFlowFeatures: #if insufficient features returned by flow, replace with FAST for the next frame
                 kp = detector.detect(img) 
                 kp = featureBinning(kp)
                 
@@ -313,17 +306,18 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
     previous_kp = kp
     previous_img = img
 
-
+# remove y (vertical) component
 newT = []
 for i,t in enumerate(allT):
     newT.append([t[0], t[2]])
 
+# comment and uncomment these lines to change between correcting to ground truth or not
 #correctedT = newT
-correctedT, counter, numberOfFrames, corrections = correctToGroundTruth(newT,allGPS,5)
 
+correctedT, counter, numberOfFrames = correctToGroundTruth(newT,allGPS,5)
 print("Number of Corrections required was "+ str(counter) + " over the course of " + str(numberOfFrames) + " frames")
 
-# close all windows
+# plot reuslts on matplotlib and graph, then close
 plotResults(correctedT,allGPS)
 plotResultsOnMap(correctedT)
 cv2.destroyAllWindows()
