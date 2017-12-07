@@ -120,7 +120,19 @@ The approach chosen for this implementation of visual odometry was monocular
  parameters associated with this implementation.
  When the FAST feature detector is used, the features are placed into bins
  in order to prevent features becoming too concentrated in a specific area.
- 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Image of Binning and FAST
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -134,7 +146,7 @@ The scale, or approximate number of meters moved between images, is calculated
 \end_layout
 
 \begin_layout Standard
-Another important consideration is to only include results where there s
+Another important consideration is to only include results where there is
  a significant forward component to the translation vector.
  One of the reasons that this has been implemented is possible interpretations
  of sideways or backwards motion caused by cars travelling in the other
@@ -162,11 +174,37 @@ The performance of this system has been evaluated in several different ways.
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+MatPlotlib images here
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The second evaluation method was to convert all of the translations given
  by this implementation back into GPS points and overlay them on a map of
  Durham, along with the ground truth data, to determine whether the path
  that the system had found was accurate.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Map images here
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -177,6 +215,20 @@ The final method of evaluation implemented here was to correct the results
  of the odometry implementation, as well as an indication of the relative
  difficulty of the sections of the dataset.
  This was implemented as a post-processing step.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Map and Matplotlib of corrections, as well as graph of distances and number
+ of corrections required
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
