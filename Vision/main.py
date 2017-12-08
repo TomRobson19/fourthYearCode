@@ -1,3 +1,15 @@
+######################################################################
+'''
+This implementation requires matplotlib, geopy and gmplot, all of which are available through pip. "pip install geopy" etc. 
+May also require python3-tk, availbe from apt/yum. "apt install python3-tk"
+
+The code can then be run using "python3 main.py"
+
+The matplotlib plot will be displayed first, when this window is close, the google maps plot will be available in the same directory as "mymap.html"
+Lines 327-330 control whether correction to ground truth is used, and what the distance threshold is
+
+'''
+######################################################################
 import cv2
 import os
 import numpy as np
@@ -310,6 +322,7 @@ for index, filename in enumerate(sorted(os.listdir(full_path_directory))):#[:100
 newT = []
 for i,t in enumerate(allT):
     newT.append([t[0], t[2]])
+
 
 # comment and uncomment these lines to change between correcting to ground truth or not
 #correctedT = newT
