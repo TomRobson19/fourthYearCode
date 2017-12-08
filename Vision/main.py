@@ -324,10 +324,10 @@ for i,t in enumerate(allT):
     newT.append([t[0], t[2]])
 
 
-# comment and uncomment these lines to change between correcting to ground truth or not
+# comment and uncomment these lines to change between correcting to ground truth or not, and specify the threshold
 #correctedT = newT
 
-correctedT, counter, numberOfFrames = correctToGroundTruth(newT,allGPS,5)
+correctedT, counter, numberOfFrames = correctToGroundTruth(newT,allGPS,100)
 print("Number of Corrections required was "+ str(counter) + " over the course of " + str(numberOfFrames) + " frames")
 
 # plot reuslts on matplotlib and graph, then close
