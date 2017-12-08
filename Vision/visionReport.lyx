@@ -81,7 +81,7 @@
 \begin_body
 
 \begin_layout Title
-Advanced Computer Vision Summative Assignment - Visual Odometry
+Evaluating Visual Odometry for Future Autonomous Vehicle Guidance
 \end_layout
 
 \begin_layout Author
@@ -95,9 +95,9 @@ Pre-processing
 \begin_layout Standard
 Following an examination of the dataset, the first decision that was made
  was to remove the lower part of the images, as this contained the bonnet
- of the car and its shadow, which would have features that would either
- not move or move differently to the rest of the features in the image,
- leading to confusing results.
+ of the car and the shadow of the car and cameras, which would have features
+ that would either not move or move differently to the rest of the features
+ in the image, leading to confusing results.
 \end_layout
 
 \begin_layout Section*
@@ -107,12 +107,15 @@ Feature Extraction and Matching
 \begin_layout Standard
 The approach chosen for this implementation of visual odometry was monocular
  odometry.
- The initial approach taken used a SURF feature detector, and the OpenCV
- Flann based matcher to correlate features between the current and previous
- images.
- However, the results using this approach were quite poor and slow to run.
- Therefore, taking inspiration from the example provided, the feature detector
- was changed to use sparse Optical Flow, using the Lucas-Kanade algorithm.
+ Taking inspiration from the examples provided
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1,key-2"
+
+\end_inset
+
+, the feature detector used was sparse Optical Flow, using the Lucas-Kanade
+ algorithm.
  This is backed up by the OpenCV implementation of the FAST feature detector,
  which is used when the number of matching features that the optical flow
  algorithm finds is insufficient.
@@ -120,6 +123,17 @@ The approach chosen for this implementation of visual odometry was monocular
  parameters associated with this implementation.
  When the FAST feature detector is used, the features are placed into bins
  in order to prevent features becoming too concentrated in a specific area.
+ The effect of this is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Binning-of-FAST"
+
+\end_inset
+
+ below.
+ The feature rich areas shown here would have even more features had binning
+ not been implemented.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -164,8 +178,10 @@ Binning of FAST Features
 \end_layout
 
 \begin_layout Standard
-The scale, or approximate number of meters moved between images, is calculated
- from the ground truth GPS data.
+From these features, we can use included OpenCV functions to calculate the
+ Essential Matric and recover the rotation and translation (R and t).
+ The scale, or approximate number of meters moved between images used to
+ update R and t, is calculated from the ground truth GPS data.
  To try and cut down on the number of erroneous results and the number of
  unnecessary computations, we ignore any images with a very small scale
  value, as this indicates that the car has not moved very far, and is most
@@ -183,7 +199,15 @@ Another important consideration is to only include results where there is
  significant, is that we still want to be able to recognise when the car
  is going round a corner, but ignore erroneous readings, many of which have
  negative forward components.
- The interpretation of significant was determined by experimentation.
+ The interpretation of 
+\begin_inset Quotes eld
+\end_inset
+
+significant
+\begin_inset Quotes erd
+\end_inset
+
+ here was determined by experimentation.
 \end_layout
 
 \begin_layout Section*
@@ -198,7 +222,8 @@ The performance of this system has been evaluated in several different ways.
  the shape of the trajectory that the odometry was finding was sufficiently
  close to the shape of the ground truth data, particularly in the first
  part of the dataset, as this was mainly used for initial testing as it
- is one of the easier parts, with clearly defined corners, as shown in 
+ is one of the easier parts, with clearly defined corners, as shown in Figure
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:MatPlotLib-plots"
@@ -306,7 +331,14 @@ The second evaluation method was to convert all of the translations given
  Durham, along with the ground truth data, to determine whether the path
  that the system had found was accurate in a manner that is more understandable
  and real-world relevant than the previous plots.
- 
+ This is show in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Map-of-whole"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -332,6 +364,12 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Map-of-whole"
+
+\end_inset
+
 Map of whole dataset performance
 \end_layout
 
@@ -349,15 +387,40 @@ Map of whole dataset performance
 As shown in the figures above, the trajectory of the odometry results goes
  quite far away from the ground truth, but the general shape of the trajectory
  is quite close to being correct, it just gets some of the corners wrong.
- Therefore, when it makes these mistakes, it would be useful to correct
- it to the ground truth values here, and determine how often this is necessary.
- This is the final method of evaluation implemented here as a post-processing
- step.
- The graph below shows the number of corrections required when the euclidean
- distance between the odometry point and the ground truth point goes about
- a certain distance threshold.
- The effect of these corrections is shown in the MatPlotLib and Google Maps
- plots below.
+ Therefore, when it makes these mistakes, we correct to ground truth data
+ as a post-processing step.
+ The graph in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Graph"
+
+\end_inset
+
+ shows the number of corrections required when the euclidean distance between
+ the odometry point and the ground truth point goes about a certain distance
+ threshold.
+ The effect of these corrections is shown in the MatPlotLib (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Corrected-Plots"
+
+\end_inset
+
+) and Google Maps (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Corrected-Maps"
+
+\end_inset
+
+) plots below.
+ As we can see, the results of this improve the performance considerably,
+ even when the distance threshold is large.
+ The full dataset contains 2898 frames, and the GPS ground truth data is
+ only accurate to 5 meters, so the fact that under 10% of the frames need
+ to be corrected (203) when the distance threshold is 5 metres is a sign
+ that the odometry is performing fairly well over the vast majority of the
+ dataset.
  
 \end_layout
 
@@ -419,7 +482,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance5Plot.png
-	scale 30
+	scale 50
 
 \end_inset
 
@@ -450,7 +513,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance10Plot.png
-	scale 30
+	scale 50
 
 \end_inset
 
@@ -469,10 +532,9 @@ Distance threshold of 10
 \end_inset
 
 
-\begin_inset space \hfill{}
-\end_inset
+\end_layout
 
-
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -481,7 +543,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance25Plot.png
-	scale 30
+	scale 50
 
 \end_inset
 
@@ -500,9 +562,10 @@ Distance threshold of 25
 \end_inset
 
 
-\end_layout
+\begin_inset space \hfill{}
+\end_inset
 
-\begin_layout Plain Layout
+
 \begin_inset Float figure
 wide false
 sideways false
@@ -511,7 +574,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance50Plot.png
-	scale 30
+	scale 50
 
 \end_inset
 
@@ -530,10 +593,9 @@ Distance threshold of 50
 \end_inset
 
 
-\begin_inset space \hfill{}
-\end_inset
+\end_layout
 
-
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -542,7 +604,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance75Plot.png
-	scale 30
+	scale 50
 
 \end_inset
 
@@ -573,7 +635,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance100Plot.png
-	scale 30
+	scale 50
 
 \end_inset
 
@@ -630,7 +692,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance5Map.png
-	scale 20
+	scale 25
 
 \end_inset
 
@@ -661,7 +723,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance10Map.png
-	scale 20
+	scale 25
 
 \end_inset
 
@@ -692,7 +754,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance25Map.png
-	scale 20
+	scale 25
 
 \end_inset
 
@@ -722,7 +784,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance50Map.png
-	scale 20
+	scale 25
 
 \end_inset
 
@@ -753,7 +815,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance75Map.png
-	scale 20
+	scale 25
 
 \end_inset
 
@@ -784,7 +846,7 @@ status collapsed
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename distance100Map.png
-	scale 20
+	scale 25
 
 \end_inset
 
@@ -823,6 +885,50 @@ Corrected Maps
 \end_inset
 
 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+A simple monocular visual odometry project in Python - https://github.com/uoip/mo
+noVO-python 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+
+\end_inset
+
+Py-MVO: Monocular Visual Odometry using Python - https://github.com/Transportatio
+n-Inspection/visual_odometry
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-3"
+
+\end_inset
+
+Monocular Visual Odometry using OpenCV - https://avisingh599.github.io/vision/mono
+cular-vo/ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-4"
+
+\end_inset
+
+Visual Odometry from scratch - A tutorial for beginners - https://avisingh599.git
+hub.io/vision/visual-odometry-full/
 \end_layout
 
 \end_body
