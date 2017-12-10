@@ -97,13 +97,45 @@ Describe the main difference between the Human “Earscape” model (Ref: Lectur
 \end_layout
 
 \begin_layout Standard
+Signal Quantisation is the part of the audio digitalisation process that
+ divides the signal strength into discrete levels.
+ The Human Earscape model defines what kinds of information that the human
+ ear is capable of perceiving, and what level of sound pressure is required
+ to enable us to perceive specific frequencies.
+ The range of the earscape model is bounded at the low sound pressure end
+ of the spectrum by the Miniumum Audability curve.
+ This tells us that low frequency sounds can only be heard at higher sound
+ pressure levels, whereas higher frequency sounds can be heard at comparatively
+ lower sound pressure levels.
+ The upper bound of this model is the Terminal Threshold, which is the sound
+ pressure level as which the sound is not percieved to be any louder, and
+ can cause pain and discomfort to the listener.
+ This earscape model is defined for the average human listener and is used
+ to allow compression algorithms to vary across different frequency levels.
+\end_layout
+
+\begin_layout Standard
+The earscape model can tell us the appropriate frequency range for different
+ types of content, and quantisation algorithms can therefore remove information
+ outside of these frequency ranges.
+ For example, a voice recording file could have all frequencies outside
+ of the typical human vocal range removed in order to reduce file size and
+ aid in the understandability of the file.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Earscape - low frequency have to be louder.
  higher frequencies can be anything.
  can use this as part of the encoding process to do some compression.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Audio Noise Masking - playing one sound over another means you can't hear
  the first sound as well.
  Adding another sound in the same frequency band 
@@ -121,6 +153,11 @@ masks
  
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 MPEG/Audio Layer I encoding divides an input audio signal into 32 sub-bands
  forming the inputs for audio digitalization.
@@ -129,7 +166,16 @@ MPEG/Audio Layer I encoding divides an input audio signal into 32 sub-bands
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Don't compare to other numbers of bands
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -156,7 +202,16 @@ In your own words, explain four differences between applying DCT and Wavelet
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Wavelets are lecture 4
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
