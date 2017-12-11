@@ -97,9 +97,7 @@ Describe the main difference between the Human “Earscape” model (Ref: Lectur
 \end_layout
 
 \begin_layout Standard
-Signal Quantisation is the part of the audio digitalisation process that
- divides the signal strength into discrete levels.
- The Human Earscape model defines what kinds of information that the human
+The Human Earscape model defines what kinds of information that the human
  ear is capable of perceiving, and what level of sound pressure is required
  to enable us to perceive specific frequencies.
  The range of the earscape model is bounded at the low sound pressure end
@@ -112,50 +110,35 @@ Signal Quantisation is the part of the audio digitalisation process that
  can cause pain and discomfort to the listener.
  This earscape model is defined for the average human listener and is used
  to allow compression algorithms to vary across different frequency levels.
-\end_layout
-
-\begin_layout Standard
-The earscape model can tell us the appropriate frequency range for different
- types of content, and quantisation algorithms can therefore remove information
- outside of these frequency ranges.
+ This model can tell us the appropriate frequency range for different types
+ of content, and quantisation algorithms can therefore be optimised to remove
+ information outside of these frequency ranges.
  For example, a voice recording file could have all frequencies outside
- of the typical human vocal range removed in order to reduce file size and
- aid in the understandability of the file.
+ of the typical human vocal range removed in order to simplify the audio
+ digitialisation process and eventually reduce the file size.
  
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Earscape - low frequency have to be louder.
- higher frequencies can be anything.
- can use this as part of the encoding process to do some compression.
- 
-\end_layout
-
-\begin_layout Plain Layout
-Audio Noise Masking - playing one sound over another means you can't hear
- the first sound as well.
- Adding another sound in the same frequency band 
-\begin_inset Quotes eld
-\end_inset
-
-masks
-\begin_inset Quotes erd
-\end_inset
-
- it.
- Can use in the MP3 algorithm to work out when it can get away with doing
- more quantisation by adding more noise as this is being masked by the original
- signal.
- 
-\end_layout
-
-\end_inset
-
-
+The audio masking model in the MP3 standard takes advantage of a perceptual
+ weakness of human hearing that occurs when a strong audio signal of a certain
+ frequency obscures, or 'masks', weaker audio signals of similar frequencies.
+ To take advantage of this, we can partition the audible spectrum into bands
+ based on how capable the ear is of perceiving different frequencies.
+ The purpose of this partitioning is to understand the size of the neighbourhood
+ of frequencies that will be 'masked' by a strong audio signal.
+ This can be taken advantage of in the signal quantisation process by first
+ transforming the audio signal into the frequency domain, and breaking this
+ down into subbands that represent the neighbourhoods in which masking will
+ occur enables the MP3 algorithm to set the quantisation level to the maximum
+ possible value such that the level of quantisation noise will be imperceptible
+ to the listener.
+ Masking can also occur temporally, as experiments have shown that it takes
+ some time for us to be able to perceive a weak signal after hearing a strong
+ signal at a similar frequency.
+ The MP3 algorithm uses this to further quantise the signal, by determining
+ whether a sound will be heard or not following a strong sound based on
+ its frequency, sound pressure and the time between the two sounds.
 \end_layout
 
 \begin_layout Section
@@ -166,11 +149,33 @@ MPEG/Audio Layer I encoding divides an input audio signal into 32 sub-bands
 \end_layout
 
 \begin_layout Standard
+This division is performed in MPEG layer 1 by a basic filter bank.
+ The 32 subbands are constant width, whereas the ability of humans to tell
+ the difference between sounds of different frequencies, known as the critical
+ bands of the ear, are not of constant width but instead vary as different
+ frequency levels.
+ Therefore, these 32 bands do not accurately reflect the ears critical bands.
+ The bandwidth is too wide at the lower frequencies, which prevents the
+ specific tuning of quantiser bits to the actual critical bands.
+ Furthermore, this filter bank and its inverse are not lossless transformations,
+ as even if no quantisation were to take place the inverse transform would
+ not perfectly recover the original input signal.
+ Also, adjacent filter bands have a considerable frequency overlap, meaning
+ that a signal at a single frequency can affect two adjacent filter bank
+ outputs.
+ From these 32 bands, the layer 1 algorithm groups together 12 samples from
+ each of the bands, and allocates them a number of bits to be used for represent
+ation, given by a scale factor which attempts to maximise the resolution
+ of the quantiser.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-Don't compare to other numbers of bands
+DOES THIS IMPROVE OR DEGRADE??
 \end_layout
 
 \end_inset
@@ -184,6 +189,12 @@ In your own words, explain the purpose of involving Discrete Cosine Transform
  Justify how this procedure improves the quality of audio digitalization
  in terms of both the audio signal preserved and file size produced.
  (Ref: MP3) [20 Marks] 
+\end_layout
+
+\begin_layout Standard
+The layer 3 algorithm is a far more refined and complex approach to audio
+ digitalisation than the layer 1 and layer 2 algorithm.
+ 
 \end_layout
 
 \begin_layout Section
@@ -206,7 +217,7 @@ In your own words, explain four differences between applying DCT and Wavelet
 status open
 
 \begin_layout Plain Layout
-Wavelets are lecture 4
+Wavelets are lecture 4 - roughly 20 mins in to recording
 \end_layout
 
 \end_inset
