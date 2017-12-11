@@ -150,16 +150,18 @@ MPEG/Audio Layer I encoding divides an input audio signal into 32 sub-bands
 
 \begin_layout Standard
 This division is performed in MPEG layer 1 by a basic filter bank.
- The 32 subbands are constant width, whereas the ability of humans to tell
- the difference between sounds of different frequencies, known as the critical
- bands of the ear, are not of constant width but instead vary as different
- frequency levels.
+ It is intended to allow the encoder to vary the quantisation level across
+ the spectrum of frequencies.
+ The 32 subbands supposed to represent the critical bands of human hearing,
+ but they are constant width, whereas the critical bands of the ear are
+ not of constant width but instead vary as different frequency levels.
  Therefore, these 32 bands do not accurately reflect the ears critical bands.
  The bandwidth is too wide at the lower frequencies, which prevents the
  specific tuning of quantiser bits to the actual critical bands.
  Furthermore, this filter bank and its inverse are not lossless transformations,
  as even if no quantisation were to take place the inverse transform would
  not perfectly recover the original input signal.
+ This means that this process adds noise to the input signal.
  Also, adjacent filter bands have a considerable frequency overlap, meaning
  that a signal at a single frequency can affect two adjacent filter bank
  outputs.
@@ -167,6 +169,16 @@ This division is performed in MPEG layer 1 by a basic filter bank.
  each of the bands, and allocates them a number of bits to be used for represent
 ation, given by a scale factor which attempts to maximise the resolution
  of the quantiser.
+ These 32 groups of 12 samples are grouped into a frame.
+ 
+\end_layout
+
+\begin_layout Standard
+The ability to vary the quantisation levels at different frequency ranges
+ does help the audio digitalisation process, but the way that it is implemented
+ means that the layer 1 algorithm doesn't get very close to approximateing
+ the true nature of human hearing.
+ The subsequent layers of the MPEG algorithm aim to improve this.
  
 \end_layout
 
@@ -194,7 +206,22 @@ In your own words, explain the purpose of involving Discrete Cosine Transform
 \begin_layout Standard
 The layer 3 algorithm is a far more refined and complex approach to audio
  digitalisation than the layer 1 and layer 2 algorithm.
+ It attempts to resolve the filter bank deficiencies from layers 1 and 2
+ by applying a Discrete Cosine Transform.
+ This DCT subdivides the filter bank outputs further by expressing the audio
+ signal as a list of coefficients of cosine waves.
+ These coefficients can then be stored.....
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+(explain more of DCT here)
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
