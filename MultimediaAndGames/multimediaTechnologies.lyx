@@ -170,29 +170,20 @@ This division is performed in MPEG layer 1 by a basic filter bank.
 ation, given by a scale factor which attempts to maximise the resolution
  of the quantiser.
  These 32 groups of 12 samples are grouped into a frame.
- 
+ The masking that the layer 1 algorithm takes advantage of is entirely frequency
+ based, with no consideration of temporal masking as discussed above.
+ This is dealt with by the later layers of the algorithm.
 \end_layout
 
 \begin_layout Standard
 The ability to vary the quantisation levels at different frequency ranges
- does help the audio digitalisation process, but the way that it is implemented
- means that the layer 1 algorithm doesn't get very close to approximateing
+ does improve the audio digitalisation process compared to applying the
+ same quantisation level for the entire audio signal.
+ However, due to the weaknesses outlined above, the way that this is implemented
+ means that the layer 1 algorithm doesn't get very close to approximating
  the true nature of human hearing.
  The subsequent layers of the MPEG algorithm aim to improve this.
  
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-DOES THIS IMPROVE OR DEGRADE??
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -207,16 +198,25 @@ In your own words, explain the purpose of involving Discrete Cosine Transform
 The layer 3 algorithm is a far more refined and complex approach to audio
  digitalisation than the layer 1 and layer 2 algorithm.
  It attempts to resolve the filter bank deficiencies from layers 1 and 2
- by applying a Discrete Cosine Transform.
- This DCT subdivides the filter bank outputs further by expressing the audio
- signal as a list of coefficients of cosine waves.
- These coefficients can then be stored.....
- 
+ by making the filters have non-equal frequencies and by applying a Modified
+ Discrete Cosine Transform.
+ This MDCT subdivides the filter bank outputs further by expressing the
+ audio signal as a list of coefficients of cosine waves.
+ These coefficients can then be stored in a diagonal pattern and compressed.
+ The use of the MDCT minimises the issues caused by the Discrete Fourier
+ Transform of the previous layers, particularly around block edge effects,
+ when data is quantised and then transformed back, the beginning and ending
+ samples may not be coordinated with preceding and subsequent blocks, causing
+ a certain level of noise.
+ The MDCT removes such effects by overlapping frames by 50%.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-(explain more of DCT here)
+Still debating whether this is the point of the question
 \end_layout
 
 \end_inset
@@ -258,6 +258,58 @@ Level 4 students - Conducting a research in scalable video coding (SVC)
  different from the original H.264/AVC standard, in terms of architecture,
  coding mechanism, functionalities, video representation and transmission.
  (Ref: Lecture note and SVC) [50 Marks] 
+\end_layout
+
+\begin_layout Standard
+SVC is an extension of the H.264/AVC that allows for partial transmission
+ and decoding of a bit stream.
+ The video that results has lower temporal or spatial resolution or reduced
+ fidelity while retaining a reconstruction quality that is close to the
+ original H.264/AVC.
+ SVC provides network friendly scalability at bit-stream level with a moderate
+ increase in decoder complexity compared to the original standard.
+ This means that it is suitable for video conferencing as well as for mobile
+ to high definition broadcast, as well as professional editing.
+ 
+\end_layout
+
+\begin_layout Standard
+The SVC design includes spatial and temporal scalability, which describe
+ cases in which subsets of the bit stream represent the source content with
+ a reduced picture size and frame rate.
+ The design also includes fidelity scalability, enabling the substream to
+ provide the same spatio-temporal resolution as the complete bit stream
+ but with a lower fidelity.
+ One SVC bit stream can therefore provide a wide variety of combinations
+ of these basic scalability types.
+ In a similar manner to other video types such as MPEG-2 Video and MPEG-4
+ Visual, the fact that SVC supports spatial scalability means that the ratio
+ of picture sizes in the complete bit stream and included substreams are
+ not restricted to a particular value.
+ Furthermore, these pictures of bit stream subsets may contain additional
+ parts beyond the borders of the pictures of the complete bit stream, or
+ may only represent a subarea of the complete bit stream.
+ This relationship can be modified at any point.
+ The fidelity scalability implicit in SVC also allows a low-complexity rewriting
+ of a fidelity scalable bit stream into a singlelayer bit stream of the
+ original standard which will give an identical output.
+ Any SVC bit stream contains a subset bit stream that is compatible with
+ a non scalable profile of the original standard and can be decoded by legacy
+ decoders.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Now on architecture section
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
