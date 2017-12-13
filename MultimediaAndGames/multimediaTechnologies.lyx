@@ -300,11 +300,87 @@ The SVC design includes spatial and temporal scalability, which describe
 \end_layout
 
 \begin_layout Standard
+The architecture of SVC is layer based, much like the original H.264/AVC
+ standard, being made up of the video coding layer (VCL) and the network
+ abstraction layer (NAL).
+ The VCL represents the coded source content, whereas the NAL formats the
+ VCL representation and provides appropriate header information for use
+ by transport layer protocols or storage media.
+ the NAL contains both VCL NAL units, which contain coded video data, and
+ non-VCL NAL units, which contain additional information.
+ A set of NAL units that result in one decoded picture is known as an access
+ unit, and several successive access units constitute a coded video sequence.
+ 
+\end_layout
+
+\begin_layout Standard
+The scalability that has been previously discussed is provided at the bit
+ stream level.
+ Discarding NAL units from a scalable stream produces a stream with reduced
+ spatio-temporal resolution or fidelity.
+ The NAL units that are absolutely required for the decoding of a specific
+ spatio-temporal resolution and bit-rate are identified by the NAL header.
+ 
+\end_layout
+
+\begin_layout Standard
+The encoding process is done with multiple representations of the video
+ source, each with their own spatial resolution and fidelity.
+ These representations are known as layers, and each have their own identifier.
+ The layers in each access unit are encoded in increasing order of their
+ identifiers, as already transmitted data of a previous layer can be employed
+ to aid in the encoding of later layers.
+ These layers that use data from other layers in their encoding process
+ are known as enhancement layers.
+ The number of layers present in the bit stream depends on the requirements
+ of the application.
+ A maximum of 128 layers is supported by SVC, up to 47 of which can be enhanceme
+nt layers.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-Now on architecture section
+For Q6: http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4317636 
+\end_layout
+
+\begin_layout Plain Layout
+"The most important differences are as follows.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+• The possibility to employ hierarchical prediction structures for providing
+ temporal scalability with several layers while improving the coding efficiency
+ and increasing the effectiveness of quality and spatial scalable coding.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+• New methods for inter-layer prediction of motion and residual improving
+ the coding efficiency of spatial scalable and quality scalable coding.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+• The concept of key pictures for efficiently controlling the drift for
+ packet-based quality scalable coding with hierarchical prediction structures.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+• Single motion compensation loop decoding for spatial and quality scalable
+ coding providing a decoder complexity close to that of single-layer coding.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+• The support of a modified decoding process that allows a lossless and
+ low-complexity rewriting of a quality scalable bit stream into a bit stream
+ that conforms to a nonscalable H.264/AVC profile."
 \end_layout
 
 \end_inset
