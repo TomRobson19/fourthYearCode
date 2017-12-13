@@ -186,6 +186,19 @@ The ability to vary the quantisation levels at different frequency ranges
  
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Alter slightly to better ATFQ
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 In your own words, explain the purpose of involving Discrete Cosine Transform
  (DCT) in MPEG/Audio Layer 3.
@@ -245,6 +258,32 @@ status open
 
 \begin_layout Plain Layout
 Wavelets are lecture 4 - roughly 20 mins in to recording
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Because of the many advantages of wavelet based image compression as listed
+ below, the top contenders in the JPEG-2000 standard are all wavelet-based
+ compression algorithms: • Wavelet coding schemes at higher compression
+ avoid blocking artifacts.
+ • They are better matched to the HVS (Human Visual System) characteristics.
+ • Compression with wavelets is scalable as the transform process can be
+ applied to an image as many times as wanted and hence very high compression
+ ratios can be achieved.
+ • Wavelet based compression allow parametric gain control for image softening
+ and sharpening.
+ • Wavelet-based coding is more robust under transmission and decoding errors,
+ and also facilitates progressive transmission of images.
+ • Wavelet compression is very efficient at low bit rates.
+ • Wavelts provide an efficient decomposition of signals prior to compression.
 \end_layout
 
 \end_inset
@@ -430,8 +469,8 @@ To conclude, the above is a discussion of the features of SVC, but the most
 status open
 
 \begin_layout Plain Layout
-Recheck last paragraph, make it make sense and reference -  http://ieeexplore.iee
-e.org/stamp/stamp.jsp?arnumber=4317636 
+Recheck last paragraph, make it make sense and reference - http://ieeexplore.ieee.
+org/stamp/stamp.jsp?arnumber=4317636 
 \end_layout
 
 \end_inset
