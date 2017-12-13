@@ -310,11 +310,7 @@ The architecture of SVC is layer based, much like the original H.264/AVC
  non-VCL NAL units, which contain additional information.
  A set of NAL units that result in one decoded picture is known as an access
  unit, and several successive access units constitute a coded video sequence.
- 
-\end_layout
-
-\begin_layout Standard
-The scalability that has been previously discussed is provided at the bit
+ The scalability that has been previously discussed is provided at the bit
  stream level.
  Discarding NAL units from a scalable stream produces a stream with reduced
  spatio-temporal resolution or fidelity.
@@ -331,12 +327,102 @@ The encoding process is done with multiple representations of the video
  identifiers, as already transmitted data of a previous layer can be employed
  to aid in the encoding of later layers.
  These layers that use data from other layers in their encoding process
- are known as enhancement layers.
+ are known as enhancement layers, and the layers they are predicting from
+ are known as reference layers.
  The number of layers present in the bit stream depends on the requirements
  of the application.
  A maximum of 128 layers is supported by SVC, up to 47 of which can be enhanceme
 nt layers.
+ Enhancement layers can be broken down into spatial enhancement layers,
+ when the spatial resolution changes relative to the reference layer, and
+ fidelity enhancement layers, when the spatial resolution is identical to
+ the reference layer.
+ The input images of each of the spatial and fidelity layers are split into
+ macroblocks and slices.
+ A macroblock is a method of representing a 16x16 area of luma samples and
+ 8x8 samples of the 2 chroma components.
+ These are organised as slices and can be parsed independently.
  
+\end_layout
+
+\begin_layout Standard
+Within each layer, SVC follows the design of the original standard.
+ The samples of each macroblock either use intrapicture prediction, which
+ uses spatially neighbouring samples of previously coded blocks in the same
+ picture, or interpicture prediction, which uses a spatially displaced region
+ of a previously coded picture of the same layer.
+ The residual representing the difference between the original and the predictio
+n signal for a block is transformed with the decorrelating transform, the
+ coefficients of which are scaled and quantised.
+ These are then entropy encoded, along with other information about the
+ macroblock, such as the displacement vector.
+ These are differentially coded using the displacement vectors of neighbouring
+ blocks as predictors.
+ The residual is decoded using inverse scaling and inverse transformation
+ operations on the quantised transform coefficients.
+ This residual is then added to the prediction signal, and the result is
+ additionally processed before it is output, or possibly to be stored as
+ a reference picture.
+\end_layout
+
+\begin_layout Standard
+SVC also provides interlayer prediction, which uses the statistical dependencies
+ between different layers to reduce the bitrate, and therefore improve the
+ coding efficiency of the enhancement layers.
+ These prediction methods can be chosen on a macroblock or submacroblock
+ basis allowing an encoder to select the mode that selects the highest coding
+ efficiency.
+ For SVC enhancement layers an additional macroblock coding mode is provided,
+ in which the the prediction signal is inferred for the reference layer
+ without transmitting any additional information.
+ When the colocated blocks of this reference layer are intracoded, the predictio
+n signal is built up from the reconstructed intra signal of the reference
+ layer.
+ This is known as interlayer intra prediction.
+ In the original H.264 standard, the displacement vectors of reference layer
+ blocks can also be used as replacement for the normal spatial displacement
+ vector predictor.
+ Another method, the interlayer residual predictor, aims to reduce the bit
+ rate required for transmission of macroblocks by using the residual signal
+ of the colocated reference layer and the enhancement layer residual to
+ get the difference between the original and the interpicture prediction
+ signal and only encoding this difference.
+\end_layout
+
+\begin_layout Standard
+Each spatial and fidelity enchancement layer can be decoded with a single
+ motion compensation loop.
+ For the reference layers, only the intracoded macroblocks and residual
+ blocks that are required for interlayer prediction need to be reconstructed,
+ and the corresponding displacement vectors must be decoded.
+ This is an important feature of SVC, as only the complex operations of
+ prediction and deblocking need to be performed for the target layer to
+ be displayed.
+ Temporal scalability can also be achieved by splitting the access units
+ in to a temporal base and multiple temporal enhancement layers and ensuring
+ that only access units of the same of coarser temporal layer are used for
+ inter picture prediction.
+ 
+\end_layout
+
+\begin_layout Standard
+To conclude, the above is a discussion of the features of SVC, but the most
+ important differences between SVC and the original H.264/AVC standard are
+ as follows: SVC provides the possibility to employ hierarchical prediction
+ structures for providing temporal scalability with several layers while
+ improving the coding efficiency and increasing the effectiveness of quality
+ and spatial scalable coding.
+ SVC also gives us new methods for inter-layer prediction of motion and
+ residual improving the coding efficiency of spatial scalable and quality
+ scalable coding.
+ The concept of key pictures gives us a method to efficiently control the
+ drift for packet-based quality scalable coding with hierarchical prediction
+ structures.
+ Single motion compensation loop decoding for spatial and quality scalable
+ coding provides a decoder complexity close to that of single-layer coding.
+ Finally, SVC supports a modified decoding process that allows a lossless
+ and low-complexity rewriting of a quality scalable bit stream into a bit
+ stream that conforms to a nonscalable H.264/AVC profile
 \end_layout
 
 \begin_layout Standard
@@ -344,43 +430,8 @@ nt layers.
 status open
 
 \begin_layout Plain Layout
-For Q6: http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4317636 
-\end_layout
-
-\begin_layout Plain Layout
-"The most important differences are as follows.
- 
-\end_layout
-
-\begin_layout Plain Layout
-• The possibility to employ hierarchical prediction structures for providing
- temporal scalability with several layers while improving the coding efficiency
- and increasing the effectiveness of quality and spatial scalable coding.
- 
-\end_layout
-
-\begin_layout Plain Layout
-• New methods for inter-layer prediction of motion and residual improving
- the coding efficiency of spatial scalable and quality scalable coding.
- 
-\end_layout
-
-\begin_layout Plain Layout
-• The concept of key pictures for efficiently controlling the drift for
- packet-based quality scalable coding with hierarchical prediction structures.
- 
-\end_layout
-
-\begin_layout Plain Layout
-• Single motion compensation loop decoding for spatial and quality scalable
- coding providing a decoder complexity close to that of single-layer coding.
- 
-\end_layout
-
-\begin_layout Plain Layout
-• The support of a modified decoding process that allows a lossless and
- low-complexity rewriting of a quality scalable bit stream into a bit stream
- that conforms to a nonscalable H.264/AVC profile."
+Recheck last paragraph, make it make sense and reference -  http://ieeexplore.iee
+e.org/stamp/stamp.jsp?arnumber=4317636 
 \end_layout
 
 \end_inset
