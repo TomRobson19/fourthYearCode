@@ -235,20 +235,55 @@ Justify the suitability of replacing the DCT function in MPEG/Audio Layer
 \begin_layout Standard
 A substantial difference between the wavelet transform and DCT is that the
  wavelet transform includes time resolution as well as frequency resolution.
- This allows wavelets to 
+ This allows wavelets to achieve a better representation of time within
+ the audio file than a DCT is able to, as signals can be encoded relative
+ to an adaptive time-frequency window.
+ 
 \end_layout
 
 \begin_layout Standard
-Performing a wavelet transform is more complex than a DCT, however it has
- been shown that they are equivalent to iteratively applying a filterbank
+Performing a wavelet transform is more computationally complex than performing
+ a DCT, however it has been shown that wavelet transforms are equivalent
+ in runtime to iteratively applying a standard filterbank as discussed in
+ previous questions.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+below is done, reference
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Choosing a wavelet to be used for a multi-purpose audio encoding algorithm
+ such as MPEG requires it to be able to represent all forms of audio effectively
+, as classical music has very different characteristics to speech, and both
+ are different to pop music.
+ If it cannot do this, then encoding certain types of audio will work very
+ well, whereas others will not perform very well.
+ Therefore, the choice of wavelet is crucial.
+ Haar wavelets and Daubechies wavelets are the most famous and common, but
+ alternatives also exist.
+ 
 \end_layout
 
 \begin_layout Standard
 In terms of the components of layer 3, if a wavelet transform were to be
  implemented then the MDCT would be replaced with a wavelet transform, most
- likely also using filter bank equivalent.
- The windowing component of the MDCT that is used to provided time resolution
- is also not required if a wavelet transform was used, so can be removed.
+ likely also using a wavelet equivalent of the existing filter bank.
+ Such wavelet filter banks provide perfect reconstruction.
+ They are structured in trees, and output the results of both low pass and
+ high pass filtering.
+ The windowing component of the MDCT that is used to provide some level
+ of time resolution is also not required if a wavelet transform was used,
+ so can be removed.
  
 \end_layout
 
@@ -301,9 +336,9 @@ blocking artefacts
 \begin_inset Quotes erd
 \end_inset
 
- that cause problems for DCT encoding, as a wavelet based encoding scheme
- does not need to convert the image into blocks and the lengths of its basis
- functions are variable.
+ and mosquito noise that cause problems for DCT encoding, as a wavelet based
+ encoding scheme does not need to convert the image into blocks and the
+ lengths of its basis functions are variable.
  
 \end_layout
 
@@ -329,7 +364,7 @@ https://www.ijedr.org/papers/IJEDR1401120.pdf
 \end_layout
 
 \begin_layout Plain Layout
-Add more if have time (and if can be bothered)
+Add more to this if have time (and if can be bothered)
 \end_layout
 
 \end_inset
@@ -367,10 +402,9 @@ The SVC design includes spatial and temporal scalability, which describe
  but with a lower fidelity.
  One SVC bit stream can therefore provide a wide variety of combinations
  of these basic scalability types.
- In a similar manner to other video types such as MPEG-2 Video and MPEG-4
- Visual, the fact that SVC supports spatial scalability means that the ratio
- of picture sizes in the complete bit stream and included substreams are
- not restricted to a particular value.
+ The fact that SVC supports spatial scalability means that the ratio of
+ picture sizes in the complete bit stream and included substreams are not
+ restricted to a particular value.
  Furthermore, these pictures of bit stream subsets may contain additional
  parts beyond the borders of the pictures of the complete bit stream, or
  may only represent a subarea of the complete bit stream.
