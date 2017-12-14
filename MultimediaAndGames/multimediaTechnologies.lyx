@@ -152,9 +152,11 @@ MPEG/Audio Layer I encoding divides an input audio signal into 32 sub-bands
 This division is performed in MPEG layer 1 by a basic filter bank.
  It is intended to allow the encoder to vary the quantisation level across
  the spectrum of frequencies.
- The 32 subbands supposed to represent the critical bands of human hearing,
- but they are constant width, whereas the critical bands of the ear are
- not of constant width but instead vary as different frequency levels.
+ This enables the algorithm to exploit the limited ability of the ear to
+ resolve sounds within a band to hide quanitisation noise.
+ The 32 subbands are supposed to represent the critical bands of human hearing.
+ These subbands are of a constant width, whereas the critical bands of the
+ ear are not of constant width but instead vary as different frequency levels.
  Therefore, these 32 bands do not accurately reflect the ears critical bands.
  The bandwidth is too wide at the lower frequencies, which prevents the
  specific tuning of quantiser bits to the actual critical bands.
@@ -178,25 +180,14 @@ ation, given by a scale factor which attempts to maximise the resolution
 \begin_layout Standard
 The ability to vary the quantisation levels at different frequency ranges
  does improve the audio digitalisation process compared to applying the
- same quantisation level for the entire audio signal.
- However, due to the weaknesses outlined above, the way that this is implemented
- means that the layer 1 algorithm doesn't get very close to approximating
- the true nature of human hearing.
- The subsequent layers of the MPEG algorithm aim to improve this.
+ same quantisation level for the entire audio signal, which would lead to
+ either a poor sound quality output or a large file size.
+ However, due to the weaknesses of this first layer that are outlined above,
+ the way that this is implemented means that the layer 1 algorithm doesn't
+ get very close to approximating the true nature of human hearing.
+ The subsequent layers of the MPEG algorithm aim to build on this to further
+ improve the audio signal quantisation.
  
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Alter slightly to better ATFQ
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -222,19 +213,15 @@ The layer 3 algorithm is a far more refined and complex approach to audio
  samples may not be coordinated with preceding and subsequent blocks, causing
  a certain level of noise.
  The MDCT removes such effects by overlapping frames by 50%.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Still debating whether this is the point of the question
-\end_layout
-
-\end_inset
-
-
+ The transformation to the frequency domain also gives the masking and quantisat
+ion components more sizes of windows limiting the amount of output distortion
+ that quantisation causes.
+ Many of the coefficients in the frequency domain will be duplicates, particular
+ly close to 0, enabling the signal to be easily compressed by techniques
+ like run-length encoding and Huffman encoding.
+ As this process is lossless, it enables a large reduction in the filesize
+ while preserving the audio signal quality.
+ 
 \end_layout
 
 \begin_layout Section
@@ -242,7 +229,13 @@ Justify the suitability of replacing the DCT function in MPEG/Audio Layer
  3 with Wavelet transform, explaining any requirement in choosing Wavelet
  transform functions and what changes have to make in MPEG/Audio Layer 3
  components to allow such a replacement.
- (Ref: Lecture note and MP3) [20 Marks] 
+ (Ref: Lecture note and MP3) [20 Marks]
+\end_layout
+
+\begin_layout Standard
+A substantial difference between the wavelet transform and DCT is that the
+ wavelet transform includes time resolution as well as frequency resolution.
+ This allows wavelets to 
 \end_layout
 
 \begin_layout Section
@@ -250,6 +243,24 @@ In your own words, explain four differences between applying DCT and Wavelet
  transform to compress an image, and justify their difference in supporting
  image decompression and transmission.
  (Ref: Lecture note) [20 Marks] 
+\end_layout
+
+\begin_layout Standard
+The wavelet transform builds up a hierarchical representation of an image,
+ making it well suited to use in JPEG.
+ This allows more efficient network transfer, as a coarse representation
+ of the image can be sent first, followed by a more detailed representation.
+ If DCT were to be used, the image would need to be stored as a lower quality
+ representation, as well as the image differences between several higher
+ quality representations to reconstruct the image at different resolutions
+ as required.
+ Wavelets have the ability to perform multiresolution analysis allowing
+ the support of the hierarchical and progressive modes of the JPEG algorithm
+ without the need for any additional storage.
+ This means that the wavelet transforms do not suffer as badly to transmission
+ errors as if one of the layers is lost, the image can still be displayed
+ at slightly lower resolution.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -272,18 +283,45 @@ status open
 \begin_layout Plain Layout
 Because of the many advantages of wavelet based image compression as listed
  below, the top contenders in the JPEG-2000 standard are all wavelet-based
- compression algorithms: • Wavelet coding schemes at higher compression
- avoid blocking artifacts.
- • They are better matched to the HVS (Human Visual System) characteristics.
- • Compression with wavelets is scalable as the transform process can be
+ compression algorithms: 
+\end_layout
+
+\begin_layout Plain Layout
+• Wavelet coding schemes at higher compression avoid blocking artifacts.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+• They are better matched to the HVS (Human Visual System) characteristics.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+• Compression with wavelets is scalable as the transform process can be
  applied to an image as many times as wanted and hence very high compression
  ratios can be achieved.
- • Wavelet based compression allow parametric gain control for image softening
+ 
+\end_layout
+
+\begin_layout Plain Layout
+• Wavelet based compression allow parametric gain control for image softening
  and sharpening.
- • Wavelet-based coding is more robust under transmission and decoding errors,
+ 
+\end_layout
+
+\begin_layout Plain Layout
+• Wavelet-based coding is more robust under transmission and decoding errors,
  and also facilitates progressive transmission of images.
- • Wavelet compression is very efficient at low bit rates.
- • Wavelts provide an efficient decomposition of signals prior to compression.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+• Wavelet compression is very efficient at low bit rates.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+• Wavelts provide an efficient decomposition of signals prior to compression.
 \end_layout
 
 \end_inset
