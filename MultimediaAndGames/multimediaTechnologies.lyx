@@ -238,6 +238,20 @@ A substantial difference between the wavelet transform and DCT is that the
  This allows wavelets to 
 \end_layout
 
+\begin_layout Standard
+Performing a wavelet transform is more complex than a DCT, however it has
+ been shown that they are equivalent to iteratively applying a filterbank
+\end_layout
+
+\begin_layout Standard
+In terms of the components of layer 3, if a wavelet transform were to be
+ implemented then the MDCT would be replaced with a wavelet transform, most
+ likely also using filter bank equivalent.
+ The windowing component of the MDCT that is used to provided time resolution
+ is also not required if a wavelet transform was used, so can be removed.
+ 
+\end_layout
+
 \begin_layout Section
 In your own words, explain four differences between applying DCT and Wavelet
  transform to compress an image, and justify their difference in supporting
@@ -264,16 +278,46 @@ The wavelet transform builds up a hierarchical representation of an image,
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Wavelets are lecture 4 - roughly 20 mins in to recording
+When DCT is used, each image block is transformed and quantised individually.
+ This removes correlations between blocks, and limits its effectiveness
+ in representing non-stationary objects.
+ Wavelet based coding methods are much more capable of dealing with non-stationa
+ry objects thanks to the adaptive time-frequency window that they can make
+ use of due to the fact that the wavelet transform includes a time resolution
+ in addition to a frequency resolution.
+ 
 \end_layout
 
+\begin_layout Standard
+The output of the wavelet transform correlates better to the way humans
+ see the world, due to the fact that the wavelet basis functions match the
+ Human Visual System (HVS) characteristics, leading to a superior image
+ representation in the view of a human observer.
+ They are also much more capable of avoiding so called 
+\begin_inset Quotes eld
 \end_inset
 
+blocking artefacts
+\begin_inset Quotes erd
+\end_inset
 
+ that cause problems for DCT encoding, as a wavelet based encoding scheme
+ does not need to convert the image into blocks and the lengths of its basis
+ functions are variable.
+ 
+\end_layout
+
+\begin_layout Standard
+The main difference between the DCT and wavelet transform coefficients lies
+ in the highpass bands.
+ The highpass DCT bands provide higher frequency resolution, but lower spatial
+ resolution.
+ As a consequence of this, it provides a greater number of frequency bands,
+ but the spatial information is more diffcult to recognise.
+ By comparison, the wavelet subbands provide higher spatial resolution,
+ and lower frequency resolution.
+ As a result, the number of subbands is few, but the spatial resolution
+ is superior.
 \end_layout
 
 \begin_layout Standard
@@ -281,47 +325,11 @@ Wavelets are lecture 4 - roughly 20 mins in to recording
 status open
 
 \begin_layout Plain Layout
-Because of the many advantages of wavelet based image compression as listed
- below, the top contenders in the JPEG-2000 standard are all wavelet-based
- compression algorithms: 
+https://www.ijedr.org/papers/IJEDR1401120.pdf
 \end_layout
 
 \begin_layout Plain Layout
-• Wavelet coding schemes at higher compression avoid blocking artifacts.
- 
-\end_layout
-
-\begin_layout Plain Layout
-• They are better matched to the HVS (Human Visual System) characteristics.
- 
-\end_layout
-
-\begin_layout Plain Layout
-• Compression with wavelets is scalable as the transform process can be
- applied to an image as many times as wanted and hence very high compression
- ratios can be achieved.
- 
-\end_layout
-
-\begin_layout Plain Layout
-• Wavelet based compression allow parametric gain control for image softening
- and sharpening.
- 
-\end_layout
-
-\begin_layout Plain Layout
-• Wavelet-based coding is more robust under transmission and decoding errors,
- and also facilitates progressive transmission of images.
- 
-\end_layout
-
-\begin_layout Plain Layout
-• Wavelet compression is very efficient at low bit rates.
- 
-\end_layout
-
-\begin_layout Plain Layout
-• Wavelts provide an efficient decomposition of signals prior to compression.
+Add more if have time (and if can be bothered)
 \end_layout
 
 \end_inset
@@ -345,8 +353,8 @@ SVC is an extension of the H.264/AVC that allows for partial transmission
  original H.264/AVC.
  SVC provides network friendly scalability at bit-stream level with a moderate
  increase in decoder complexity compared to the original standard.
- This means that it is suitable for video conferencing as well as for mobile
- to high definition broadcast, as well as professional editing.
+ This means that it is more suitable for video conferencing as well as for
+ mobile to high definition broadcast, as well as professional editing.
  
 \end_layout
 
