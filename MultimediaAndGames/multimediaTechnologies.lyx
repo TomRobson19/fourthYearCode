@@ -240,27 +240,17 @@ A substantial difference between the wavelet transform and DCT is that the
  to an adaptive time-frequency window.
  The advantages of this are clear, as it enables us to cut the singal of
  interest into parts that are temporally correlated and analyse these separately.
+ Layer 3 of the MPEG algorithm tries to use blocking in its MDCT to compensation
+ for this weakness, but if wavelets were to be used instead, this would
+ not need to be done.
  
 \end_layout
 
 \begin_layout Standard
 Performing a wavelet transform is more computationally complex than performing
- a DCT, however it has been shown that wavelet transforms are equivalent
- in runtime to iteratively applying a standard filterbank as discussed in
- previous questions.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-below is done, reference
-\end_layout
-
-\end_inset
-
-
+ a DCT, however it has been shown that performing a wavelet transform on
+ an audio signal is of equivalent complexity to iteratively applying a standard
+ filterbank as discussed in previous questions.
 \end_layout
 
 \begin_layout Standard
@@ -274,6 +264,13 @@ Choosing a wavelet to be used for a multi-purpose audio encoding algorithm
  Haar wavelets and Daubechies wavelets are the most famous and common, but
  alternatives also exist.
  
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bomers2000"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -342,6 +339,13 @@ blocking artefacts
  encoding scheme does not need to convert the image into blocks and the
  lengths of its basis functions are variable.
  
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Talukder2010"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -355,19 +359,9 @@ The main difference between the DCT and wavelet transform coefficients lies
  and lower frequency resolution.
  As a result, the number of subbands is few, but the spatial resolution
  is superior.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-https://www.ijedr.org/papers/IJEDR1401120.pdf
-\end_layout
-
-\begin_layout Plain Layout
-Add more to this if have time (and if can be bothered)
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Parmar2014"
 
 \end_inset
 
@@ -529,13 +523,11 @@ Each spatial and fidelity enchancement layer can be decoded with a single
 \begin_layout Standard
 To conclude, the above is a discussion of the features of SVC, but the most
  important differences between SVC and the original H.264/AVC standard are
- as follows: SVC provides the possibility to employ hierarchical prediction
- structures for providing temporal scalability with several layers while
- improving the coding efficiency and increasing the effectiveness of quality
- and spatial scalable coding.
- SVC also gives us new methods for inter-layer prediction of motion and
- residual improving the coding efficiency of spatial scalable and quality
- scalable coding.
+ as follows: SVC enables the use of hierarchical prediction structures in
+ order to provide temporal scalability and improve the coding efficiency
+ and increase the effectiveness of quality and spatial scalable coding.
+ SVC also provides new methods for inter-layer prediction, which improves
+ the coding efficiency.
  The concept of key pictures gives us a method to efficiently control the
  drift for packet-based quality scalable coding with hierarchical prediction
  structures.
@@ -543,17 +535,22 @@ To conclude, the above is a discussion of the features of SVC, but the most
  coding provides a decoder complexity close to that of single-layer coding.
  Finally, SVC supports a modified decoding process that allows a lossless
  and low-complexity rewriting of a quality scalable bit stream into a bit
- stream that conforms to a nonscalable H.264/AVC profile
+ stream that conforms to a nonscalable H.264/AVC profile.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Schwarz2007"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Recheck last paragraph, make it make sense and reference - http://ieeexplore.ieee.
-org/stamp/stamp.jsp?arnumber=4317636 
-\end_layout
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintAll"
+bibfiles "multimedia"
+options "plain"
 
 \end_inset
 
