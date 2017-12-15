@@ -238,6 +238,8 @@ A substantial difference between the wavelet transform and DCT is that the
  This allows wavelets to achieve a better representation of time within
  the audio file than a DCT is able to, as signals can be encoded relative
  to an adaptive time-frequency window.
+ The advantages of this are clear, as it enables us to cut the singal of
+ interest into parts that are temporally correlated and analyse these separately.
  
 \end_layout
 
