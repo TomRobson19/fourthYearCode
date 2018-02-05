@@ -1,0 +1,142 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\date{}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language british
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\headheight 2cm
+\headsep 2cm
+\footskip 1cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Advanced Computer Graphics Summative Assignment
+\end_layout
+
+\begin_layout Author
+hzwr87
+\end_layout
+
+\begin_layout Section
+Compare the main difference between applying appearance-based metric and
+ geometricbased metric to measure the quality difference between two polygon
+ meshes.
+ Analyse in which part of the graphics rendering pipeline each metric should
+ be applied to perform quality measurement.
+ [20 marks] 
+\end_layout
+
+\begin_layout Section
+Explain how the Haudorff distance can serve as a metric to determine the
+ dissimilarity between two polygon meshes, even when these meshes are formed
+ by different number vertices and connectivity.
+ [10 marks] 
+\end_layout
+
+\begin_layout Section
+Describe the data structure of progressive meshes.
+ Analyse the rendering efficiency of progressive meshes visualisation, given
+ that the user is allowed to freely rotate the viewpoint during the visualisatio
+n process.
+ [20 marks]
+\end_layout
+
+\begin_layout Section
+Explain how progressive meshes implement the refinement and decimation processes.
+ [10 marks]
+\end_layout
+
+\begin_layout Section
+Analyse how the incorporation of level-of-detail modeling impacts the rendering
+ performance and network bandwidth consumption of a large distributed virtual
+ environment system.
+ Evaluate the suitability of using progressive meshes to implement the level-of-
+detail modeling in such a system.
+ Note that in the above distributed virtual environment system, all graphics
+ models of the virtual environment are maintained by a remote server.
+ During runtime, each client will download relevant graphics models on-demand
+ from the server to support interaction and visualisation.
+ [20 marks]
+\end_layout
+
+\begin_layout Section
+Explain the main issue of applying level-of-detail modeling to support interacti
+ve visualisation of a large 3D scene, given that the user is allowed to
+ change the viewpoint from time to time.
+ Describe two different methods to tackle such a challenge.
+ [20 marks]
+\end_layout
+
+\end_body
+\end_document
