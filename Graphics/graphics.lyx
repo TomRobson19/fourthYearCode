@@ -164,6 +164,25 @@ n process.
  [20 marks]
 \end_layout
 
+\begin_layout Standard
+A progressive mesh represents polygon models as a sequence of edge collapses,
+ or vertex splits.
+ There are two important advantages associated with this technique, that
+ the resulting representation can be much simpler than the original model,
+ and the time taken to reconstruct the model is directly proportional to
+ the desired approximation size.
+ These advantages are due to the fact the operations used are innately reversibl
+e, so we can store the simplest possible base mesh along with the sequence
+ of operations used to get from the original mesh to this base mesh.
+ A variable number of these transformations can then be reapplied in reverse
+ to set the level of detail to be the same as desired.
+ 
+\end_layout
+
+\begin_layout Standard
+The visualisation process should be relatively 
+\end_layout
+
 \begin_layout Section
 Explain how progressive meshes implement the refinement and decimation processes.
  [10 marks]
