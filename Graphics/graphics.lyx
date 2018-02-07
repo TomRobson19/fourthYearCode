@@ -180,12 +180,33 @@ e, so we can store the simplest possible base mesh along with the sequence
 \end_layout
 
 \begin_layout Standard
-The visualisation process should be relatively 
+The visualisation process is very efficient in terms of runtime as all of
+ the operations required have been pre-computed.
+ This means that as the viewpoint is rotated each new part of the object
+ that was not previously visible can be quickly displayed by applying the
+ pre-computed operations.
+ 
+\end_layout
+
+\begin_layout Standard
+However, for a large model such as a landscape, we will often only be looking
+ at a small part of it, whereas the progressive mesh is view independent.
+ This means that when we want high resolution, the whole model is in high
+ resolution, and vice versa.
+ Not being able to focus on a specific region
 \end_layout
 
 \begin_layout Section
 Explain how progressive meshes implement the refinement and decimation processes.
  [10 marks]
+\end_layout
+
+\begin_layout Standard
+Selective Refinement: We can optimize the number of triangles, and therefore
+ the rendering performance, if we can selectively refine the model resolution
+ of a local region that we are interested at while keeping the rest at low
+ resolution.
+ COPY PASTA
 \end_layout
 
 \begin_layout Section
