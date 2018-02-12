@@ -165,8 +165,7 @@ n process.
 \end_layout
 
 \begin_layout Standard
-A progressive mesh represents polygon models as a sequence of edge collapses,
- or vertex splits.
+A progressive mesh represents polygon models as a sequence of edge collapses.
  There are two important advantages associated with this technique, that
  the resulting representation can be much simpler than the original model,
  and the time taken to reconstruct the model is directly proportional to
@@ -174,26 +173,23 @@ A progressive mesh represents polygon models as a sequence of edge collapses,
  These advantages are due to the fact the operations used are innately reversibl
 e, so we can store the simplest possible base mesh along with the sequence
  of operations used to get from the original mesh to this base mesh.
- A variable number of these transformations can then be reapplied in reverse
- to set the level of detail to be the same as desired.
- 
-\end_layout
-
-\begin_layout Standard
-The visualisation process is very efficient in terms of runtime as all of
- the operations required have been pre-computed.
- This means that as the viewpoint is rotated each new part of the object
- that was not previously visible can be quickly displayed by applying the
- pre-computed operations.
+ A variable number of these edge collapses can then be reapplied in reverse
+ as vertex splits to set the level of detail to be the same as desired.
  
 \end_layout
 
 \begin_layout Standard
 However, for a large model such as a landscape, we will often only be looking
- at a small part of it, whereas the progressive mesh is view independent.
+ at a small part of it, whereas a progressive mesh is view independent.
  This means that when we want high resolution, the whole model is in high
  resolution, and vice versa.
- Not being able to focus on a specific region
+ Not being able to focus on a specific region means that we cannot remove
+ as many polygons as we would like to for some of the views.
+ This can be solved using the process of selective refinement to optimise
+ the number of triangles, but this is difficult as there are string dependencies
+ between neighbouring regions that would be affected by edge collapses and
+ vertex splits.
+ 
 \end_layout
 
 \begin_layout Section
@@ -202,11 +198,17 @@ Explain how progressive meshes implement the refinement and decimation processes
 \end_layout
 
 \begin_layout Standard
-Selective Refinement: We can optimize the number of triangles, and therefore
- the rendering performance, if we can selectively refine the model resolution
- of a local region that we are interested at while keeping the rest at low
- resolution.
- COPY PASTA
+A refinement algorithm begins with a initial coarse approximation and iterativel
+y adds elements, where as a decimation algorithm begins with the original
+ surface and iteratively removes elements down to the requested size.
+ Both of these derive an approximation through a transformation.
+ Progressive meshes implement refinement using vertex split operations,
+ which divide a vertex into two new vertices, forming a new edge and two
+ new triangles.
+ Decimation is implemented using edge collapse operations, which take two
+ connected edges and replace them with a single vertex, removing a new edge
+ and two triangles.
+ 
 \end_layout
 
 \begin_layout Section
@@ -222,12 +224,32 @@ detail modelling in such a system.
  [20 marks]
 \end_layout
 
+\begin_layout Standard
+“A Method for Progressive and Selective Transmission of Multi-resolution
+ Models,”
+\end_layout
+
 \begin_layout Section
 Explain the main issue of applying level-of-detail modelling to support
  interactive visualisation of a large 3D scene, given that the user is allowed
  to change the viewpoint from time to time.
  Describe two different methods to tackle such a challenge.
  [20 marks]
+\end_layout
+
+\begin_layout Standard
+There are many, just pick a significant one.
+ Will be similar to the view dependence stuff.
+ 
+\end_layout
+
+\begin_layout Standard
+Selective refinement adds to level of detail modelling.
+ 
+\end_layout
+
+\begin_layout Standard
+“View-dependent Refinement of Progressive Meshes,”
 \end_layout
 
 \end_body
