@@ -7,6 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import *
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+import spacy
+
 def readData():
 	filename = "news_ds.csv"
 
@@ -36,10 +38,11 @@ def cleanData(text):
 	return text
 
 def evaluatePrediction(prediction,true):
-	print(classification_report(prediction,true))
+	print(classification_report(true,prediction))
+	print(accuracy_score(true,prediction))
 
 if __name__ == '__main__':
-	print("Reading in Data")
+	print("Reading Data")
 	ids, text, labels = readData()
 
 	print("Cleaning Data")
@@ -47,9 +50,16 @@ if __name__ == '__main__':
 
 	x_train, x_test, y_train, y_test = train_test_split(text, labels, test_size=0.2, random_state=26)
 
-	print("Features")
+	print("Extracting Features")
 
-	#CountVectoriser
+	# grid search below parameters for both Count(tf) and tf-idf
+
+	# vect = CountVectoriser(
+	# 	ngram_range=(1,5),
+	# 	min_df=10,
+	# 	max_df=0.6,
+	# 	analyzer="word")
+
 	vect = TfidfVectorizer(
 		ngram_range=(1,5),
 		min_df=10,
@@ -57,13 +67,17 @@ if __name__ == '__main__':
 		analyzer="word"
 		)
 
+	print("Training MultinomialNaiveBayes")
+
 	vect = vect.fit(x_train)
 	x_train = vect.transform(x_train)
 	x_test = vect.transform(x_test)
 
-	classifier = MultinomialNB(alpha=0)
+	classifier = MultinomialNB(alpha=0.1)
 	classifier.fit(x_train, y_train)
 	prediction = classifier.predict(x_test)
 	true = y_test
+
+	print("Evaluating")
 
 	evaluatePrediction(prediction,true)
