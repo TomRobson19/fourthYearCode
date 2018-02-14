@@ -17,29 +17,51 @@ def readData():
 	labels = []
 
 	with open(filename) as file:
-		csvReader = csv.reader(file, delimiter=',', quotechar='"')
+		csvReader = csv.reader(file, delimiter=',', quotechar='"') #“”
 		first = True
 		for item in csvReader:
 			if first:
 				first = False
+			elif len(item[1]) < 10:
+				continue
 			else:
 				ids.append(int(item[0]))
 				text.append(item[1])
 				labels.append(int(item[2]))
 	return ids, text, labels
 
+
+#there are some empty articles in the data, need to remove these and their labels
 def cleanData(text):
-	for article in text:
-		article = article.lower()
-		article = article.replace('\n', ' ')
-		article = article.replace('  ', ' ')
+	for i in range(len(text)):
+		text[i] = text[i].lower()
+		text[i] = text[i].replace('\n', ' ')
 		import re
-		article = re.sub(r'([^\s\w]|_)+', '', article)
+		text[i] = re.sub(r'([^\s\w]|_)+', '', text[i])
+		text[i] = re.sub(r'^https?:\/\/.*[\r\n]*', '', text[i])
+		text[i] = re.sub( '\s+', ' ', text[i]).strip()
 	return text
 
 def evaluatePrediction(prediction,true):
 	print(classification_report(true,prediction))
 	print(accuracy_score(true,prediction))
+
+def getWordVectors(text):
+	nlp = spacy.load('en_core_web_lg')
+
+	word2VecText = []
+
+	for article in text:
+		tokens = nlp(article)
+		word2VecArticle = []
+
+		for token in tokens:
+			word2VecArticle.append(token.vector_norm)
+
+		word2VecText.append(word2VecArticle)
+
+	return word2VecText
+
 
 if __name__ == '__main__':
 	print("Reading Data")
@@ -47,37 +69,47 @@ if __name__ == '__main__':
 
 	print("Cleaning Data")
 	text = cleanData(text)
+	#print(text)
 
 	x_train, x_test, y_train, y_test = train_test_split(text, labels, test_size=0.2, random_state=26)
 
-	print("Extracting Features")
+	shallow = False
 
-	# grid search below parameters for both Count(tf) and tf-idf
+	if shallow:
+		print("Extracting Features")
 
-	# vect = CountVectoriser(
-	# 	ngram_range=(1,5),
-	# 	min_df=10,
-	# 	max_df=0.6,
-	# 	analyzer="word")
+		# grid search below parameters for both Count(tf) and tf-idf
 
-	vect = TfidfVectorizer(
-		ngram_range=(1,5),
-		min_df=10,
-		max_df=0.6,
-		analyzer="word"
-		)
+		# vect = CountVectoriser(
+		# 	ngram_range=(1,5),
+		# 	min_df=10,
+		# 	max_df=0.6,
+		# 	analyzer="word")
 
-	print("Training MultinomialNaiveBayes")
+		vect = TfidfVectorizer(
+			ngram_range=(1,5),
+			min_df=10,
+			max_df=0.6,
+			analyzer="word"
+			)
 
-	vect = vect.fit(x_train)
-	x_train = vect.transform(x_train)
-	x_test = vect.transform(x_test)
+		print("Training MultinomialNaiveBayes")
 
-	classifier = MultinomialNB(alpha=0.1)
-	classifier.fit(x_train, y_train)
-	prediction = classifier.predict(x_test)
-	true = y_test
+		vect = vect.fit(x_train)
+		x_train = vect.transform(x_train)
+		x_test = vect.transform(x_test)
 
-	print("Evaluating")
+		classifier = MultinomialNB(alpha=0.1)
+		classifier.fit(x_train, y_train)
+		prediction = classifier.predict(x_test)
+		true = y_test
 
-	evaluatePrediction(prediction,true)
+		print("Evaluating")
+
+		evaluatePrediction(prediction,true)
+
+	deep = True
+	if deep:
+		print("Getting word2vec Vectors")
+		vectors = getWordVectors(text)
+		print(vectors)
