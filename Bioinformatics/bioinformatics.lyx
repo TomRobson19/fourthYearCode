@@ -84,33 +84,68 @@
 Bioinformatics Summative Assignment
 \end_layout
 
-\begin_layout Author
+\begin_layout Standard
 hzwr87
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Section
 
 \series bold
 This question is about the Build algorithm from [1].
  
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
+\begin_layout Subsection
 
 \series bold
 Explain what the algorithm does and how it works in your own words.
  Do not use pseudocode [25 marks] 
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Standard
+The BUILD algorithm recursively builds a tree using constraints of the form
+ 
+\begin_inset Formula $(i,j)<(k,l)$
+\end_inset
+
+where 
+\begin_inset Formula $i\neq j$
+\end_inset
+
+ and
+\begin_inset Formula $k\neq l$
+\end_inset
+
+.
+ This notation means that the lowest common ancestor of 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $j$
+\end_inset
+
+ is a proper descendant of the lowest common ancestor of 
+\begin_inset Formula $k$
+\end_inset
+
+ and 
+\begin_inset Formula $l$
+\end_inset
+
+.
+ The algorithm itself requires a set of constraints and and a set of nodes.
+ 
+\end_layout
+
+\begin_layout Subsection
 
 \series bold
 Expand the partition step (given below) in pseudocode compute πC = S1; S2;
  : : : Sr; [20 marks] 
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Subsection
 
 \series bold
 Write a recurrence that expresses the running time of Build depending on
@@ -121,7 +156,7 @@ Write a recurrence that expresses the running time of Build depending on
  [25 marks]
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Subsection
 
 \series bold
 Run the algorithm on the following set of constraints (e; f) < (k; d) (c;
@@ -133,7 +168,7 @@ Run the algorithm on the following set of constraints (e; f) < (k; d) (c;
  [25 marks]
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Subsection
 
 \series bold
 Reverse the Build algorithm, i,e.
@@ -145,16 +180,14 @@ Reverse the Build algorithm, i,e.
  [30 marks] 
 \end_layout
 
-\end_deeper
-\begin_layout Enumerate
+\begin_layout Section
 
 \series bold
 This question is about the MinCutSupertree algorithm from [2].
  
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
+\begin_layout Subsection
 
 \series bold
 One of its properties is that it preserves nesting and subtrees that are
@@ -163,7 +196,7 @@ One of its properties is that it preserves nesting and subtrees that are
  [15 marks] 
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Subsection
 
 \series bold
 Argue that the MinCutSupertree algorithm is a generalisation of the Build
@@ -173,6 +206,5 @@ Argue that the MinCutSupertree algorithm is a generalisation of the Build
  [10 marks]
 \end_layout
 
-\end_deeper
 \end_body
 \end_document
