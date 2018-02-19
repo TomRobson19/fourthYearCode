@@ -10,3 +10,5 @@ Vision/__pycache__/
 Vision/mosaic-lab
 
 Vision/mymap\.html
+
+*.txt
