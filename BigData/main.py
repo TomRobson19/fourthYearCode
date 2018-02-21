@@ -181,7 +181,7 @@ if __name__ == '__main__':
 		sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
 		embedded_sequences = embedding_layer(sequence_input)
 
-		lstm = False
+		lstm = True
 		if lstm:
 			print("Using LSTM")
 			x = Conv1D(128, 5, activation='relu')(embedded_sequences)
@@ -215,3 +215,7 @@ if __name__ == '__main__':
 		# happy learning!
 		model.fit(x_train, y_train, validation_data=(x_test, y_test),
 		          epochs=20, batch_size=128)
+
+		prediction = model.predict(x_test)
+
+		#evaluatePrediction(prediction,y_test)
