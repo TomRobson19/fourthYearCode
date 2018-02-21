@@ -140,9 +140,93 @@ where
 .
  The algorithm itself requires a set of constraints and and a non-empty
  set of nodes.
- If the set of nodes has only 1 element, then the alorithm returns a tree
+ If the set of nodes has only 1 element, then the algorithm returns a tree
  consisting of this element alone.
- In all 
+ Otherwise, the set of nodes is partitioned into blocks based on 3 rules.
+ 
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $(i,j)<(k,l)$
+\end_inset
+
+ is a constraint, then both 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $j$
+\end_inset
+
+ are in the same block 
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $(i,j)<(k,l)$
+\end_inset
+
+ is a constraint, and 
+\begin_inset Formula $k$
+\end_inset
+
+ and 
+\begin_inset Formula $l$
+\end_inset
+
+ are in the same block, then 
+\begin_inset Formula $i$
+\end_inset
+
+, 
+\begin_inset Formula $j$
+\end_inset
+
+, 
+\begin_inset Formula $k$
+\end_inset
+
+, and 
+\begin_inset Formula $l$
+\end_inset
+
+ are all in the same block.
+ .
+ 
+\end_layout
+
+\begin_layout Enumerate
+No two nodes are in the same block unless specified by the above rules.
+ 
+\end_layout
+
+\begin_layout Standard
+For each of the blocks created by this partitioning method, we find which
+ of the original constraints are relevant to each block, which means all
+ of 
+\begin_inset Formula $i$
+\end_inset
+
+, 
+\begin_inset Formula $j$
+\end_inset
+
+, 
+\begin_inset Formula $k$
+\end_inset
+
+, and 
+\begin_inset Formula $l$
+\end_inset
+
+ are in this block.
+ We then call the BUILD algorithm again with this new set of constraints
+ and nodes.
+ This continues recursively until a null tree is returned, at which point
+ we know that the nodes that were passed to BUILD in this recursive step
+ were leaves of the final tree.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -161,6 +245,10 @@ Expand the partition step (given below) in pseudocode compute
 
 \begin_layout Standard
 This is applying the 2 rules
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Subsection
