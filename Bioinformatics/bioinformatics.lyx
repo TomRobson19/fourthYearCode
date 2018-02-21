@@ -84,7 +84,7 @@
 Bioinformatics Summative Assignment
 \end_layout
 
-\begin_layout Standard
+\begin_layout Author
 hzwr87
 \end_layout
 
@@ -100,6 +100,10 @@ This question is about the Build algorithm from [1].
 \series bold
 Explain what the algorithm does and how it works in your own words.
  Do not use pseudocode [25 marks] 
+\end_layout
+
+\begin_layout Standard
+(5 or 6 sentences)
 \end_layout
 
 \begin_layout Standard
@@ -134,15 +138,29 @@ where
 \end_inset
 
 .
- The algorithm itself requires a set of constraints and and a set of nodes.
- 
+ The algorithm itself requires a set of constraints and and a non-empty
+ set of nodes.
+ If the set of nodes has only 1 element, then the alorithm returns a tree
+ consisting of this element alone.
+ In all 
 \end_layout
 
 \begin_layout Subsection
 
 \series bold
-Expand the partition step (given below) in pseudocode compute πC = S1; S2;
- : : : Sr; [20 marks] 
+Expand the partition step (given below) in pseudocode compute 
+\begin_inset Formula $\pi_{C}=S_{1},S_{2},...S_{r};$
+\end_inset
+
+ [20 marks] 
+\end_layout
+
+\begin_layout Standard
+(4 or 5 lines)
+\end_layout
+
+\begin_layout Standard
+This is applying the 2 rules
 \end_layout
 
 \begin_layout Subsection
@@ -159,13 +177,430 @@ Write a recurrence that expresses the running time of Build depending on
 \begin_layout Subsection
 
 \series bold
-Run the algorithm on the following set of constraints (e; f) < (k; d) (c;
- l) < (g; k) (c; h) < (a; n) (g; b) < (g; i) (j; n) < (j; l) (g; i) < (d;
- m) (c; a) < (f; h) (c; h) < (c; a) (j; l) < (e; n) (e; f) < (h; l) (n;
- l) < (a; f) (j; l) < (j; a) (d; i) < (k; n) (k; m) < (e; i) (d; i) < (g;
- i) (j; n) < (j; f) : You should show the partitioning and the recursive
- calls at each stage.
+Run the algorithm on the following set of constraints.
+ You should show the partitioning and the recursive calls at each stage.
  [25 marks]
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(e,f)<(k,d)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(c,l)<(g,k)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(c,h)<(a,n)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(g,b)<(g,i)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(j,n)<(j,l)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(g,i)<(d,m)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(c,a)<(f,h)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(c,h)<(c,a)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Enumerate
+
+\lang english
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[9.]
+\backslash
+setcounter{enumi}{9}
+\end_layout
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $(j,l)<(e,n)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(e,f)<(h,l)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(n,l)<(a,f)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(j,l)<(j,a)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(d,i)<(k,n)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(k,m)<(e,i)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(d,i)<(g,i)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(j,n)<(j,f)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+ALGORITHM GOES HERE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At each stage, write what each rule produces partition wise, and what constraint
+s carry over.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -173,8 +608,11 @@ Run the algorithm on the following set of constraints (e; f) < (k; d) (c;
 \series bold
 Reverse the Build algorithm, i,e.
  design an algorithm that takes a tree with labeled leaves as an input,
- and produces a set of constraints of the form (i; j) < (k; l), which is
- consistent only with (an isomorphic copy of) that input.
+ and produces a set of constraints of the form 
+\begin_inset Formula $(i,j)<(k,l)$
+\end_inset
+
+, which is consistent only with (an isomorphic copy of) that input.
  Prove the correctness of your algorithm.
  Also, a smaller output (a set of constraints) would give you a better mark.
  [30 marks] 
