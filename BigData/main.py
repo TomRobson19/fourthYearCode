@@ -200,6 +200,7 @@ if __name__ == '__main__':
 			x = MaxPooling1D(5)(x)
 			#x = Conv1D(128, 5, activation='relu')(x)
 			#x = GlobalMaxPooling1D()(x)
+			# This should be the RNN base class not the Simple RNN
 			x = SimpleRNN(5)(x)
 			x = Dense(128, activation='relu')(x)
 
