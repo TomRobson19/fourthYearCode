@@ -71,6 +71,7 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\bullet 3 0 7 -1
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -100,10 +101,6 @@ This question is about the Build algorithm from [1].
 \series bold
 Explain what the algorithm does and how it works in your own words.
  Do not use pseudocode [25 marks] 
-\end_layout
-
-\begin_layout Standard
-(5 or 6 sentences)
 \end_layout
 
 \begin_layout Standard
@@ -223,10 +220,9 @@ For each of the blocks created by this partitioning method, we find which
  are in this block.
  We then call the BUILD algorithm again with this new set of constraints
  and nodes.
- This continues recursively until a null tree is returned, at which point
- we know that the nodes that were passed to BUILD in this recursive step
- were leaves of the final tree.
- 
+ This continues BUILD is called on only 1 node, in which case it returns
+ a tree consisting of only this node, which will be a leaf of the overall
+ tree, which is built up from these leaves.
 \end_layout
 
 \begin_layout Subsection
@@ -245,10 +241,6 @@ Expand the partition step (given below) in pseudocode compute
 
 \begin_layout Standard
 This is applying the 2 rules
-\end_layout
-
-\begin_layout Standard
-
 \end_layout
 
 \begin_layout Subsection
@@ -271,7 +263,7 @@ Run the algorithm on the following set of constraints.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Box Boxed
+\begin_inset Box Frameless
 position "t"
 hor_pos "c"
 has_inner_box 1
@@ -332,47 +324,7 @@ status open
 \noun off
 \color none
 \lang english
-\begin_inset Formula $(c,l)<(g,k)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\lang english
 \begin_inset Formula $(c,h)<(a,n)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\lang english
-\begin_inset Formula $(g,b)<(g,i)$
 \end_inset
 
 
@@ -412,26 +364,6 @@ status open
 \noun off
 \color none
 \lang english
-\begin_inset Formula $(g,i)<(d,m)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\lang english
 \begin_inset Formula $(c,a)<(f,h)$
 \end_inset
 
@@ -452,7 +384,67 @@ status open
 \noun off
 \color none
 \lang english
-\begin_inset Formula $(c,h)<(c,a)$
+\begin_inset Formula $(j,l)<(e,n)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(n,l)<(a,f)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(d,i)<(k,n)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(d,i)<(g,i)$
 \end_inset
 
 
@@ -506,7 +498,67 @@ setcounter{enumi}{9}
 \noun off
 \color none
 
-\begin_inset Formula $(j,l)<(e,n)$
+\begin_inset Formula $(c,l)<(g,k)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(g,b)<(g,i)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(g,i)<(d,m)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $(c,h)<(c,a)$
 \end_inset
 
 
@@ -546,47 +598,7 @@ setcounter{enumi}{9}
 \noun off
 \color none
 \lang english
-\begin_inset Formula $(n,l)<(a,f)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\lang english
 \begin_inset Formula $(j,l)<(j,a)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\lang english
-\begin_inset Formula $(d,i)<(k,n)$
 \end_inset
 
 
@@ -626,26 +638,6 @@ setcounter{enumi}{9}
 \noun off
 \color none
 \lang english
-\begin_inset Formula $(d,i)<(g,i)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\lang english
 \begin_inset Formula $(j,n)<(j,f)$
 \end_inset
 
@@ -663,7 +655,7 @@ setcounter{enumi}{9}
 \end_layout
 
 \begin_layout Standard
-\begin_inset Box Boxed
+\begin_inset Box Frameless
 position "t"
 hor_pos "c"
 has_inner_box 1
@@ -674,10 +666,147 @@ width "100col%"
 special "none"
 height "1in"
 height_special "totalheight"
-status open
+status collapsed
 
 \begin_layout Plain Layout
-ALGORITHM GOES HERE
+BUILD(
+\begin_inset Formula $(a,b,c,d,e,f,g,h,i,j,k,l,m,n)$
+\end_inset
+
+, (
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $(e,f)<(k,d)$
+\end_inset
+
+ , 
+\begin_inset Formula $(c,h)<(a,n)$
+\end_inset
+
+ , 
+\begin_inset Formula $(j,n)<(j,l)$
+\end_inset
+
+ , 
+\begin_inset Formula $(c,a)<(f,h)$
+\end_inset
+
+ , 
+\begin_inset Formula $(j,l)<(e,n)$
+\end_inset
+
+ , 
+\begin_inset Formula $(n,l)<(a,f)$
+\end_inset
+
+ , 
+\begin_inset Formula $(d,i)<(k,n)$
+\end_inset
+
+ , 
+\begin_inset Formula $(d,i)<(g,i)$
+\end_inset
+
+ , 
+\begin_inset Formula $(c,l)<(g,k)$
+\end_inset
+
+ , 
+\begin_inset Formula $(g,b)<(g,i)$
+\end_inset
+
+ , 
+\begin_inset Formula $(g,i)<(d,m)$
+\end_inset
+
+ , 
+\begin_inset Formula $(c,h)<(c,a)$
+\end_inset
+
+ , 
+\begin_inset Formula $(e,f)<(h,l)$
+\end_inset
+
+ , 
+\begin_inset Formula $(j,l)<(j,a)$
+\end_inset
+
+ , 
+\begin_inset Formula $(k,m)<(e,i)$
+\end_inset
+
+ , 
+\begin_inset Formula $(j,n)<(j,f)$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang british
+))
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Applying partition rule 1 gives the blocks (
+\begin_inset Formula $e,f$
+\end_inset
+
+), (
+\begin_inset Formula $a,c,h,j,l,n$
+\end_inset
+
+), (
+\begin_inset Formula $b,d,g,i$
+\end_inset
+
+), (
+\begin_inset Formula $k,m$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+Applying partition rule 2 gives the blocks (
+\begin_inset Formula $a,c,e,f,h,j,l,n$
+\end_inset
+
+), (
+\begin_inset Formula $b,d,g,i$
+\end_inset
+
+), (
+\begin_inset Formula $k,m$
+\end_inset
+
+)
 \end_layout
 
 \end_inset
@@ -685,10 +814,1243 @@ ALGORITHM GOES HERE
 
 \end_layout
 
-\begin_layout Standard
-At each stage, write what each rule produces partition wise, and what constraint
-s carry over.
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(a,c,e,f,h,j,l,n)$
+\end_inset
+
+, (
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $(c,h)<(a,n)$
+\end_inset
+
+ , 
+\begin_inset Formula $(j,n)<(j,l)$
+\end_inset
+
+ , 
+\begin_inset Formula $(c,a)<(f,h)$
+\end_inset
+
+ , 
+\begin_inset Formula $(j,l)<(e,n)$
+\end_inset
+
+ , 
+\begin_inset Formula $(n,l)<(a,f)$
+\end_inset
+
  
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang british
+, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $(c,h)<(c,a)$
+\end_inset
+
+ , 
+\begin_inset Formula $(e,f)<(h,l)$
+\end_inset
+
+ , 
+\begin_inset Formula $(j,l)<(j,a)$
+\end_inset
+
+ , 
+\begin_inset Formula $(j,n)<(j,f)$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang british
+)
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Applying partition rule 1 gives the blocks (
+\begin_inset Formula $a,c,h$
+\end_inset
+
+), (
+\begin_inset Formula $j,l,n$
+\end_inset
+
+), (
+\begin_inset Formula $e,f$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+Applying partition rule 2 changes nothing
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(a,c,h)$
+\end_inset
+
+, (
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $(c,h)<(c,a)$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang british
+)
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Applying partition rule 1 gives the blocks (
+\begin_inset Formula $c,h$
+\end_inset
+
+), (
+\begin_inset Formula $a$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+Applying partition rule 2 changes nothing
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(c,h)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+By partition rule 3, as there are no constraints, these will then be in
+ separate blocks.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(c)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node c.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(h)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node h.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(a)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node a.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(j,l,n)$
+\end_inset
+
+, (
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $(j,n)<(j,l)$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang british
+))
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Applying partition rule 1 gives the blocks (
+\begin_inset Formula $j,n$
+\end_inset
+
+), (
+\begin_inset Formula $l$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+Applying partition rule 2 changes nothing
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(j,n)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+By partition rule 3, as there are no constraints, these will then be in
+ separate blocks.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(j)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node j.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(n)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node n.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(l)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node l.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(e,f)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+By partition rule 3, as there are no constraints, these will then be in
+ separate blocks.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(e)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node k.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(f)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node m.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(b,d,g,i)$
+\end_inset
+
+, (
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $(d,i)<(g,i)$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang british
+ , 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $(g,b)<(g,i)$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang british
+))
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Applying partition rule 1 gives the blocks (
+\begin_inset Formula $d,i$
+\end_inset
+
+), (
+\begin_inset Formula $b,g$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+Applying partition rule 2 changes nothing
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(d,i)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+By partition rule 3, as there are no constraints, these will then be in
+ separate blocks.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(d)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node d.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(i)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node i.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(b,g)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+By partition rule 3, as there are no constraints, these will then be in
+ separate blocks.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(b)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node k.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(g)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node m.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(k,m)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+By partition rule 3, as there are no constraints, these will then be in
+ separate blocks.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(k)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node k.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+BUILD(
+\begin_inset Formula $(m)$
+\end_inset
+
+, ())
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This returns a tree only containing the node m.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\emph on
+\begin_inset Graphics
+	filename Bio.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Final tree produced by BUILD
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
