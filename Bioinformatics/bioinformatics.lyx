@@ -189,8 +189,6 @@ If
 \end_inset
 
  are all in the same block.
- .
- 
 \end_layout
 
 \begin_layout Enumerate
@@ -236,22 +234,106 @@ Expand the partition step (given below) in pseudocode compute
 \end_layout
 
 \begin_layout Standard
-(4 or 5 lines)
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout LyX-Code
+\begin_inset Formula $\pi=S$
+\end_inset
+
+
 \end_layout
 
-\begin_layout Standard
-This is applying the 2 rules
+\begin_layout LyX-Code
+for c in C:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+i,j,k,l = c
+\end_layout
+
+\begin_layout LyX-Code
+if i and j are not in the same block:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+merge blocks containing i and j
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout LyX-Code
+for c in C:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+i,j,k,l = c
+\end_layout
+
+\begin_layout LyX-Code
+if k and l are in the same block and i and j are in a different block:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+merge blocks containing i, j and k, l
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout LyX-Code
+return 
+\begin_inset Formula $\pi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Partition Step of BUILD(S,C)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 
 \series bold
 Write a recurrence that expresses the running time of Build depending on
- the number of dierent leaf-labels n and the number of constraints m.
+ the number of different leaf-labels n and the number of constraints m.
  Use it to estimate the running time of the algorithm assuming that the
- partitioning step runs in time f (n; m) for some function monotonically
- nondecreasing function f.
+ partitioning step runs in time 
+\begin_inset Formula $f(n,m)$
+\end_inset
+
+ for some function monotonically non-decreasing function f.
  [25 marks]
+\end_layout
+
+\begin_layout Standard
+Here we assuime that the partition step from the previous question runs
+ in 
+\begin_inset Formula $f(n,m)$
+\end_inset
+
+ time.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -1501,7 +1583,7 @@ BUILD(
 \end_layout
 
 \begin_layout Plain Layout
-This returns a tree only containing the node k.
+This returns a tree only containing the node e.
 \end_layout
 
 \end_inset
@@ -1539,7 +1621,7 @@ BUILD(
 \end_layout
 
 \begin_layout Plain Layout
-This returns a tree only containing the node m.
+This returns a tree only containing the node f.
 \end_layout
 
 \end_inset
@@ -1847,7 +1929,7 @@ BUILD(
 \end_layout
 
 \begin_layout Plain Layout
-This returns a tree only containing the node k.
+This returns a tree only containing the node b.
 \end_layout
 
 \end_inset
@@ -1885,7 +1967,7 @@ BUILD(
 \end_layout
 
 \begin_layout Plain Layout
-This returns a tree only containing the node m.
+This returns a tree only containing the node g.
 \end_layout
 
 \end_inset
@@ -2036,7 +2118,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Final tree produced by BUILD
+Final tree produced by BUILD on this set of nodes and constraints
 \end_layout
 
 \end_inset
