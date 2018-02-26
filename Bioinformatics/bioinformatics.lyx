@@ -312,6 +312,16 @@ Partition Step of BUILD(S,C)
 
 \end_layout
 
+\begin_layout Standard
+APPLY STEP 2 AGAIN, MAYBE SOME WAY TO SORT CONSTRAINTS TO ENABLE LOG TIME
+ COMPLEXITY.
+\end_layout
+
+\begin_layout Standard
+CAN ENCODE CONSTRAINTS INTO SET OF COMMANDS (p410) TO MINIMISE NUMBER OF
+ LOOP ITERATIONS.
+\end_layout
+
 \begin_layout Subsection
 
 \series bold
@@ -327,13 +337,21 @@ Write a recurrence that expresses the running time of Build depending on
 \end_layout
 
 \begin_layout Standard
-Here we assuime that the partition step from the previous question runs
- in 
+Here we assume that the partition step from the previous question runs in
+ 
 \begin_inset Formula $f(n,m)$
 \end_inset
 
  time.
  
+\end_layout
+
+\begin_layout Standard
+ANSWER - O(m(f(n,m))
+\end_layout
+
+\begin_layout Standard
+TRY AND DO THIS BY SUBSTITUTION
 \end_layout
 
 \begin_layout Subsection
@@ -2098,7 +2116,7 @@ This returns a tree only containing the node m.
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
