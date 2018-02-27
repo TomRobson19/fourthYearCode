@@ -248,6 +248,10 @@ status collapsed
 \end_layout
 
 \begin_layout LyX-Code
+//Apply rule 1
+\end_layout
+
+\begin_layout LyX-Code
 for c in C:
 \end_layout
 
@@ -262,11 +266,23 @@ if i and j are not in the same block:
 
 \begin_deeper
 \begin_layout LyX-Code
-merge blocks containing i and j
+merge blocks in 
+\begin_inset Formula $\pi$
+\end_inset
+
+ containing i and j
 \end_layout
 
 \end_deeper
 \end_deeper
+\begin_layout LyX-Code
+repeat
+\end_layout
+
+\begin_layout LyX-Code
+//Apply rule 2
+\end_layout
+
 \begin_layout LyX-Code
 for c in C:
 \end_layout
@@ -277,16 +293,32 @@ i,j,k,l = c
 \end_layout
 
 \begin_layout LyX-Code
-if k and l are in the same block and i and j are in a different block:
+if k and l are in the same block of 
+\begin_inset Formula $\pi$
+\end_inset
+
+ and i and j are in a different block of 
+\begin_inset Formula $\pi$
+\end_inset
+
+ :
 \end_layout
 
 \begin_deeper
 \begin_layout LyX-Code
-merge blocks containing i, j and k, l
+merge blocks of 
+\begin_inset Formula $\pi$
+\end_inset
+
+ containing i, j and k, l
 \end_layout
 
 \end_deeper
 \end_deeper
+\begin_layout LyX-Code
+end repeat if rule 2 had no effect
+\end_layout
+
 \begin_layout LyX-Code
 return 
 \begin_inset Formula $\pi$
@@ -310,16 +342,6 @@ Partition Step of BUILD(S,C)
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-APPLY STEP 2 AGAIN, MAYBE SOME WAY TO SORT CONSTRAINTS TO ENABLE LOG TIME
- COMPLEXITY.
-\end_layout
-
-\begin_layout Standard
-CAN ENCODE CONSTRAINTS INTO SET OF COMMANDS (p410) TO MINIMISE NUMBER OF
- LOOP ITERATIONS.
 \end_layout
 
 \begin_layout Subsection
@@ -2166,6 +2188,55 @@ Reverse the Build algorithm, i,e.
  Prove the correctness of your algorithm.
  Also, a smaller output (a set of constraints) would give you a better mark.
  [30 marks] 
+\end_layout
+
+\begin_layout Standard
+The reverse of the BUILD algorithm can best be described as a sequence of
+ steps.
+\end_layout
+
+\begin_layout Enumerate
+Label each internal node of the tree with the Lowest Common Ancestor of
+ two of the leaves of its children.
+ For example, the root of the tree from the previous question could be labelled
+ 
+\begin_inset Formula $(c,m)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Any leaf that is not referred to by any of the internal node constraints
+ should get a label of itself and a leaf descendent of one of its siblings.
+ (This occurs when an internal node has 3 or more leaf children).
+\end_layout
+
+\begin_layout Enumerate
+Remove all leaves that have not been labelled by step 2 from the tree.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Create a constraint for each of the remaining nodes of the tree, of the
+ form (node) < (parent).
+ There are 2 sub conditions
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The root is not of the left-hand-side of any constraint
+\end_layout
+
+\begin_layout Enumerate
+The leaf constraints from step 2 must be labelled of the form (node) < (parent's
+ parent) to ensure that they are true descendents.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+PROOF DOESNT NEED TO BE FORMAL, GUESS WE CAN JUST SHOW THAT IT WORKS ON
+ A SERIES OF EXAMPLES?
 \end_layout
 
 \begin_layout Section
