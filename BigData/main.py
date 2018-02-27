@@ -46,6 +46,10 @@ def cleanData(text):
 		text[i] = re.sub(r'([^\s\w]|_)+', '', text[i])
 		text[i] = re.sub(r'^https?:\/\/.*[\r\n]*', '', text[i])
 		text[i] = re.sub( '\s+', ' ', text[i]).strip()
+
+		text[i] = re.sub(r'(\S+)@(\S+)', '', text[i])
+		text[i] = re.sub(r'(\A|\s)@(\w+)', '', text[i])
+		text[i] = re.sub(r'(\A|\s)#(\w+)', '', text[i])
 	return text
 
 def evaluatePrediction(prediction,true):
@@ -76,7 +80,7 @@ if __name__ == '__main__':
 	text = cleanData(text)
 	#print(text)
 
-	shallow = False
+	shallow = True
 
 	if shallow:
 
@@ -114,7 +118,7 @@ if __name__ == '__main__':
 
 		evaluatePrediction(prediction,true)
 
-	deep = True
+	deep = False
 	if deep:
 		# print("Getting word2vec Vectors")
 		# vectors = getWordVectors(text)
