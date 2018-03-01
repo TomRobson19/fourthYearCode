@@ -369,11 +369,7 @@ Here we assume that the partition step from the previous question runs in
 \end_layout
 
 \begin_layout Standard
-ANSWER - O(m(f(n,m))
-\end_layout
 
-\begin_layout Standard
-TRY AND DO THIS BY SUBSTITUTION
 \end_layout
 
 \begin_layout Subsection
@@ -2289,6 +2285,7 @@ This preserves nesting as if a subtree A is nested within a subtree B, then
 
 \begin_layout Standard
 REWRITE AND ENSURE IT MAKES MORE SENSE.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -2299,6 +2296,76 @@ Argue that the MinCutSupertree algorithm is a generalisation of the Build
  show how to encode a constraint from the inputs of the later as a tree,
  which is one of the inputs of the former.
  [10 marks]
+\end_layout
+
+\begin_layout Standard
+The constraints for the BUILD algorithm can be converted into subtrees by
+ considering 2 cases.
+ Constraints can only be made up of either 3 or 4 unique nodes for example
+ 
+\series bold
+
+\begin_inset Formula $(i,j)<(k,l)$
+\end_inset
+
+ 
+\series default
+or
+\series bold
+ 
+\begin_inset Formula $(i,j)<(k,i)$
+\end_inset
+
+.
+ 
+\series default
+By running the BUILD algorithm on each of these constraints individually,
+ we get the 2 tree in the Figure below.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Bio2.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Two possible subtrees
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Any constraint that is an input to BUILD can be encoded as one of these
+ 2 trees, and from here the MinCutSupertree algorithm can be run on these
+ subtrees to give the final tree.
+ 
 \end_layout
 
 \end_body
