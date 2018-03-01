@@ -2227,7 +2227,7 @@ Create a constraint for each of the remaining nodes of the tree, of the
 
 \begin_deeper
 \begin_layout Enumerate
-The root is not of the left-hand-side of any constraint
+The root is not on the left-hand-side of any constraint
 \end_layout
 
 \begin_layout Enumerate
@@ -2237,8 +2237,10 @@ The leaf constraints from step 2 must be labelled of the form (node) < (parent's
 
 \end_deeper
 \begin_layout Standard
-PROOF DOESNT NEED TO BE FORMAL, GUESS WE CAN JUST SHOW THAT IT WORKS ON
- A SERIES OF EXAMPLES?
+This ensures that all of the leaves of the tree will appear on the left-hand-sid
+e of at least one constraint, so will all be appropriately represented in
+ the final graph.
+ 
 \end_layout
 
 \begin_layout Section
@@ -2258,13 +2260,35 @@ One of its properties is that it preserves nesting and subtrees that are
 \end_layout
 
 \begin_layout Standard
-The property of preserving nesting and subtrees is achieved in line 5 of
- the pseudocode when the graph 
+The property of preserving nesting and subtrees that are shared by all of
+ the input trees is achieved in line 5 of the pseudocode when the graph
+ 
 \begin_inset Formula $S_{\mathscr{T}}/E_{\mathscr{T}}^{max}$
 \end_inset
 
  is constructed.
  
+\end_layout
+
+\begin_layout Standard
+This preserves subtrees that occur in all input trees as the edges between
+ them will always be contracted when forming 
+\begin_inset Formula $S_{\mathscr{T}}/E_{\mathscr{T}}^{max}$
+\end_inset
+
+, so they will remain in the same subtree of the output graph.
+ 
+\end_layout
+
+\begin_layout Standard
+This preserves nesting as if a subtree A is nested within a subtree B, then
+ calling MinCutSupertree on B will end up with the nodes of A being contracted,
+ preserving this subtree and therefore the nesting.
+ 
+\end_layout
+
+\begin_layout Standard
+REWRITE AND ENSURE IT MAKES MORE SENSE.
 \end_layout
 
 \begin_layout Subsection
