@@ -2179,15 +2179,17 @@ Final tree produced by BUILD on this set of nodes and constraints
 
 \series bold
 Reverse the Build algorithm, i,e.
- design an algorithm that takes a tree with labeled leaves as an input,
+ design an algorithm that takes a tree with labelled leaves as an input,
  and produces a set of constraints of the form 
 \begin_inset Formula $(i,j)<(k,l)$
 \end_inset
 
-, which is consistent only with (an isomorphic copy of) that input.
+, such that when Build runs on that set, the result is (an isomorphic copy
+ of) the input tree.
  Prove the correctness of your algorithm.
- Also, a smaller output (a set of constraints) would give you a better mark.
- [30 marks] 
+ Also, a smaller output (number of constraints) would give you a better
+ mark.
+ [30 marks]
 \end_layout
 
 \begin_layout Standard
@@ -2253,6 +2255,16 @@ One of its properties is that it preserves nesting and subtrees that are
  shared by all of the input trees.
  Point where precisely in the algorithm this property is achieved.
  [15 marks] 
+\end_layout
+
+\begin_layout Standard
+The property of preserving nesting and subtrees is achieved in line 5 of
+ the pseudocode when the graph 
+\begin_inset Formula $S_{\mathscr{T}}/E_{\mathscr{T}}^{max}$
+\end_inset
+
+ is constructed.
+ 
 \end_layout
 
 \begin_layout Subsection
