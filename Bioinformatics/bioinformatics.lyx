@@ -226,7 +226,7 @@ For each of the blocks created by this partitioning method, we find which
 \begin_layout Subsection
 
 \series bold
-Expand the partition step (given below) in pseudocode compute 
+Expand the partition step in pseudocode: compute 
 \begin_inset Formula $\pi_{C}=S_{1},S_{2},...S_{r};$
 \end_inset
 
@@ -365,10 +365,89 @@ Here we assume that the partition step from the previous question runs in
 \end_inset
 
  time.
+ As this is monotonic, it will always be expressed below as the worst case
  
+\begin_inset Formula $f(n,m)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $T(1,m)=O(1)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T(n,m)=KT(n-1,m)+f(n,m)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Where K is the number of sets in the the partition 
+\begin_inset Formula $\pi_{C}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T(n,m)=K(K^{'}T(n-2,m)+f(n,m))+f(n,m)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T(n,m)=K(K^{'}(K^{''}T(n-3,m)+f(n,m))+f(n,m))+f(n,m)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The number of calls to BUILD referred to by 
+\begin_inset Formula $K\times K^{'}\times K^{''}...$
+\end_inset
+
+ is bounded by 
+\begin_inset Formula $(2n-1)$
+\end_inset
+
+, and the number of partioning calls (i.e.
+ calls to 
+\begin_inset Formula $f(n,m)$
+\end_inset
+
+) is bounded by 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+, we can infer:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T(n,m)=(2n-1)T(1,0)+(n-1)f(n,m)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T(n,m)=(2n-1)O(1)+(n-1)f(n,m)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T(n,m)=O(n+nf(n,m))$
+\end_inset
+
 
 \end_layout
 
@@ -2239,6 +2318,10 @@ e of at least one constraint, so will all be appropriately represented in
  
 \end_layout
 
+\begin_layout Standard
+WHAT MORE TO SAY?
+\end_layout
+
 \begin_layout Section
 
 \series bold
@@ -2263,28 +2346,15 @@ The property of preserving nesting and subtrees that are shared by all of
 \end_inset
 
  is constructed.
- 
-\end_layout
-
-\begin_layout Standard
-This preserves subtrees that occur in all input trees as the edges between
- them will always be contracted when forming 
+ This graph preserves subtrees that occur in all input trees as the edges
+ between them will always be contracted when forming 
 \begin_inset Formula $S_{\mathscr{T}}/E_{\mathscr{T}}^{max}$
 \end_inset
 
-, so they will remain in the same subtree of the output graph.
- 
-\end_layout
-
-\begin_layout Standard
-This preserves nesting as if a subtree A is nested within a subtree B, then
- calling MinCutSupertree on B will end up with the nodes of A being contracted,
- preserving this subtree and therefore the nesting.
- 
-\end_layout
-
-\begin_layout Standard
-REWRITE AND ENSURE IT MAKES MORE SENSE.
+, so they will remain together in the output graph.
+ Nesting is also preserved, as if a subtree A is nested within a subtree
+ B, then calling MinCutSupertree on B will end up with the nodes of A being
+ contracted, preserving this subtree and therefore the nesting.
  
 \end_layout
 
@@ -2363,8 +2433,8 @@ Two possible subtrees
 
 \begin_layout Standard
 Any constraint that is an input to BUILD can be encoded as one of these
- 2 trees, and from here the MinCutSupertree algorithm can be run on these
- subtrees to give the final tree.
+ 2 trees, and from here the MinCutSupertree algorithm can be run to give
+ us the final tree.
  
 \end_layout
 
