@@ -2315,6 +2315,14 @@ The leaf constraints from step 2 must be labelled of the form (node) < (parent's
 This ensures that all of the leaves of the tree will appear on the left-hand-sid
 e of at least one constraint, so will all be appropriately represented in
  the final graph.
+ If the tree is binary, then all leaves will appear in the label of their
+ parent.
+ Due to the formation of the constraints as (children)<(parent), the correct
+ subtree structure will be preserved.
+ In the case of a non binary tree, there will be children that are not represent
+ed by their parent's label.
+ The constraint added by step 2 of this reverse algorithm ensures that these
+ nodes are placed in the correct subtree.
  
 \end_layout
 
