@@ -238,18 +238,23 @@ Explain the main issue of applying level-of-detail modelling to support
 \end_layout
 
 \begin_layout Standard
-There are many, just pick a significant one.
- Will be similar to the view dependence stuff.
+An important issue is the high polygon count that is required to display
+ parts of meshes at high visual quality close to the observer, as well as
+ lowering the level of detail for parts of meshes that are further away.
+ This is very noticable in situations such as landscape rendering.
  
 \end_layout
 
 \begin_layout Standard
-Selective refinement adds to level of detail modelling.
- 
+view-dependent refinement
 \end_layout
 
 \begin_layout Standard
-“View-dependent Refinement of Progressive Meshes,”
+criteria based refinement 
+\end_layout
+
+\begin_layout Standard
+search for the above in the paper
 \end_layout
 
 \end_body
