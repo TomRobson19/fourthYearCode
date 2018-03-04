@@ -371,17 +371,18 @@ Here we assume that the partition step from the previous question runs in
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $T(1,m)=O(1)$
+\begin_inset Formula $T(1,0)=O(1)$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $T(n,m)=KT(n-1,m)+f(n,m)$
+\begin_inset Formula $T(n,m)=KT(n_{i},m_{i})+f(n,m)$
 \end_inset
 
 
@@ -392,18 +393,34 @@ Where K is the number of sets in the the partition
 \begin_inset Formula $\pi_{C}$
 \end_inset
 
+ and 
+\begin_inset Formula $i$
+\end_inset
+
+ represents the 
+\begin_inset Formula $ith$
+\end_inset
+
+ block in 
+\begin_inset Formula $\pi_{c}$
+\end_inset
+
+, where 
+\begin_inset Formula $0\leq i\leq K$
+\end_inset
+
 .
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $T(n,m)=K(K^{'}T(n-2,m)+f(n,m))+f(n,m)$
+\begin_inset Formula $T(n,m)=K(K^{'}T(n_{i},m_{i})+f(n,m))+f(n,m)$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $T(n,m)=K(K^{'}(K^{''}T(n-3,m)+f(n,m))+f(n,m))+f(n,m)$
+\begin_inset Formula $T(n,m)=K(K^{'}(K^{''}T(n_{i},m_{i})+f(n,m))+f(n,m))+f(n,m)$
 \end_inset
 
 
@@ -2213,7 +2230,7 @@ This returns a tree only containing the node m.
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -2222,7 +2239,7 @@ status collapsed
 \emph on
 \begin_inset Graphics
 	filename Bio.png
-	scale 50
+	scale 40
 
 \end_inset
 
@@ -2405,6 +2422,8 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
+\noindent
+\align center
 \begin_inset Graphics
 	filename Bio2.png
 	scale 50
