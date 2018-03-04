@@ -2230,7 +2230,7 @@ This returns a tree only containing the node m.
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -2255,10 +2255,6 @@ Final tree produced by BUILD on this set of nodes and constraints
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
