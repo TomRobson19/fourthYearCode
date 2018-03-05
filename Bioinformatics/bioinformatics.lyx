@@ -135,7 +135,7 @@ where
 \end_inset
 
 .
- The algorithm itself requires a set of constraints and and a non-empty
+ The algorithm itself requires a set of such constraints and and a non-empty
  set of nodes.
  If the set of nodes has only 1 element, then the algorithm returns a tree
  consisting of this element alone.
@@ -218,9 +218,10 @@ For each of the blocks created by this partitioning method, we find which
  are in this block.
  We then call the BUILD algorithm again with this new set of constraints
  and nodes.
- This continues BUILD is called on only 1 node, in which case it returns
+ This continues until BUILD is called on only 1 node, in which case it returns
  a tree consisting of only this node, which will be a leaf of the overall
- tree, which is built up from these leaves.
+ tree.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -382,7 +383,7 @@ Here we assume that the partition step from the previous question runs in
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $T(n,m)=KT(n_{i},m_{i})+f(n,m)$
+\begin_inset Formula $T(n,m)<KT(n_{i},m_{i})+f(n,m)$
 \end_inset
 
 
@@ -413,14 +414,14 @@ Where K is the number of sets in the the partition
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $T(n,m)=K(K^{'}T(n_{i},m_{i})+f(n,m))+f(n,m)$
+\begin_inset Formula $T(n,m)<K(K^{'}T(n_{i},m_{i})+f(n,m))+f(n,m)$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $T(n,m)=K(K^{'}(K^{''}T(n_{i},m_{i})+f(n,m))+f(n,m))+f(n,m)$
+\begin_inset Formula $T(n,m)<K(K^{'}(K^{''}T(n_{i},m_{i})+f(n,m))+f(n,m))+f(n,m)$
 \end_inset
 
 
@@ -448,14 +449,14 @@ The number of calls to BUILD referred to by
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $T(n,m)=(2n-1)T(1,0)+(n-1)f(n,m)$
+\begin_inset Formula $T(n,m)<(2n-1)T(1,0)+(n-1)f(n,m)$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $T(n,m)=(2n-1)O(1)+(n-1)f(n,m)$
+\begin_inset Formula $T(n,m)<(2n-1)O(1)+(n-1)f(n,m)$
 \end_inset
 
 
@@ -2407,7 +2408,7 @@ or
  
 \series default
 By running the BUILD algorithm on each of these constraints individually,
- we get the 2 tree in the Figure below.
+ we get the 2 possible tree patterns in the Figure below.
  
 \end_layout
 
