@@ -84,6 +84,8 @@ if __name__ == '__main__':
 
 	if shallow:
 
+		start = time.time()
+
 		x_train, x_test, y_train, y_test = train_test_split(text, labels, test_size=0.2, random_state=26)
 
 		print("Extracting Features")
@@ -114,9 +116,13 @@ if __name__ == '__main__':
 		prediction = classifier.predict(x_test)
 		true = y_test
 
+		end = time.time()
+
 		print("Evaluating")
 
 		evaluatePrediction(prediction,true)
+
+		print("Runtime:"+str(end-start))
 
 	deep = False
 	if deep:
