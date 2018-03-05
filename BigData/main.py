@@ -1,7 +1,6 @@
 import numpy as np
 import csv
 import string
-import time
 
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
