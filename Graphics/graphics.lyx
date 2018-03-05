@@ -250,22 +250,29 @@ Explain the main issue of applying level-of-detail modelling to support
 An important issue is the high polygon count that is required to display
  parts of meshes at high visual quality close to the observer, as well as
  lowering the level of detail for parts of meshes that are further away.
- This is very noticable in situations such as landscape rendering.
+ This is very noticeable in situations such as landscape rendering.
  
 \end_layout
 
 \begin_layout Standard
-View-dependent refinement can be supported using vertex hierarchies.
- This algorithm uses the edge contractions to create a binary tree, any
- cut through which represents a valid model.
- This allows us to utilise many more potential models than we were originally
- able to, which supports selective refinement based on the viewpoint of
- the user.
+View-dependent refinement can be supported using a hierarchy of meshes.
+ Parts of the scene outside of the view frustrum can be removed efficiently,
+ and the level-of-detail model can be adjusted independently for each mesh
+ in the hierarchy.
+ Establishing such hierarchies on continuous surfaces is a challenging problem
+ however, as it is difficult to correctly display the boundaries between
+ meshes.
  
 \end_layout
 
 \begin_layout Standard
-criteria based refinement 
+An alternative to this is criteria based refinement, which works based on
+ the view frustum, surface orientation, and screen-space geometric error,
+ and incrementally refines and coarsens the meshes in real time.
+ This view-dependent method effectively reduces the polygon count for large
+ 3D scenes using minimal processing time, making it particularly effective
+ for interactive visualisations.
+ 
 \end_layout
 
 \end_body
