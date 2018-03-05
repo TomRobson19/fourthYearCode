@@ -1,16 +1,17 @@
 import numpy as np
 import csv
 import string
+import time
 
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import *
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
-from keras.layers import Conv1D, MaxPooling1D, Embedding, LSTM, SimpleRNN, RNN, Dense, Input, GlobalMaxPooling1D
+from keras.layers import Conv1D, MaxPooling1D, Embedding, CuDNNLSTM, SimpleRNN, RNN, Dense, Input, GlobalMaxPooling1D
 from keras.models import Model
 
 import spacy
@@ -34,6 +35,7 @@ def readData():
 				ids.append(int(item[0]))
 				text.append(item[1])
 				labels.append(int(item[2]))
+
 	return ids, text, labels
 
 
@@ -53,8 +55,8 @@ def cleanData(text):
 	return text
 
 def evaluatePrediction(prediction,true):
-	print(classification_report(true,prediction))
-	print(accuracy_score(true,prediction))
+	print(classification_report(true,prediction,digits=4))
+	print("Accuracy: "+str(accuracy_score(true,prediction)))
 
 def getWordVectors(text):
 	nlp = spacy.load('en_core_web_lg')
@@ -80,7 +82,7 @@ if __name__ == '__main__':
 	text = cleanData(text)
 	#print(text)
 
-	shallow = True
+	shallow = False
 
 	if shallow:
 
@@ -90,18 +92,14 @@ if __name__ == '__main__':
 
 		print("Extracting Features")
 
-		# grid search below parameters for both Count(tf) and tf-idf
-
-		# vect = CountVectoriser(
+		# vect = CountVectorizer(
 		# 	ngram_range=(1,5),
 		# 	min_df=10,
-		# 	max_df=0.6,
 		# 	analyzer="word")
 
 		vect = TfidfVectorizer(
 			ngram_range=(1,5),
 			min_df=10,
-			max_df=0.6,
 			analyzer="word"
 			)
 
@@ -122,13 +120,10 @@ if __name__ == '__main__':
 
 		evaluatePrediction(prediction,true)
 
-		print("Runtime:"+str(end-start))
+		print("Runtime: "+str(end-start))
 
-	deep = False
+	deep = True
 	if deep:
-		# print("Getting word2vec Vectors")
-		# vectors = getWordVectors(text)
-		# print(vectors)
 
 		print("Tokenising text data")
 		MAX_NUM_WORDS = 20000
@@ -198,9 +193,9 @@ if __name__ == '__main__':
 			x = MaxPooling1D(5)(x)
 			x = Conv1D(128, 5, activation='relu')(x)
 			x = MaxPooling1D(5)(x)
-			#x = Conv1D(128, 5, activation='relu')(x)
-			#x = GlobalMaxPooling1D()(x)
-			x = LSTM(5)(x)
+
+
+			x = CuDNNLSTM(200)(x)
 			x = Dense(128, activation='relu')(x)
 		else:
 			print("Using RNN")
@@ -208,8 +203,8 @@ if __name__ == '__main__':
 			x = MaxPooling1D(5)(x)
 			x = Conv1D(128, 5, activation='relu')(x)
 			x = MaxPooling1D(5)(x)
-			#x = Conv1D(128, 5, activation='relu')(x)
-			#x = GlobalMaxPooling1D()(x)
+
+
 			# This should be the RNN base class not the Simple RNN
 			x = SimpleRNN(5)(x)
 			x = Dense(128, activation='relu')(x)
