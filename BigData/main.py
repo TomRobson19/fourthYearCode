@@ -93,12 +93,12 @@ if __name__ == '__main__':
 		print("Extracting Features")
 
 		# vect = CountVectorizer(
-		# 	ngram_range=(1,5),
+		# 	ngram_range=(1,3),
 		# 	min_df=10,
 		# 	analyzer="word")
 
 		vect = TfidfVectorizer(
-			ngram_range=(1,5),
+			ngram_range=(1,4),
 			min_df=10,
 			analyzer="word"
 			)
