@@ -11,10 +11,38 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
-from keras.layers import Conv1D, MaxPooling1D, Embedding, CuDNNLSTM, SimpleRNN, RNN, Dense, Input, GlobalMaxPooling1D
+from keras.layers import Conv1D, MaxPooling1D, Embedding, CuDNNLSTM, SimpleRNN, RNN, Dense, Input, GlobalMaxPooling1D, Dropout, Flatten, Layer
 from keras.models import Model
 
-import spacy
+import keras.backend as K
+
+
+class MinimalRNNCell(Layer):
+
+    def __init__(self, units, **kwargs):
+        self.units = units
+        self.state_size = units
+        super(MinimalRNNCell, self).__init__(**kwargs)
+
+    def build(self, input_shape):
+        self.kernel = self.add_weight(shape=(input_shape[-1], self.units),
+                                      initializer='uniform',
+                                      name='kernel')
+        self.recurrent_kernel = self.add_weight(
+            shape=(self.units, self.units),
+            initializer='uniform',
+            name='recurrent_kernel')
+        self.built = True
+
+    def call(self, inputs, states):
+        prev_output = states[0]
+        h = K.dot(inputs, self.kernel)
+        output = h + K.dot(prev_output, self.recurrent_kernel)
+        return output, [output]
+
+
+
+
 
 def readData():
 	filename = "news_ds.csv"
@@ -84,11 +112,11 @@ if __name__ == '__main__':
 
 	shallow = False
 
+	x_train, x_test, y_train, y_test = train_test_split(text, labels, test_size=0.2, random_state=26)
+
 	if shallow:
 
 		start = time.time()
-
-		x_train, x_test, y_train, y_test = train_test_split(text, labels, test_size=0.2, random_state=26)
 
 		print("Extracting Features")
 
@@ -133,14 +161,17 @@ if __name__ == '__main__':
 
 		tokenizer = Tokenizer(num_words=MAX_NUM_WORDS)
 		tokenizer.fit_on_texts(text)
-		sequences = tokenizer.texts_to_sequences(text)
+		sequences = tokenizer.texts_to_sequences(x_train)
+		sequences_test = tokenizer.texts_to_sequences(x_test)
 
 		word_index = tokenizer.word_index
 		print('Found %s unique tokens.' % len(word_index))
 
 		data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 
-		labels = to_categorical(np.asarray(labels))
+		test_data = pad_sequences(sequences_test, maxlen=MAX_SEQUENCE_LENGTH)
+
+		labels = np.asarray(y_train)
 		print('Shape of data tensor:', data.shape)
 		print('Shape of label tensor:', labels.shape)
 
@@ -151,10 +182,10 @@ if __name__ == '__main__':
 		labels = labels[indices]
 		nb_validation_samples = int(VALIDATION_SPLIT * data.shape[0])
 
-		x_train = data[:-nb_validation_samples]
-		y_train = labels[:-nb_validation_samples]
-		x_test = data[-nb_validation_samples:]
-		y_test = labels[-nb_validation_samples:]
+		x_train_deep = data[:-nb_validation_samples]
+		y_train_deep = labels[:-nb_validation_samples]
+		x_val = data[-nb_validation_samples:]
+		y_val = labels[-nb_validation_samples:]
 
 		print("Getting embeddings")
 		embeddings_index = {}
@@ -186,7 +217,7 @@ if __name__ == '__main__':
 		sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
 		embedded_sequences = embedding_layer(sequence_input)
 
-		lstm = True
+		lstm = False
 		if lstm:
 			print("Using LSTM")
 			x = Conv1D(128, 5, activation='relu')(embedded_sequences)
@@ -195,33 +226,38 @@ if __name__ == '__main__':
 			x = MaxPooling1D(5)(x)
 
 
-			x = CuDNNLSTM(200)(x)
-			x = Dense(128, activation='relu')(x)
+			x = CuDNNLSTM(256)(x)
+			x = Dropout(0.25)(x)
+			x = Dense(128)(x)
+
 		else:
 			print("Using RNN")
+			cell = MinimalRNNCell(32)
+
 			x = Conv1D(128, 5, activation='relu')(embedded_sequences)
 			x = MaxPooling1D(5)(x)
 			x = Conv1D(128, 5, activation='relu')(x)
 			x = MaxPooling1D(5)(x)
 
 
-			# This should be the RNN base class not the Simple RNN
-			x = SimpleRNN(5)(x)
-			x = Dense(128, activation='relu')(x)
+
+			x = RNN(cell)(x)
+			x = Dropout(0.25)(x)
+			x = Dense(128)(x)
 
 
-
-		preds = Dense(2, activation='softmax')(x)
+		preds = Dense(1, activation='sigmoid')(x)
 
 		model = Model(sequence_input, preds)
-		model.compile(loss='categorical_crossentropy',
-		              optimizer='rmsprop',
+		model.compile(loss='binary_crossentropy',
+		              optimizer='adam',
 		              metrics=['acc'])
 
-		# happy learning!
-		model.fit(x_train, y_train, validation_data=(x_test, y_test),
+		#adam is better than adadelta and rmsprop
+
+		model.fit(x_train_deep, y_train_deep, validation_data=(x_val, y_val),
 		          epochs=20, batch_size=128)
 
-		prediction = model.predict(x_test)
+		prediction = K.eval(K.cast(K.greater(model.predict(test_data),0.5),"float32"))
 
-		#evaluatePrediction(prediction,y_test)
+		evaluatePrediction(prediction,y_test)
