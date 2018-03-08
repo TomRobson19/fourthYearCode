@@ -227,9 +227,13 @@ detail modelling in such a system.
 \begin_layout Standard
 Using level-of-detail modelling decreases the network bandwidth consumption
  of a large distributed virtual environment system because it only transmits
- a base mesh and a list of transformations to be applied to it.
+ a base mesh and a list of transformations to be applied to it, taken from
+ the geometry database stored on the server.
  This is clearly an improvement in comparison to transmitting the full model,
  or completely replacing it for each different quality level.
+ Additionally, the majority of geometry compression methods take into account
+ the information that is shared by neighbouring polygons, which reduces
+ the amount of data that need to be transmitted to represent the full model.
  Level-of-detail models can also utilise progressive transmission, meaning
  that the models are encoded in such a way that partially transmitted models
  can be rendered and progressively refined as more information is received.
@@ -248,14 +252,16 @@ Explain the main issue of applying level-of-detail modelling to support
 
 \begin_layout Standard
 An important issue is the high polygon count that is required to display
- parts of meshes at high visual quality close to the observer, as well as
+ parts of meshes close to the observer at high visual quality, as well as
  lowering the level of detail for parts of meshes that are further away.
- This is very noticeable in situations such as landscape rendering.
+ This is very noticeable in situations such as rendering a large 3D landscape,
+ when we are only interested in a small part of it.
  
 \end_layout
 
 \begin_layout Standard
-View-dependent refinement can be supported using a hierarchy of meshes.
+View-dependent refinement can solve this issue, and this can be supported
+ using a hierarchy of meshes.
  Parts of the scene outside of the view frustrum can be removed efficiently,
  and the level-of-detail model can be adjusted independently for each mesh
  in the hierarchy.
