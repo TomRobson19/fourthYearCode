@@ -11,7 +11,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
-from keras.layers import Conv1D, MaxPooling1D, Embedding, CuDNNLSTM, SimpleRNN, RNN, Dense, Input, GlobalMaxPooling1D, Dropout, Flatten, Layer
+from keras.layers import Conv1D, MaxPooling1D, Embedding, CuDNNLSTM, LSTM, SimpleRNN, RNN, Dense, Input, GlobalMaxPooling1D, Dropout, Flatten, Layer
 from keras.models import Model
 
 import keras.backend as K
@@ -217,7 +217,7 @@ if __name__ == '__main__':
 		sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
 		embedded_sequences = embedding_layer(sequence_input)
 
-		lstm = False
+		lstm = True
 		if lstm:
 			print("Using LSTM")
 			x = Conv1D(128, 5, activation='relu')(embedded_sequences)
@@ -248,6 +248,8 @@ if __name__ == '__main__':
 
 		preds = Dense(1, activation='sigmoid')(x)
 
+		start = time.time()
+
 		model = Model(sequence_input, preds)
 		model.compile(loss='binary_crossentropy',
 		              optimizer='adam',
@@ -260,4 +262,8 @@ if __name__ == '__main__':
 
 		prediction = K.eval(K.cast(K.greater(model.predict(test_data),0.5),"float32"))
 
+		end = time.time()
+
 		evaluatePrediction(prediction,y_test)
+
+		print("Runtime: "+str(end-start))
