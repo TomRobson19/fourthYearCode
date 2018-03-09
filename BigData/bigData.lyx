@@ -5,6 +5,7 @@
 \textclass article
 \begin_preamble
 \date{}
+\usepackage{url}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -86,6 +87,178 @@ Big Data Summative Assignment
 
 \begin_layout Author
 hzwr87
+\end_layout
+
+\begin_layout Section
+Libraries used and installation instructions
+\end_layout
+
+\begin_layout Standard
+SkLearn, Keras
+\end_layout
+
+\begin_layout Standard
+All testing run on GTX 1050 graphics card.
+ 
+\end_layout
+
+\begin_layout Standard
+Glove embeddings twitter - glove.6B.300d.txt - download from (actual zip link)
+\end_layout
+
+\begin_layout Standard
+https://nlp.stanford.edu/projects/glove/
+\end_layout
+
+\begin_layout Section
+Preprocessing
+\end_layout
+
+\begin_layout Standard
+The first preprocessing step was to convert all of the text to lowercase,
+ remove newlines, special characters and multiple spaces.
+ The purpose of this was to try and ensure that the text was in a uniform
+ format, and try and differentiate between real and fake new based on text
+ content alone.
+ On examination of the dataset, an early observation was that many of the
+ articles were web based, and contained many web URLS, twitter handles and
+ hashtags.
+ These were also removed, again for the purpose of differentiating based
+ on text.
+ There were also several examples which were either blank documents or individua
+l words.
+ The decision was made to remove any document containing less than 10 characters
+ from the dataset, to ensure that each document contained sufficient text
+ to learn from.
+ 
+\end_layout
+
+\begin_layout Section
+Shallow Learning
+\end_layout
+
+\begin_layout Subsection
+Feature Extraction
+\end_layout
+
+\begin_layout Standard
+Having cleaned the data, we now come to extract features.
+ The two features used in this study are term frequency (tf) and term frequency-
+inverse document frequency (tf-idf).
+ Both have been used here in order to determine the effect that taking into
+ account the 
+\begin_inset Quotes eld
+\end_inset
+
+importance
+\begin_inset Quotes erd
+\end_inset
+
+ of each word to a document.
+ For both of these features, we have also considered a range of n-grams.
+ The range chosen here begin with unigrams alone and end with the combination
+ of all n-grams up to 8.
+ The inclusion of the combination of all these n-grams was due to the strength
+ of the combination of the long distance dependencies of the larger n-grams
+ and the local features of the smaller n-grams.
+ We have not gone higher than 8-grams as up to this point the precision,
+ recall, F1 score and accuracy had peaked and started to decrease, whereas
+ the runtime is increasing.
+ 
+\end_layout
+
+\begin_layout Subsection
+Classification
+\end_layout
+
+\begin_layout Standard
+After these features were extracted, they were passed into a Multinomial
+ Naïve Bayes classifier.
+ The main parameter for this classifier is alpha, which represents the level
+ of additive smoothing.
+ Through experimentation, it was established that the optimal value for
+ this parameter was 0, i.e.
+ no smoothing, and the results presented below were collected using this
+ value.
+ The data was split 80:20 between train and test, and the classification
+ report of SciKitLearn was used to obtain the precision, recall and F1 score.
+ The accuracy and runtime are also recorded.
+ The optimal parameters were the combination of 1-4 grams using tf-idf,
+ although the results were very close to the 1-3 grams, which had a shorter
+ runtime.
+ 
+\end_layout
+
+\begin_layout Section
+Deep Learning
+\end_layout
+
+\begin_layout Subsection
+Feature Extraction
+\end_layout
+
+\begin_layout Standard
+For the extraction of features for deep learning, the decision was made
+ to use GloVe: Global Vectors for Word Representation.
+ This algorithm is trained on 
+\begin_inset Quotes eld
+\end_inset
+
+aggregated global word-word co-occurrence statistics from a corpus, and
+ the resulting representations showcase interesting linear substructures
+ of the word vector space
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Pennington2014"
+
+\end_inset
+
+.
+ WHYYYYy
+\end_layout
+
+\begin_layout Standard
+SELECTION OF GLOVE FILE
+\end_layout
+
+\begin_layout Subsection
+Classification
+\end_layout
+
+\begin_layout Standard
+From here, these features are passed to a Keras Neural Network.
+ The most important layers in this model are the LSTM and RNN layers, so
+ those will be the main point of comparison addressed in this report.
+ The remainder of the network is standardised to both approaches.
+ The architecture that has been chosen is two convolutional layers with
+ 128 filters each, and a kernel size of 5.
+ Between each of these is a max pooling layer of pool size 5.
+ This is then passed to the LSTM/RNN, followed by a dropout of 0.25, a dense
+ layer of 128 units and finally a single unit dense layer with a sigmoid
+ activation function.
+ Sigmoid was chosen as the values with only vary between 0 and 1, as this
+ is the format of the training labels.
+ 
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintAll"
+bibfiles "BigData"
+options "plain"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
