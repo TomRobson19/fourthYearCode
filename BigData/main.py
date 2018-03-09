@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import *
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
+from keras.callbacks import TensorBoard
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
@@ -15,6 +16,12 @@ from keras.layers import Conv1D, MaxPooling1D, Embedding, CuDNNLSTM, LSTM, Simpl
 from keras.models import Model
 
 import keras.backend as K
+
+outputFolder = "output"
+import time
+ts = time.time()
+outputFolder = outputFolder+"/"+str(ts).split(".")[0]
+tbCallBack = TensorBoard(log_dir=outputFolder+'/log', histogram_freq=0,  write_graph=True, write_images=True)
 
 
 class MinimalRNNCell(Layer):
@@ -73,13 +80,13 @@ def cleanData(text):
 		text[i] = text[i].lower()
 		text[i] = text[i].replace('\n', ' ')
 		import re
-		text[i] = re.sub(r'([^\s\w]|_)+', '', text[i])
 		text[i] = re.sub(r'^https?:\/\/.*[\r\n]*', '', text[i])
 		text[i] = re.sub( '\s+', ' ', text[i]).strip()
 
 		text[i] = re.sub(r'(\S+)@(\S+)', '', text[i])
 		text[i] = re.sub(r'(\A|\s)@(\w+)', '', text[i])
 		text[i] = re.sub(r'(\A|\s)#(\w+)', '', text[i])
+		text[i] = re.sub(r'([^\s\w]|_)+', '', text[i])
 	return text
 
 def evaluatePrediction(prediction,true):
@@ -156,7 +163,7 @@ if __name__ == '__main__':
 		print("Tokenising text data")
 		MAX_NUM_WORDS = 20000
 		MAX_SEQUENCE_LENGTH = 1000
-		EMBEDDING_DIM = 200
+		EMBEDDING_DIM = 300
 		VALIDATION_SPLIT = 0.2
 
 		tokenizer = Tokenizer(num_words=MAX_NUM_WORDS)
@@ -189,7 +196,7 @@ if __name__ == '__main__':
 
 		print("Getting embeddings")
 		embeddings_index = {}
-		f = open("glove.twitter.27B.200d.txt")
+		f = open("glove.42B.300d.txt")
 		for line in f:
 		    values = line.split()
 		    word = values[0]
@@ -226,13 +233,13 @@ if __name__ == '__main__':
 			x = MaxPooling1D(5)(x)
 
 
-			x = CuDNNLSTM(256)(x)
+			x = CuDNNLSTM(128)(x)
 			x = Dropout(0.25)(x)
 			x = Dense(128)(x)
 
 		else:
 			print("Using RNN")
-			cell = MinimalRNNCell(32)
+			cell = MinimalRNNCell(64)
 
 			x = Conv1D(128, 5, activation='relu')(embedded_sequences)
 			x = MaxPooling1D(5)(x)
@@ -258,7 +265,7 @@ if __name__ == '__main__':
 		#adam is better than adadelta and rmsprop
 
 		model.fit(x_train_deep, y_train_deep, validation_data=(x_val, y_val),
-		          epochs=20, batch_size=128)
+		          epochs=20, batch_size=128, callbacks=[tbCallBack])
 
 		prediction = K.eval(K.cast(K.greater(model.predict(test_data),0.5),"float32"))
 
