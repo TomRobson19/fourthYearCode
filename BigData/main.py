@@ -109,7 +109,7 @@ def getWordVectors(text):
 
 	return word2VecText
 
-if __name__ == '__main__':
+def main():
 	print("Reading Data")
 	ids, text, labels = readData()
 
@@ -196,7 +196,7 @@ if __name__ == '__main__':
 
 		print("Getting embeddings")
 		embeddings_index = {}
-		f = open("glove.42B.300d.txt")
+		f = open("glove.6B.300d.txt")
 		for line in f:
 		    values = line.split()
 		    word = values[0]
@@ -224,7 +224,7 @@ if __name__ == '__main__':
 		sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
 		embedded_sequences = embedding_layer(sequence_input)
 
-		lstm = True
+		lstm = False
 		if lstm:
 			print("Using LSTM")
 			x = Conv1D(128, 5, activation='relu')(embedded_sequences)
@@ -274,3 +274,8 @@ if __name__ == '__main__':
 		evaluatePrediction(prediction,y_test)
 
 		print("Runtime: "+str(end-start))
+
+
+
+if __name__ == '__main__':
+	main()
