@@ -90,7 +90,7 @@ hzwr87
 \end_layout
 
 \begin_layout Section
-Libraries used and installation instructions
+Dependencies
 \end_layout
 
 \begin_layout Standard
@@ -120,6 +120,15 @@ python3 main.py
 .
  No additional parameters are needed, it will run the best shallow and deep
  parameter sets and display the results.
+\end_layout
+
+\begin_layout Standard
+The CudNNLSTM layer was used for this study for the runtime measurements,
+ and is commented out in the implementation as it causes errors when no
+ GPU is present.
+ If testing on a GPU, superior runtime can be obtained by swapping the LSTM
+ and CudNNLSTM layers on lines 236 and 237 of the code.
+ 
 \end_layout
 
 \begin_layout Section

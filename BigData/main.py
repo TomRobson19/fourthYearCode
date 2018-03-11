@@ -234,6 +234,7 @@ def main():
 
 		if i=="LSTM":
 			x = LSTM(128)(x)
+			#x = CuDNNLSTM(128)(x)
 		else:
 			cell = MinimalRNNCell(64)
 			x = RNN(cell)(x)
