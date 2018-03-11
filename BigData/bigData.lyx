@@ -94,21 +94,32 @@ Libraries used and installation instructions
 \end_layout
 
 \begin_layout Standard
-SkLearn, Keras
-\end_layout
-
-\begin_layout Standard
-All testing run on GTX 1050 graphics card.
+For this assignment, the main libraries used are Numpy, SkLearn and Keras
+ (using the Tensorflow GPU backend).
+ All of the Deep Learning experiments were run on a NVIDIA GeForce GTX 1050
+ graphics card with CUDA8 and CudNN6.
  
 \end_layout
 
 \begin_layout Standard
-Glove embeddings - glove.6B.300d.txt - download from http://nlp.stanford.edu/data/glo
-ve.6B.zip
+The GloVe embeddings in the Deep Learning component require the following
+ text file - glove.6B.300d.txt - this can be downloaded from http://nlp.stanford.edu/
+data/glove.6B.zip.
 \end_layout
 
 \begin_layout Standard
-https://nlp.stanford.edu/projects/glove/
+The code is written to run the main function automatically when called from
+ command line using 
+\begin_inset Quotes eld
+\end_inset
+
+python3 main.py
+\begin_inset Quotes erd
+\end_inset
+
+.
+ No additional parameters are needed, it will run the best shallow and deep
+ parameter sets and display the results.
 \end_layout
 
 \begin_layout Section
@@ -1475,7 +1486,7 @@ Classification
 \end_layout
 
 \begin_layout Standard
-From here, these features are passed to a Keras Neural Network.
+From here, these features are passed to a Neural Network, written in Keras.
  The most important layers in this model are the LSTM and RNN layers, so
  those will be the main point of comparison addressed in this report.
  The remainder of the network is standardised to both approaches.
@@ -1492,7 +1503,13 @@ From here, these features are passed to a Keras Neural Network.
 \end_layout
 
 \begin_layout Standard
-JUSTIFY ARCHITECTURE AND PARAMETERS
+The convolutional layers are used for the same reason as the n-grams from
+ the shallow learning section, as they break the text into smaller regions
+ to make use of intra-text dependencies.
+ The pooling layers downsample the output of these convolutions to the correct
+ number of dimensions for the LSTM or RNN layers to use.
+ The final dense layer then collates the output of the LSTM/RNN before going
+ to the sigmoid based output layer.
 \end_layout
 
 \begin_layout Standard
@@ -1500,6 +1517,14 @@ For the LSTM and RNN, the main parameter to be set is the units, or the
  dimensionality of the the output space.
  This was tested for both layer types for the range 8-1024.
  Powers of 2 were selected here due to them providing higher efficiency.
+ The training was performed over 20 epochs, as it was clear that no great
+ advantage could be gained by running for longer.
+ Runtime is included here to illustrate the effect of increasing the number
+ of units massively has, as the runtime is very similar for the majority
+ of the parameters tested.
+ It is also very similar between both the LSTM and RNN in the majority of
+ cases, but the LSTM runtime increases substantially more than the RNN runtime
+ as the number of units is increased.
  
 \end_layout
 
@@ -1507,7 +1532,7 @@ For the LSTM and RNN, the main parameter to be set is the units, or the
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -1646,7 +1671,7 @@ LSTM
 \begin_inset Text
 
 \begin_layout Plain Layout
-76.02
+126.02
 \end_layout
 
 \end_inset
@@ -1711,7 +1736,7 @@ LSTM
 \begin_inset Text
 
 \begin_layout Plain Layout
-72.57
+122.57
 \end_layout
 
 \end_inset
@@ -1776,7 +1801,7 @@ LSTM
 \begin_inset Text
 
 \begin_layout Plain Layout
-72.86
+122.86
 \end_layout
 
 \end_inset
@@ -1841,7 +1866,7 @@ LSTM
 \begin_inset Text
 
 \begin_layout Plain Layout
-74.23
+124.23
 \end_layout
 
 \end_inset
@@ -1918,7 +1943,7 @@ LSTM
 \begin_layout Plain Layout
 
 \series bold
-77.85
+127.85
 \end_layout
 
 \end_inset
@@ -1983,7 +2008,7 @@ LSTM
 \begin_inset Text
 
 \begin_layout Plain Layout
-79.78
+129.78
 \end_layout
 
 \end_inset
@@ -2048,7 +2073,7 @@ LSTM
 \begin_inset Text
 
 \begin_layout Plain Layout
-93.15
+143.15
 \end_layout
 
 \end_inset
@@ -2113,7 +2138,7 @@ LSTM
 \begin_inset Text
 
 \begin_layout Plain Layout
-141.64
+191.64
 \end_layout
 
 \end_inset
@@ -2178,7 +2203,7 @@ RNN
 \begin_inset Text
 
 \begin_layout Plain Layout
-73.12
+123.12
 \end_layout
 
 \end_inset
@@ -2243,7 +2268,7 @@ RNN
 \begin_inset Text
 
 \begin_layout Plain Layout
-74.47
+124.47
 \end_layout
 
 \end_inset
@@ -2308,7 +2333,7 @@ RNN
 \begin_inset Text
 
 \begin_layout Plain Layout
-74.62
+124.62
 \end_layout
 
 \end_inset
@@ -2385,7 +2410,7 @@ RNN
 \begin_layout Plain Layout
 
 \series bold
-74.83
+124.83
 \end_layout
 
 \end_inset
@@ -2450,7 +2475,7 @@ RNN
 \begin_inset Text
 
 \begin_layout Plain Layout
-75.32
+125.32
 \end_layout
 
 \end_inset
@@ -2515,7 +2540,7 @@ RNN
 \begin_inset Text
 
 \begin_layout Plain Layout
-75.95
+125.95
 \end_layout
 
 \end_inset
@@ -2580,7 +2605,7 @@ RNN
 \begin_inset Text
 
 \begin_layout Plain Layout
-80.61
+130.61
 \end_layout
 
 \end_inset
@@ -2645,7 +2670,7 @@ RNN
 \begin_inset Text
 
 \begin_layout Plain Layout
-96.92
+146.92
 \end_layout
 
 \end_inset
@@ -2692,11 +2717,23 @@ Conclusion
 \end_layout
 
 \begin_layout Standard
-The best results obtained on this dataset were using an LSTM with .......
+The best results obtained on this dataset were using an LSTM with 128 units,
+ giving us an accuracy of 93.65%.
+ The runtime of the deep implementation is substantially longer than the
+ shallow for a relatively small increase in performance.
+ Therefore, whether shallow or deep would be preferred would depend on how
+ much runtime is valued by the user.
+ 
 \end_layout
 
 \begin_layout Standard
-Should I include further work?
+Further work would examine deeper architectures with more layers, maybe
+ even using multiple convolutional layers together with different kernel
+ sizes to represent the combination of multiple n-grams.
+ Useful data that could be used to solve this probelm that was not included
+ in the corpus, such as title oir source, could also be experimented with
+ to try to obtain better results.
+ 
 \end_layout
 
 \begin_layout Standard
