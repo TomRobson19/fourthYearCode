@@ -120,6 +120,7 @@ python3 main.py
 .
  No additional parameters are needed, it will run the best shallow and deep
  parameter sets and display the results.
+ The provided dataset and GloVe file must be in the same directory as main.py.
 \end_layout
 
 \begin_layout Standard
