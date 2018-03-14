@@ -93,6 +93,21 @@ This concerns variant b of the assignment.
 \end_layout
 
 \begin_layout Standard
+Do we have to reorder that dataset, as it seems like we do and not doing
+ it makes errors? (using head/*)
+\end_layout
+
+\begin_layout Standard
+How should we deal with different aspect ratios for different datasets?
+ (brain and head are 1,1,2, bunny is 1,1,1)
+\end_layout
+
+\begin_layout Standard
+Is the 10% just arbitrary? It doesn't work at all for brain and bunny.
+ Too low for brain and too high for bunny
+\end_layout
+
+\begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 btprint "btPrintAll"
