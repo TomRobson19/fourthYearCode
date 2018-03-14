@@ -24,3 +24,5 @@ Visualisation/head/
 *.zip
 
 Visualisation/VTK-8\.1\.0/
+
+Visualisation/ParaView-5.5.0-RC3-Qt5-MPI-Linux-64bit
