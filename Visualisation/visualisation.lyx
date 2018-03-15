@@ -93,8 +93,16 @@ This concerns variant b of the assignment.
 \end_layout
 
 \begin_layout Standard
+Which dataset? 8 or 16?
+\end_layout
+
+\begin_layout Standard
 Do we have to reorder that dataset, as it seems like we do and not doing
  it makes errors? (using head/*)
+\end_layout
+
+\begin_layout Standard
+Extra files in the bunny data
 \end_layout
 
 \begin_layout Standard
