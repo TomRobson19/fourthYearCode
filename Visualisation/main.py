@@ -53,12 +53,15 @@ readerVolume.Update()
 maximumValue = readerVolume.GetOutput().GetScalarRange()[1]
 print(maximumValue)
 
+###################################################################################
+
 # Generate an isosurface
 contours = vtk.vtkMarchingCubes()
 contours.SetInputConnection( readerVolume.GetOutputPort() )
 contours.ComputeNormalsOn()
 contours.ComputeGradientsOn()
-contours.SetValue( 0, int(0.03*maximumValue ))  # Bone isovalue
+contours.SetValue(0,1500)
+#contours.SetValue( 0, int(0.03*maximumValue ))  # Bone isovalue
 #for head, 800 gives skin, 1500 gives skull
 #for brain, use 1500
 #for bunny, use 2000
@@ -77,11 +80,44 @@ actorBone = vtk.vtkLODActor()
 actorBone.SetNumberOfCloudPoints( 1000000 )
 actorBone.SetMapper( geoBoneMapper )
 actorBone.GetProperty().SetColor( 1, 1, 1 )
+actorBone.GetProperty().SetOpacity( 1.0 )
+
+###################################################################################
+
+# Generate an isosurface
+contoursSkin = vtk.vtkMarchingCubes()
+contoursSkin.SetInputConnection( readerVolume.GetOutputPort() )
+contoursSkin.ComputeNormalsOn()
+contoursSkin.ComputeGradientsOn()
+contoursSkin.SetValue(0,800)
+#contours.SetValue( 0, int(0.03*maximumValue ))  # Bone isovalue
+#for head, 800 gives skin, 1500 gives skull
+#for brain, use 1500
+#for bunny, use 2000
+
+confilterSkin = vtk.vtkPolyDataConnectivityFilter()
+confilterSkin.SetInputConnection(contoursSkin.GetOutputPort())
+confilterSkin.SetExtractionModeToLargestRegion()
+
+# Take the isosurface data and create geometry
+geoBoneMapperSkin = vtk.vtkPolyDataMapper()
+geoBoneMapperSkin.SetInputConnection( confilterSkin.GetOutputPort() )
+geoBoneMapperSkin.ScalarVisibilityOff()
+
+# Take the isosurface data and create geometry
+actorSkin = vtk.vtkLODActor()
+actorSkin.SetNumberOfCloudPoints( 1000000 )
+actorSkin.SetMapper( geoBoneMapperSkin )
+actorSkin.GetProperty().SetColor( 0, 1, 0 )
+actorSkin.GetProperty().SetOpacity( 0.5 )
+
+####################################################################################
 
 # Create renderer
 ren = vtk.vtkRenderer()
 ren.SetBackground( 0.329412, 0.34902, 0.427451 ) 
 ren.AddActor(actorBone)
+ren.AddActor(actorSkin)
 
 # Create a window for the renderer of size 250x250
 renWin = vtk.vtkRenderWindow()
