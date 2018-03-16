@@ -115,7 +115,8 @@ actorSkin.GetProperty().SetOpacity( 0.5 )
 
 # Create renderer
 ren = vtk.vtkRenderer()
-ren.SetBackground( 0.329412, 0.34902, 0.427451 ) 
+#ren.SetBackground( 0.329412, 0.34902, 0.427451 ) 
+ren.SetBackground( 1,0,1 ) 
 ren.AddActor(actorBone)
 ren.AddActor(actorSkin)
 
