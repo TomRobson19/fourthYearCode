@@ -89,30 +89,77 @@ hzwr87
 \end_layout
 
 \begin_layout Standard
-This concerns variant b of the assignment.
-\end_layout
+\begin_inset Note Note
+status collapsed
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Which dataset? 8 or 16?
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Do we have to reorder that dataset, as it seems like we do and not doing
  it makes errors? (using head/*)
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Extra files in the bunny data
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 How should we deal with different aspect ratios for different datasets?
  (brain and head are 1,1,2, bunny is 1,1,1)
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Is the 10% just arbitrary? It doesn't work at all for brain and bunny.
  Too low for brain and too high for bunny
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This report concerns variant b of the assignment.
+\end_layout
+
+\begin_layout Standard
+Design Rationale - (include dataset ordering)
+\end_layout
+
+\begin_layout Standard
+Flow chart of pipeline structure
+\end_layout
+
+\begin_layout Standard
+Parameter selection
+\end_layout
+
+\begin_layout Standard
+Colour selection
+\end_layout
+
+\begin_layout Standard
+Screenshots:
+\end_layout
+
+\begin_layout Standard
+Each on on 10% of maximum value
+\end_layout
+
+\begin_layout Standard
+Head - skin, skull, combination - (get one that includes straps too)
+\end_layout
+
+\begin_layout Standard
+Brain - should really only need the main one
+\end_layout
+
+\begin_layout Standard
+Bunny - demonstrate effects of conFilter to remove parts of the tube, also
+ demonstrate the effects of changing the aspect ratio (tall and short bunny
+ to show the necessity of specifying relative to the dataset.
 \end_layout
 
 \begin_layout Standard
