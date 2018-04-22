@@ -57,7 +57,7 @@
 \color #008000
 \end_index
 \leftmargin 2cm
-\topmargin 2cm
+\topmargin 1cm
 \rightmargin 2cm
 \bottommargin 2cm
 \headheight 2cm
@@ -89,30 +89,81 @@ hzwr87
 \end_layout
 
 \begin_layout Standard
+This report concerns variant b of the assignment.
+ We have used the 16 bit variants of the data from 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://graphics.stanford.edu/data/voldata"
+target "https://graphics.stanford.edu/data/voldata"
+
+\end_inset
+
+, as this allowed us to ultilise the dataset showing the Stanford terra-cotta
+ bunny, which only had 16-bit data files assotiated with it, without having
+ to alter our implementation for the other datasets.
+\end_layout
+
+\begin_layout Standard
+A sketch of our software architecture is shown in the flowchart in Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Flow-chart-of"
+
+\end_inset
+
+.
+ We split this down into three main stages, setup, isosurface model creation
+ and output.
+ The setup phase involved parsing the command line parameters, reading the
+ requested dataset in the appropriate format and setting up the renderer,
+ renderer windown and user interactor.
+ We then proceed to create our isosurface model.
+ We specify the isosurface value (threshold) which will be expressed as
+ a percentage of the maximum voxel value found in the data set.
+ The values we use are shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:What-each-isosurface"
+
+\end_inset
+
+.
+ In some of the datasets, it is then necessary to filter this isosurface
+ to keep the largest region, to remove elements that are present in the
+ dataset that are not meaningful for this visualisation.
+ 
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
-Which dataset? 8 or 16?
+figure for this
 \end_layout
 
-\begin_layout Plain Layout
-Do we have to reorder that dataset, as it seems like we do and not doing
- it makes errors? (using head/*)
-\end_layout
+\end_inset
+
+ We then use the output of this to create a geometry from the data of the
+ remaining isosurface, which is then assigned to an actor, and given an
+ assotiated number of cloud points, colour value and opacity.
+ We can do this multiple times, for example to show both the skin and skull
+ views of the head dataset as shown in Figure 
+\begin_inset Note Note
+status open
 
 \begin_layout Plain Layout
-Extra files in the bunny data
+figure for this
 \end_layout
 
-\begin_layout Plain Layout
-How should we deal with different aspect ratios for different datasets?
- (brain and head are 1,1,2, bunny is 1,1,1)
-\end_layout
+\end_inset
+
+.
+ When this was done, we needed to select colours that showed a clear contrast.
+ 
+\begin_inset Note Note
+status open
 
 \begin_layout Plain Layout
-Is the 10% just arbitrary? It doesn't work at all for brain and bunny.
- Too low for brain and too high for bunny
+Explain colour selection
 \end_layout
 
 \end_inset
@@ -121,19 +172,61 @@ Is the 10% just arbitrary? It doesn't work at all for brain and bunny.
 \end_layout
 
 \begin_layout Standard
-This report concerns variant b of the assignment.
+The final step was then to add the actor(s) that we had created to the renderer
+ and display them.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+What is our USP?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Design Rationale - (include dataset ordering)
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename images/Visualisation.pdf
+	width 60col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Flowchart of our VTK rendering pipeline
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Flow-chart-of"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Standard
-Flow chart of pipeline structure
+\end_inset
+
+
 \end_layout
 
-\begin_layout Standard
-Parameter selection - Isosurfaces, cloud points, dimensionality
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -141,25 +234,438 @@ Colour selection
 \end_layout
 
 \begin_layout Standard
-Screenshots:
+Screenshot of each one on 10% of maximum value
 \end_layout
 
 \begin_layout Standard
-Each on on 10% of maximum value
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="4">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dataset
 \end_layout
 
-\begin_layout Standard
-Head - skin, skull, combination - (get one that includes straps too)
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Isosurface Value (% of max value)
 \end_layout
 
-\begin_layout Standard
-Brain - should really only need the main one
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Information Being Shown
 \end_layout
 
-\begin_layout Standard
-Bunny - demonstrate effects of conFilter to remove parts of the tube, also
- demonstrate the effects of changing the aspect ratio (tall and short bunny
- to show the necessity of specifying relative to the dataset.
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Figure Number
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Head
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+skin
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+35
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+skull
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2 pass - 25 and 35
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+both
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Brain
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+full information
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+45
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+brain
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+48
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+skull
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Bunny
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+filter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+aspect ratio
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+What each isosurface value shows
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:What-each-isosurface"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

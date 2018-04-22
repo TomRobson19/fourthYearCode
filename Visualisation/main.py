@@ -53,72 +53,10 @@ readerVolume.Update()
 maximumValue = readerVolume.GetOutput().GetScalarRange()[1]
 print(maximumValue)
 
-###################################################################################
-
-# Generate an isosurface
-contours = vtk.vtkMarchingCubes()
-contours.SetInputConnection( readerVolume.GetOutputPort() )
-contours.ComputeNormalsOn()
-contours.ComputeGradientsOn()
-contours.SetValue(0,1500)
-#contours.SetValue( 0, int(0.03*maximumValue ))  # Bone isovalue
-#for head, 800 gives skin, 1500 gives skull
-#for brain, use 1500
-#for bunny, use 2000
-
-confilter = vtk.vtkPolyDataConnectivityFilter()
-confilter.SetInputConnection(contours.GetOutputPort())
-confilter.SetExtractionModeToLargestRegion()
-
-# Take the isosurface data and create geometry
-geoBoneMapper = vtk.vtkPolyDataMapper()
-geoBoneMapper.SetInputConnection( confilter.GetOutputPort() )
-geoBoneMapper.ScalarVisibilityOff()
-
-# Take the isosurface data and create geometry
-actorBone = vtk.vtkLODActor()
-actorBone.SetNumberOfCloudPoints( 1000000 )
-actorBone.SetMapper( geoBoneMapper )
-actorBone.GetProperty().SetColor( 1, 1, 1 )
-actorBone.GetProperty().SetOpacity( 1.0 )
-
-###################################################################################
-
-# Generate an isosurface
-contoursSkin = vtk.vtkMarchingCubes()
-contoursSkin.SetInputConnection( readerVolume.GetOutputPort() )
-contoursSkin.ComputeNormalsOn()
-contoursSkin.ComputeGradientsOn()
-contoursSkin.SetValue(0,800)
-#contours.SetValue( 0, int(0.03*maximumValue ))  # Bone isovalue
-#for head, 800 gives skin, 1500 gives skull
-#for brain, use 1500
-#for bunny, use 2000
-
-confilterSkin = vtk.vtkPolyDataConnectivityFilter()
-confilterSkin.SetInputConnection(contoursSkin.GetOutputPort())
-confilterSkin.SetExtractionModeToLargestRegion()
-
-# Take the isosurface data and create geometry
-geoBoneMapperSkin = vtk.vtkPolyDataMapper()
-geoBoneMapperSkin.SetInputConnection( confilterSkin.GetOutputPort() )
-geoBoneMapperSkin.ScalarVisibilityOff()
-
-# Take the isosurface data and create geometry
-actorSkin = vtk.vtkLODActor()
-actorSkin.SetNumberOfCloudPoints( 1000000 )
-actorSkin.SetMapper( geoBoneMapperSkin )
-actorSkin.GetProperty().SetColor( 0, 1, 0 )
-actorSkin.GetProperty().SetOpacity( 0.5 )
-
-####################################################################################
-
 # Create renderer
 ren = vtk.vtkRenderer()
-#ren.SetBackground( 0.329412, 0.34902, 0.427451 ) 
-ren.SetBackground( 1,0,1 ) 
-ren.AddActor(actorBone)
-ren.AddActor(actorSkin)
+ren.SetBackground( 0, 0, 0 ) 
+#ren.SetBackground( 1,0,1 ) 
 
 # Create a window for the renderer of size 250x250
 renWin = vtk.vtkRenderWindow()
@@ -128,6 +66,47 @@ renWin.SetSize(1000, 1000)
 # Set an user interface interactor for the render window
 iren = vtk.vtkRenderWindowInteractor()
 iren.SetRenderWindow(renWin)
+
+thresholds = [0.35, 0.25]
+colours = [(1,1,1), (0,1,0)]
+
+# thresholds = [0.3]
+# colours = [(1,1,1)]
+
+# thresholds = [0.48, 0.45]
+# colours = [(1,1,1), (0,1,0)]
+
+# thresholds = [0.03]
+# colours = [(1,1,1)]
+
+
+for i in range(len(thresholds)):
+	# Generate an isosurface
+	contours = vtk.vtkMarchingCubes()
+	contours.SetInputConnection( readerVolume.GetOutputPort() )
+	contours.ComputeNormalsOn()
+	contours.ComputeGradientsOn()
+	contours.SetValue( 0, int(thresholds[i]*maximumValue ))  # isovalue
+
+	confilter = vtk.vtkPolyDataConnectivityFilter()
+	confilter.SetInputConnection(contours.GetOutputPort())
+	confilter.SetExtractionModeToLargestRegion()
+
+	# Take the isosurface data and create geometry
+	geoBoneMapper = vtk.vtkPolyDataMapper()
+	geoBoneMapper.SetInputConnection( confilter.GetOutputPort() )
+	geoBoneMapper.ScalarVisibilityOff()
+
+	actorBone = vtk.vtkLODActor()
+	actorBone.SetNumberOfCloudPoints( 1000000 )
+	actorBone.SetMapper( geoBoneMapper )
+	actorBone.GetProperty().SetColor(colours[i])
+	if i == 0:
+		actorBone.GetProperty().SetOpacity( 1.0 )
+	else:
+		actorBone.GetProperty().SetOpacity( 0.5 )
+
+	ren.AddActor(actorBone)
 
 # Start the initialization and rendering
 iren.Initialize()
