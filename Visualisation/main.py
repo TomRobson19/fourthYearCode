@@ -42,7 +42,7 @@ readerVolume.SetDataScalarType( vtk.VTK_UNSIGNED_SHORT )
 readerVolume.SetFileDimensionality( 2 )
 readerVolume.SetDataExtent ( 0, xPixels-1, 0, yPixels-1, 0, noImages-1)
 
-readerVolume.SetDataSpacing( 1,1,2 )
+readerVolume.SetDataSpacing( 1,1,1 )
 #readerVolume.SetDataSpacing( 1,1,1 ) # for bunny
 
 readerVolume.SetNumberOfScalarComponents( 1 )
@@ -67,8 +67,8 @@ renWin.SetSize(1000, 1000)
 iren = vtk.vtkRenderWindowInteractor()
 iren.SetRenderWindow(renWin)
 
-thresholds = [0.35, 0.25]
-colours = [(1,1,1), (0,1,0)]
+# thresholds = [0.35, 0.25]
+# colours = [(1,1,1), (0,1,0)]
 
 # thresholds = [0.3]
 # colours = [(1,1,1)]
@@ -76,8 +76,8 @@ colours = [(1,1,1), (0,1,0)]
 # thresholds = [0.48, 0.45]
 # colours = [(1,1,1), (0,1,0)]
 
-# thresholds = [0.03]
-# colours = [(1,1,1)]
+thresholds = [0.03]
+colours = [(1,1,1)]
 
 
 for i in range(len(thresholds)):
