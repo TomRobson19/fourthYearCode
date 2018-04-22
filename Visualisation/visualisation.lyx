@@ -98,7 +98,7 @@ target "https://graphics.stanford.edu/data/voldata"
 
 \end_inset
 
-, as this allowed us to ultilise the dataset showing the Stanford terra-cotta
+, as this allowed us to utilise the dataset showing the Stanford terra-cotta
  bunny, which only had 16-bit data files assotiated with it, without having
  to alter our implementation for the other datasets.
 \end_layout
@@ -147,18 +147,12 @@ reference "fig:Head-Skull-and"
 
 .
  When this was done, we needed to select colours that showed a clear contrast.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Explain colour selection
-\end_layout
-
-\end_inset
-
-The final step was then to add the actor(s) that we had created to the renderer
- and display them.
+ We use black for the background and white for the foreground in most cases,
+ as this shows a clear contrast.
+ When we use two thresholds, the second is displayed in green, as it constrasts
+ well with black and white and works well with opacity.
+ The final step was then to add the actor(s) that we had created to the
+ renderer and display them.
 \begin_inset Note Note
 status open
 
@@ -234,7 +228,7 @@ reference "tab:What-each-isosurface"
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
