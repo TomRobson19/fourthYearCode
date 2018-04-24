@@ -30,7 +30,17 @@
 \float_placement H
 \paperfontsize default
 \spacing single
-\use_hyperref false
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_quoted_options "urlcolor={cyan}"
 \papersize default
 \use_geometry true
 \use_package amsmath 1
@@ -93,7 +103,7 @@ This report concerns variant b of the assignment, using the 16 bit variants
  of the data from 
 \begin_inset CommandInset href
 LatexCommand href
-name "https://graphics.stanford.edu/data/voldata"
+name "the Stanford data archive"
 target "https://graphics.stanford.edu/data/voldata"
 
 \end_inset
@@ -153,16 +163,6 @@ reference "fig:Head-Skull-and"
  well with black and white and works well with opacity.
  The final step was then to add the actor(s) that we had created to the
  renderer and display them.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-What is our USP?
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1889,18 +1889,6 @@ name "fig:Bunny-Dataset-Correct"
 
 
 \end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset bibtex
-LatexCommand bibtex
-btprint "btPrintAll"
-bibfiles "BigData"
-options "plain"
 
 \end_inset
 
